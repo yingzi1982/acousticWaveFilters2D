@@ -71,7 +71,7 @@ V = zeros(size(X));
 
 norm_V = 0;
 norm_residual = 0.000001;
-iterationNumber=100000;
+iterationNumber=200000;
 for i = 1:iterationNumber
 %fixed potential
   V(positive_finger_x_index,positive_finger_z_index) = positive_finger_V;

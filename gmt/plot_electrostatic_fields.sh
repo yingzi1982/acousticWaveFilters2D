@@ -3,7 +3,7 @@ module load gmt
 rm -f gmt.conf
 rm -f gmt.history
 
-gmt gmtset MAP_FRAME_AXES WeSn
+gmt gmtset MAP_FRAME_AXES WeS
 gmt gmtset MAP_FRAME_TYPE plain
 #gmt gmtset MAP_FRAME_PEN thick
 #gmt gmtset MAP_TICK_PEN thick
@@ -104,7 +104,7 @@ name=potentialField
 
 grd=$backupfolder$name\.nc
 
-gmt gmtset MAP_FRAME_AXES wesn
+gmt gmtset MAP_FRAME_AXES wes
 
 Vmin=`gmt gmtinfo $originalxyz -C | awk '{print $5}'`
 Vmax=`gmt gmtinfo $originalxyz -C | awk '{print $6}'`
