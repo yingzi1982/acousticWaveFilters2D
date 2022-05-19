@@ -45,7 +45,7 @@ xmin=`gmt gmtinfo $originalxyz -C | awk -v unit_axis="$unit_axis" '{print $1/uni
 xmax=`gmt gmtinfo $originalxyz -C | awk -v unit_axis="$unit_axis" '{print $2/unit_axis}'`
 zmin=`gmt gmtinfo $originalxyz -C | awk -v unit_axis="$unit_axis" '{print $3/unit_axis}'`
 #zmax=`gmt gmtinfo $originalxyz -C | awk -v unit_axis="$unit_axis" '{print $4/unit_axis}'`
-zmax=`echo 1.0 | bc -l`
+zmax=`echo 0.0 | bc -l`
 
 height=`echo "$width*(($zmax)-($zmin))/(($xmax)-($xmin))" | bc -l`
 projection=X$width\i/$height\i
