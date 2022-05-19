@@ -70,7 +70,7 @@ negative_finger_V = 0;
 V = zeros(size(X));
 
 norm_V = 0;
-norm_residual = 0.0001;
+norm_residual = 0.00001;
 iterationNumber=10000;
 for i = 1:iterationNumber
 %fixed potential
