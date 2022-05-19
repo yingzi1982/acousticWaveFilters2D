@@ -3,7 +3,7 @@ module load gmt
 rm -f gmt.conf
 rm -f gmt.history
 
-gmt gmtset MAP_FRAME_AXES WeS
+gmt gmtset MAP_FRAME_AXES WeSn
 gmt gmtset MAP_FRAME_TYPE plain
 #gmt gmtset MAP_FRAME_PEN thick
 #gmt gmtset MAP_TICK_PEN thick
@@ -45,7 +45,7 @@ xmin=`gmt gmtinfo $originalxyz -C | awk -v unit_axis="$unit_axis" '{print $1/uni
 xmax=`gmt gmtinfo $originalxyz -C | awk -v unit_axis="$unit_axis" '{print $2/unit_axis}'`
 zmin=`gmt gmtinfo $originalxyz -C | awk -v unit_axis="$unit_axis" '{print $3/unit_axis}'`
 #zmax=`gmt gmtinfo $originalxyz -C | awk -v unit_axis="$unit_axis" '{print $4/unit_axis}'`
-zmax=`echo 0.0 | bc -l`
+zmax=`echo 1.0 | bc -l`
 
 height=`echo "$width*(($zmax)-($zmin))/(($xmax)-($xmin))" | bc -l`
 projection=X$width\i/$height\i
@@ -104,7 +104,7 @@ name=potentialField
 
 grd=$backupfolder$name\.nc
 
-gmt gmtset MAP_FRAME_AXES wes
+gmt gmtset MAP_FRAME_AXES wesn
 
 Vmin=`gmt gmtinfo $originalxyz -C | awk '{print $5}'`
 Vmax=`gmt gmtinfo $originalxyz -C | awk '{print $6}'`
