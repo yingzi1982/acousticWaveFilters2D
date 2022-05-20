@@ -89,7 +89,7 @@ awk -v unit_axis="$unit_axis" -v unit_E="$unit_E" '{print $1/unit_axis, $2/unit_
 awk -v unit_axis="$unit_axis" -v unit_E="$unit_E" '{print $1/unit_axis, $2/unit_axis, $7/unit_E}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$Ezgrd
 
 #gmt grdvector $Exgrd $Ezgrd -Ix2 -J  -Q0.1i+e+n0.25i+h0.1 -W1p -S10i -N -O -K >> $ps
-gmt grdvector $Exgrd $Ezgrd -Ix4 -J  -Q0.1i+eA+n0.25i+h0.1 -W1p -S10i -N -O -K >> $ps
+gmt grdvector $Exgrd $Ezgrd -Ix4 -J  -Q0.1i+eAl+n0.25i+h0.1 -W1p -S10i -N -O -K >> $ps
 
 
 awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis}' $backupfolder/positive_finger | gmt psxy -J -R -Ss0.005i -Gred -N -O -K >> $ps
