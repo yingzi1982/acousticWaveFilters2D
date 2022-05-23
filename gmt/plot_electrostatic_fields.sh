@@ -1,5 +1,8 @@
 #!/bin/bash
-module load gmt
+source /pdc/software/21.11/eb/software/Anaconda3/2021.05/bin/activate
+conda activate gmt6
+
+#module load gmt
 rm -f gmt.conf
 rm -f gmt.history
 
@@ -76,7 +79,7 @@ lowerLimit=0
 #lowerLimit=`echo "$Emin/$unit_E" | bc -l`
 upperLimit=`echo "$Emax/$unit_E" | bc -l`
 cpt=$backupfolder$name\.cpt
-gmt makecpt -CGMT_hot.cpt -T$lowerLimit/$upperLimit -Z -Iz > $cpt
+gmt makecpt -CGMT_hot.cpt -T$lowerLimit/$upperLimit -Iz > $cpt
 
 gmt psbasemap -R$region -J$projection  -Bx10f5+l"X (10@+-6@+m) " -By10f5+l"Z (10@+-6@+m)" -K > $ps #-L+yt -Ggray 
 awk -v unit_axis="$unit_axis" -v unit_E="$unit_E" '{print $1/unit_axis, $2/unit_axis, $4/unit_E}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$grd
@@ -96,7 +99,7 @@ awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis}' $backupfolder
 awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis}' $backupfolder/negative_finger | gmt psxy -J -R -Ss0.005i -Ggreen -N -O -K >> $ps
 
 
-gmt psscale -D$domain -C$cpt -Bxa1f0.5 -By+l"10@+6@+v/m" -O -K >> $ps
+gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+l"10@+6@+v/m" -O -K >> $ps
 
 rm -f $cpt $grd $Exgrd $Ezgrd
 
@@ -115,8 +118,8 @@ upperLimit=1
 #lowerLimit=$Vmin
 #upperLimit=$Vmax
 cpt=$backupfolder$name\.cpt
-#gmt makecpt -CGMT_hot.cpt -T$lowerLimit/$upperLimit -Z -Iz > $cpt
-gmt makecpt -CGMT_seis.cpt -T$lowerLimit/$upperLimit -Z -Iz > $cpt
+#gmt makecpt -CGMT_hot.cpt -T$lowerLimit/$upperLimit -Iz > $cpt
+gmt makecpt -CGMT_seis.cpt -T$lowerLimit/$upperLimit -Iz > $cpt
 
 gmt psbasemap -R$region -J$projection  -Bx10f5+l"X (10@+-6@+m) " -By10f5+l"Z (10@+-6@+m)" -Y$offset -O -K >> $ps #-L+yt -Ggray 
 awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis, $3}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$grd
@@ -125,7 +128,7 @@ gmt grdimage -R -J -B $grd -C$cpt -O -K >> $ps
 awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis}' $backupfolder/positive_finger | gmt psxy -J -R -Ss0.005i -Gred -N -O -K >> $ps
 awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis}' $backupfolder/negative_finger | gmt psxy -J -R -Ss0.005i -Ggreen -N -O -K >> $ps
 
-gmt psscale -D$domain -C$cpt -Bxa1f0.5 -By+lv -O >> $ps
+gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+lv -O >> $ps
 
 gmt psconvert -A -Tf $ps -D$figfolder
 rm -f $ps
@@ -133,4 +136,5 @@ rm -f $cpt $grd
 #-----------------------------------------------------
 rm -f gmt.conf
 rm -f gmt.history
-module unload gmt
+#module unload gmt
+conda deactivate
