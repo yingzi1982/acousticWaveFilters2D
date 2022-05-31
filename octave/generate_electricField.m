@@ -95,7 +95,7 @@ for i = 1:iterationNumber
 
   norm_V_new = norm(V);
   if (norm_V_new - norm_V)/norm_V_new < norm_residual
-    break;
+    %break;
   else
     norm_V = norm_V_new;
   end
