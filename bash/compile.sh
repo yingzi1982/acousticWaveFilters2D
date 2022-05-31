@@ -1,15 +1,14 @@
 #!/bin/bash
-module load intel/2018u4 gcc
-
+module load PrgEnv-cray
 
 # configure
 echo ">>configuring"
 currentdir=`pwd`
 cd $currentdir
 cd ../../../
-
-./configure CC=icc FC=ifort MPIFC=mpiifort --with-mpi > configure.log
-#./configure FC=gfortran CC=gcc MPIFC=mpif90 > configure.log
+#./configure CC=icc FC=ifort MPIFC=mpiifort --with-mpi > configure.log
+#./configure FC=gfortran CC=gcc MPIFC=mpif90 --with-mpi > configure.log
+./configure FC=ftn MPIFC=ftn CC=cc --with-mpi > configure.log
 
 # make
 make clean > making.log
@@ -27,4 +26,4 @@ echo "linked xmeshfem2D"
 cp -f ../../../bin/xspecfem2D ../
 echo "linked xspecfem2D"
 
-module unload intel/2018u4 gcc
+module unload PrgEnv-cray

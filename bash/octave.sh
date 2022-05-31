@@ -1,6 +1,7 @@
 #!/bin/bash
-#module load octave/4.4.1
-module load octave
+#module load PDC octave/6.3.0
+source /pdc/software/21.11/eb/software/Anaconda3/2021.05/bin/activate
+conda activate octave7
 
 octave_script=$1
 input_parameters=$2
@@ -10,4 +11,5 @@ cd ../octave
 
 ./$octave_script $input_parameters $input_parameters2
 
-module unload octave
+conda deactivate
+#module unload PDC octave/6.3.0
