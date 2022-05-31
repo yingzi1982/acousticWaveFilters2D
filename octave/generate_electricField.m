@@ -65,7 +65,7 @@ negative_finger = [negative_finger_x' negative_finger_z'];
 dlmwrite('../backup/positive_finger',positive_finger,' ');
 dlmwrite('../backup/negative_finger',negative_finger,' ');
 positive_finger_V = 1;
-negative_finger_V = -1;
+negative_finger_V = 0;
 %negative_finger_V = 0;
 %---------------------------------
 
