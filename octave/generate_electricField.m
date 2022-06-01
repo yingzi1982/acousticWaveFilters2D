@@ -4,31 +4,7 @@ clear all
 close all
 clc
 
-[xmin_status xmin] = system('grep xmin ../DATA/Par_file_PIEZO | cut -d = -f 2');
-xmin = str2num(xmin);
-[xmax_status xmax] = system('grep xmax ../DATA/Par_file_PIEZO | cut -d = -f 2');
-xmax = str2num(xmax);
-[nx_status nx] = system('grep nx ../DATA/Par_file_PIEZO | cut -d = -f 2');
-nx = str2num(nx);
-
-[zmin_status zmin] = system('grep zmin ../DATA/Par_file_PIEZO | cut -d = -f 2');
-zmin = str2num(zmin);
-[zmax_status zmax] = system('grep zmax ../DATA/Par_file_PIEZO | cut -d = -f 2');
-zmax = str2num(zmax);
-[nz_status nz] = system('grep nz ../DATA/Par_file_PIEZO | cut -d = -f 2');
-nz = str2num(nz);
-
-# nx nz grid numbers 
-
-x = linspace(xmin,xmax,nx);
-z = linspace(zmin,zmax,nz);
-
-dx = x(2)-x(1);
-dz = z(2)-z(1);
-disp(['dx = ' num2str(dx)])
-disp(['dz = ' num2str(dz)])
-disp('Caution: The spatial step in different dimension should be equally set!')
-
+[xmin xmax nx dx x zmin zmax nz dz z dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters;
 %---------------------------------
 % SAW
 finger_z = zmax;
