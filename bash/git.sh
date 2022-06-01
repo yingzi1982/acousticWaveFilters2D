@@ -1,5 +1,5 @@
 #!/bin/bash
-module load git
+#module load git
 #http://blog.csdn.net/sinat_20177327/article/details/76062030
 #http://kbroman.org/github_tutorial/pages/init.html
 
@@ -19,5 +19,5 @@ git commit -m "pulling from Github"
 git pull origin master
 fi
 
-module unload git
+#module unload git
 cd -
