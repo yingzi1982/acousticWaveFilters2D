@@ -91,7 +91,10 @@ disp([ "Iteration Number = " int2str(i)]);
 X = permute(X,[2 1]); 
 Z = permute(Z,[2 1]);  
 V = permute(V,[2 1]);  
+
 [E_x E_z] = gradient(V,dx,dz);
+E_x = -E_x;
+E_z = -E_z;
 
 [E_theta,E_rho] = cart2pol(E_x,E_z);
 
