@@ -11,6 +11,7 @@ nx = round((xmax-xmin)/dx+1);
 nz = round((zmax-zmin)/dz+1);
 x = linspace(xmin,xmax,nx);
 z = linspace(zmin,zmax,nz);
+[X Z] = ndgrid (x,z);
 %---------------------------------
 % SAW
 finger_z = zmax;
@@ -51,7 +52,6 @@ negative_finger_V = 0;
 %negative_finger_V = 0;
 %---------------------------------
 
-[X Z] = ndgrid (x,z);
 V = zeros(size(X));
 
 norm_V = 0;
@@ -87,9 +87,11 @@ end
 disp([ "Iteration Number = " int2str(i)]);
 %length(find(V>0.5))
 
-[E_x E_z] = gradient(transpose(V),dx,dz);
-E_x = -transpose(E_x);
-E_z = -transpose(E_z);
+
+X = permute(X,[2 1]); 
+Z = permute(Z,[2 1]);  
+V = permute(V,[2 1]);  
+[E_x E_z] = gradient(V,dx,dz);
 
 [E_theta,E_rho] = cart2pol(E_x,E_z);
 
