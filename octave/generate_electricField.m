@@ -4,7 +4,13 @@ clear all
 close all
 clc
 
-[xmin xmax nx dx x zmin zmax nz dz z dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters;
+[xmin xmax zmin zmax step dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters;
+dx=step;
+dz=step;
+nx = round((xmax-xmin)/dx+1);
+nz = round((zmax-zmin)/dz+1);
+x = linspace(xmin,xmax,nx);
+z = linspace(zmin,zmax,nz);
 %---------------------------------
 % SAW
 finger_z = zmax;
@@ -50,7 +56,8 @@ V = zeros(size(X));
 
 norm_V = 0;
 norm_residual = 0.000001;
-iterationNumber=200000;
+%iterationNumber=200000;
+iterationNumber=20000;
 for i = 1:iterationNumber
 %fixed potential
   V(positive_finger_x_index,positive_finger_z_index) = positive_finger_V;
@@ -71,7 +78,7 @@ for i = 1:iterationNumber
 
   norm_V_new = norm(V);
   if (norm_V_new - norm_V)/norm_V_new < norm_residual
-    %break;
+    break;
   else
     norm_V = norm_V_new;
   end

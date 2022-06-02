@@ -5,7 +5,6 @@ close all
 clc
 
 [xmin xmax nx dx x zmin zmax nz dz z dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters;
-elastic_constant
 %---------------------------------
 
 arg_list = argv ();
@@ -20,8 +19,16 @@ case 'direct'
 %
 case 'converse'
 electricFields=dlmread('../backup/electricFields');
-E_x = reshape(electricFields(:,[6]),nz,nx);
-E_z = reshape(electricFields(:,[7]),nz,nx);
+%Ex = reshape(electricFields(:,[6]),nz,nx);
+%Ez = reshape(electricFields(:,[7]),nz,nx);
+Ex = electricFields(:,[6]);
+Ey = zeros(size(Ex));
+Ez = electricFields(:,[7]);
+E = [Ex Ey Ez];
+E = transpose(E);
 otherwise
 disp(['Plesse input direct/converse!'])
 end
+
+stress = -transpose(piezoelectric_constant)*E;
+whos stress
