@@ -4,7 +4,22 @@ clear all
 close all
 clc
 
-[xmin xmax nx dx x zmin zmax nz dz z dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters;
+[xmin xmax zmin zmax step dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters;
+dx = step;
+dz = step;
+nx = round((xmax-xmin)/dx+1);
+nz = round((zmax-zmin)/dz+1);
+
+ymin = 0;
+ymax = 0;
+ny = 1;
+dy = step;
+
+x = linspace(xmin,xmax,nx);
+y = linspace(ymin,ymax,ny);
+z = linspace(zmin,zmax,nz);
+[X Y Z] = meshgrid (x,y,z);
+whos X Y Z
 %---------------------------------
 
 arg_list = argv ();
@@ -31,4 +46,10 @@ disp(['Plesse input direct/converse!'])
 end
 
 stress = -transpose(piezoelectric_constant)*E;
-whos stress
+
+stress1 = reshape(stress(1,:),nz,nx);
+stress2 = reshape(stress(2,:),nz,nx);
+stress3 = reshape(stress(3,:),nz,nx);
+stress4 = reshape(stress(4,:),nz,nx);
+stress5 = reshape(stress(5,:),nz,nx);
+stress6 = reshape(stress(6,:),nz,nx);
