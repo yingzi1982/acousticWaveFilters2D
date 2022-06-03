@@ -51,7 +51,7 @@ zmin=`gmt gmtinfo $originalxyz -C | awk -v unit_axis="$unit_axis" '{print $3/uni
 zmax=`echo 0.0 | bc -l`
 
 height=`echo "$width*(($zmax)-($zmin))/(($xmax)-($xmin))" | bc -l`
-projection=X$width\i/-$height\i
+projection=X$width\i/$height\i
 region=$xmin/$xmax/$zmin/$zmax
 
 nx=`grep nx $backupfolder/meshInformation | cut -d = -f 2`
