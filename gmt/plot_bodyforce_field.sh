@@ -98,9 +98,14 @@ gmt grdvector $bodyforce_xgrd $bodyforce_zgrd -Ix2 -J  -Q0.1i+eAl+n0.25i+h0.1 -W
 awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis}' $backupfolder/positive_finger | gmt psxy -J -R -Ss0.005i -Gred -N -O -K >> $ps
 awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis}' $backupfolder/negative_finger | gmt psxy -J -R -Ss0.005i -Ggreen -N -O -K >> $ps
 
-gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+l"10@+6@+v/m" -O -K >> $ps
+gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+l"10@+6@+v/m" -O >> $ps
 
 rm -f $cpt $grd $bodyforce_xgrd $bodyforce_zgrd
+
+gmt psconvert -A -Tf $ps -D$figfolder
+rm -f $ps
+rm -f $cpt $grd
+
 
 #-----------------------------------------------------
 rm -f gmt.conf
