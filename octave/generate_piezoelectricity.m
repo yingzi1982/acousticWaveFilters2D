@@ -34,7 +34,8 @@ case 'direct'
 case 'converse'
 electricFields=dlmread('../backup/electricFields');
 Ex = electricFields(:,[6]);
-Ey = zeros(size(Ex));
+%Ey = zeros(size(Ex));
+Ey = 100000*ones(size(Ex));
 Ez = electricFields(:,[7]);
 E = [Ex Ey Ez];
 E = transpose(E);
@@ -73,7 +74,7 @@ bodyforce_z = squeeze(bodyforce_z(Y_slice_index,:,:));
 [bodyforce_theta,bodyforce_rho] = cart2pol(bodyforce_x,bodyforce_z);
 %format shortEng
 %disp(['Max force amplitude = ' num2str(max(bodyforce_rho(:)))])
-max(bodyforce_rho(:))
+%max(bodyforce_rho(:))
 
 bodyforce=[reshape(X,[],1) reshape(Z,[],1) reshape(bodyforce_rho,[],1) reshape(bodyforce_theta,[],1) reshape(bodyforce_x,[],1) reshape(bodyforce_z,[],1)];
 dlmwrite('../backup/bodyforceField',bodyforce,' ');
