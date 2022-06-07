@@ -34,8 +34,7 @@ case 'direct'
 case 'converse'
 electricFields=dlmread('../backup/electricFields');
 Ex = electricFields(:,[6]);
-%Ey = zeros(size(Ex));
-Ey = 100000*ones(size(Ex));
+Ey = zeros(size(Ex));
 Ez = electricFields(:,[7]);
 E = [Ex Ey Ez];
 E = transpose(E);
