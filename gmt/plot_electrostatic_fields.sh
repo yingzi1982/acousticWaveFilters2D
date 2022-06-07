@@ -81,7 +81,7 @@ upperLimit=`echo "$Emax/$unit_E" | bc -l`
 cpt=$backupfolder$name\.cpt
 gmt makecpt -CGMT_hot.cpt -T$lowerLimit/$upperLimit -Iz > $cpt
 
-gmt psbasemap -R$region -J$projection  -Bx10f5+l"Range (10@+-6@+m) " -By10f5+l"Elevation (10@+-6@+m)" -K > $ps #-L+yt -Ggray 
+gmt psbasemap -R$region -J$projection  -Bx10f5+l"X (10@+-6@+m) " -By10f5+l"Z (10@+-6@+m)" -K > $ps #-L+yt -Ggray 
 awk -v unit_axis="$unit_axis" -v unit_E="$unit_E" '{print $1/unit_axis, $2/unit_axis, $4/unit_E}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$grd
 gmt grdimage -R -J -B $grd -C$cpt -O -K >> $ps
 
@@ -121,7 +121,7 @@ cpt=$backupfolder$name\.cpt
 #gmt makecpt -CGMT_hot.cpt -T$lowerLimit/$upperLimit -Iz > $cpt
 gmt makecpt -CGMT_seis.cpt -T$lowerLimit/$upperLimit -Iz > $cpt
 
-gmt psbasemap -R$region -J$projection  -Bx10f5+l"Range (10@+-6@+m) " -By10f5+l"Elevation (10@+-6@+m)" -Y$offset -O -K >> $ps #-L+yt -Ggray 
+gmt psbasemap -R$region -J$projection  -Bx10f5+l"X (10@+-6@+m) " -By10f5+l"Z (10@+-6@+m)" -Y$offset -O -K >> $ps #-L+yt -Ggray 
 awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis, $3}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$grd
 gmt grdimage -R -J -B $grd -C$cpt -O -K >> $ps
 
