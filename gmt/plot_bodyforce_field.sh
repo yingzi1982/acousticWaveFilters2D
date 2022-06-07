@@ -76,7 +76,7 @@ lowerLimit=0
 #upperLimit=1
 #lowerLimit=`echo "$bodyforce_min/$unit_bodyforce" | bc -l`
 #upperLimit=`echo "$bodyforce_max/$unit_bodyforce" | bc -l`
-lowerLimit=`echo "$bodyforce_min" | awk -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_bodyforce}'`
+#lowerLimit=`echo "$bodyforce_min" | awk -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_bodyforce}'`
 upperLimit=`echo "$bodyforce_max" | awk -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_bodyforce}'`
 
 cpt=$backupfolder$name\.cpt
