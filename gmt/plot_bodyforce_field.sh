@@ -83,14 +83,14 @@ cpt=$backupfolder$name\.cpt
 gmt makecpt -CGMT_hot.cpt -T$lowerLimit/$upperLimit -Iz > $cpt
 
 gmt psbasemap -R$region -J$projection  -Bx10f5+l"Range (10@+-6@+m) " -By10f5+l"Elevation (10@+-6@+m)" -K > $ps #-L+yt -Ggray 
-awk -v unit_axis="$unit_axis" -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_axis, $2/unit_axis, $4/unit_bodyforce}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$grd
+awk -v unit_axis="$unit_axis" -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_axis, $2/unit_axis, $3/unit_bodyforce}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$grd
 gmt grdimage -R -J -B $grd -C$cpt -O -K >> $ps
 
 lowerLimit=-1
 upperLimit=1
 unit_bodyforce=$bodyforce_max
-awk -v unit_axis="$unit_axis" -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_axis, $2/unit_axis, $6/unit_bodyforce}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$bodyforce_xgrd
-awk -v unit_axis="$unit_axis" -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_axis, $2/unit_axis, $7/unit_bodyforce}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$bodyforce_zgrd
+awk -v unit_axis="$unit_axis" -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_axis, $2/unit_axis, $5/unit_bodyforce}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$bodyforce_xgrd
+awk -v unit_axis="$unit_axis" -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_axis, $2/unit_axis, $6/unit_bodyforce}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$bodyforce_zgrd
 
 gmt grdvector $bodyforce_xgrd $bodyforce_zgrd -Ix2 -J  -Q0.1i+eAl+n0.25i+h0.1 -W1p -S10i -N -O -K >> $ps
 
