@@ -34,15 +34,13 @@ backupfolder=../backup/
 figfolder=../figures/
 mkdir -p $figfolder
 
-name=electricFields
+name=bodyforceField
 originalxyz=$backupfolder/$name
 unit_axis=0.000001
 width=2.2
 
 ps=$figfolder$name.ps
 pdf=$figfolder$name.pdf
-
-offset=0.8i
 
 xmin=`gmt gmtinfo $originalxyz -C | awk -v unit_axis="$unit_axis" '{print $1/unit_axis}'`
 xmax=`gmt gmtinfo $originalxyz -C | awk -v unit_axis="$unit_axis" '{print $2/unit_axis}'`
@@ -65,74 +63,45 @@ domain=$colorbar_horizontal_position\i/$colorbar_vertical_position\i/$colorbar_w
 #--------------------------------------------------
 grd=$backupfolder$name\.nc
 
-Exgrd=$backupfolder/Ex.nc
-Ezgrd=$backupfolder/Ez.nc
+bodyforce_xgrd=$backupfolder/bodyforce_x.nc
+bodyforce_zgrd=$backupfolder/bodyforce_z.nc
 
 
-Emin=`gmt gmtinfo $originalxyz -C | awk '{print $7}'`
-Emax=`gmt gmtinfo $originalxyz -C | awk '{print $8}'` #echo $Emin $Emax
+bodyforce_min=`gmt gmtinfo $originalxyz -C | awk '{print $5}'`
+bodyforce_max=`gmt gmtinfo $originalxyz -C | awk '{print $6}'`
 
-unit_E=1000000
-#unit_E=$Emax
+unit_bodyforce=10000000000000
+#unit_bodyforce=$bodyforce_max
 lowerLimit=0
 #upperLimit=1
-#lowerLimit=`echo "$Emin/$unit_E" | bc -l`
-upperLimit=`echo "$Emax/$unit_E" | bc -l`
+#lowerLimit=`echo "$bodyforce_min/$unit_bodyforce" | bc -l`
+#upperLimit=`echo "$bodyforce_max/$unit_bodyforce" | bc -l`
+lowerLimit=`echo "$bodyforce_min" | awk -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_bodyforce}'`
+upperLimit=`echo "$bodyforce_max" | awk -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_bodyforce}'`
+
 cpt=$backupfolder$name\.cpt
 gmt makecpt -CGMT_hot.cpt -T$lowerLimit/$upperLimit -Iz > $cpt
 
 gmt psbasemap -R$region -J$projection  -Bx10f5+l"Range (10@+-6@+m) " -By10f5+l"Elevation (10@+-6@+m)" -K > $ps #-L+yt -Ggray 
-awk -v unit_axis="$unit_axis" -v unit_E="$unit_E" '{print $1/unit_axis, $2/unit_axis, $4/unit_E}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$grd
+awk -v unit_axis="$unit_axis" -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_axis, $2/unit_axis, $4/unit_bodyforce}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$grd
 gmt grdimage -R -J -B $grd -C$cpt -O -K >> $ps
 
 lowerLimit=-1
 upperLimit=1
-unit_E=$Emax
-awk -v unit_axis="$unit_axis" -v unit_E="$unit_E" '{print $1/unit_axis, $2/unit_axis, $6/unit_E}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$Exgrd
-awk -v unit_axis="$unit_axis" -v unit_E="$unit_E" '{print $1/unit_axis, $2/unit_axis, $7/unit_E}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$Ezgrd
+unit_bodyforce=$bodyforce_max
+awk -v unit_axis="$unit_axis" -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_axis, $2/unit_axis, $6/unit_bodyforce}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$bodyforce_xgrd
+awk -v unit_axis="$unit_axis" -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_axis, $2/unit_axis, $7/unit_bodyforce}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$bodyforce_zgrd
 
-#gmt grdvector $Exgrd $Ezgrd -Ix2 -J  -Q0.1i+e+n0.25i+h0.1 -W1p -S10i -N -O -K >> $ps
-gmt grdvector $Exgrd $Ezgrd -Ix2 -J  -Q0.1i+eAl+n0.25i+h0.1 -W1p -S10i -N -O -K >> $ps
+gmt grdvector $bodyforce_xgrd $bodyforce_zgrd -Ix2 -J  -Q0.1i+eAl+n0.25i+h0.1 -W1p -S10i -N -O -K >> $ps
 
 
 awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis}' $backupfolder/positive_finger | gmt psxy -J -R -Ss0.005i -Gred -N -O -K >> $ps
 awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis}' $backupfolder/negative_finger | gmt psxy -J -R -Ss0.005i -Ggreen -N -O -K >> $ps
-
 
 gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+l"10@+6@+v/m" -O -K >> $ps
 
-rm -f $cpt $grd $Exgrd $Ezgrd
+rm -f $cpt $grd $bodyforce_xgrd $bodyforce_zgrd
 
-#-----------------------------------------------------
-name=potentialField
-
-grd=$backupfolder$name\.nc
-
-gmt gmtset MAP_FRAME_AXES wesn
-
-Vmin=`gmt gmtinfo $originalxyz -C | awk '{print $5}'`
-Vmax=`gmt gmtinfo $originalxyz -C | awk '{print $6}'`
-
-lowerLimit=0
-upperLimit=1
-#lowerLimit=$Vmin
-#upperLimit=$Vmax
-cpt=$backupfolder$name\.cpt
-#gmt makecpt -CGMT_hot.cpt -T$lowerLimit/$upperLimit -Iz > $cpt
-gmt makecpt -CGMT_seis.cpt -T$lowerLimit/$upperLimit -Iz > $cpt
-
-gmt psbasemap -R$region -J$projection  -Bx10f5+l"Range (10@+-6@+m) " -By10f5+l"Elevation (10@+-6@+m)" -Y$offset -O -K >> $ps #-L+yt -Ggray 
-awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis, $3}' $originalxyz | gmt blockmean -R -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R -I$inc -G$grd
-gmt grdimage -R -J -B $grd -C$cpt -O -K >> $ps
-
-awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis}' $backupfolder/positive_finger | gmt psxy -J -R -Ss0.005i -Gred -N -O -K >> $ps
-awk -v unit_axis="$unit_axis" '{print $1/unit_axis, $2/unit_axis}' $backupfolder/negative_finger | gmt psxy -J -R -Ss0.005i -Ggreen -N -O -K >> $ps
-
-gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+lv -O >> $ps
-
-gmt psconvert -A -Tf $ps -D$figfolder
-rm -f $ps
-rm -f $cpt $grd 
 #-----------------------------------------------------
 rm -f gmt.conf
 rm -f gmt.history

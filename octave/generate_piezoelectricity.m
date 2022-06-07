@@ -71,7 +71,9 @@ bodyforce_x = squeeze(bodyforce_x(Y_slice_index,:,:));
 bodyforce_z = squeeze(bodyforce_z(Y_slice_index,:,:));
 
 [bodyforce_theta,bodyforce_rho] = cart2pol(bodyforce_x,bodyforce_z);
-%max(bodyforce_rho(:))
+%format shortEng
+%disp(['Max force amplitude = ' num2str(max(bodyforce_rho(:)))])
+max(bodyforce_rho(:))
 
 bodyforce=[reshape(X,[],1) reshape(Z,[],1) reshape(bodyforce_rho,[],1) reshape(bodyforce_theta,[],1) reshape(bodyforce_x,[],1) reshape(bodyforce_z,[],1)];
-dlmwrite('../backup/bodyforce',bodyforce,' ');
+dlmwrite('../backup/bodyforceField',bodyforce,' ');
