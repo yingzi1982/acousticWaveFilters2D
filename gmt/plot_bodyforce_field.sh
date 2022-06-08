@@ -73,11 +73,11 @@ bodyforce_max=`gmt gmtinfo $originalxyz -C | awk '{print $6}'`
 unit_bodyforce=10000000000000
 #unit_bodyforce=$bodyforce_max
 lowerLimit=0
-#upperLimit=1
+upperLimit=1
 #lowerLimit=`echo "$bodyforce_min/$unit_bodyforce" | bc -l`
 #upperLimit=`echo "$bodyforce_max/$unit_bodyforce" | bc -l`
 #lowerLimit=`echo "$bodyforce_min" | awk -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_bodyforce}'`
-upperLimit=`echo "$bodyforce_max" | awk -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_bodyforce}'`
+#upperLimit=`echo "$bodyforce_max" | awk -v unit_bodyforce="$unit_bodyforce" '{print $1/unit_bodyforce}'`
 
 cpt=$backupfolder$name\.cpt
 gmt makecpt -CGMT_hot.cpt -T$lowerLimit/$upperLimit -Iz > $cpt
