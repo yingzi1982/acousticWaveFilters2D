@@ -75,9 +75,9 @@ Emax=`gmt gmtinfo $originalxyz -C | awk '{print $8}'` #echo $Emin $Emax
 unit_E=1000000
 #unit_E=$Emax
 lowerLimit=0
-#upperLimit=1
+upperLimit=1
 #lowerLimit=`echo "$Emin/$unit_E" | bc -l`
-upperLimit=`echo "$Emax/$unit_E" | bc -l`
+#upperLimit=`echo "$Emax/$unit_E" | bc -l`
 cpt=$backupfolder$name\.cpt
 gmt makecpt -CGMT_hot.cpt -T$lowerLimit/$upperLimit -Iz > $cpt
 
