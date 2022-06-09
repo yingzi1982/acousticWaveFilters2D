@@ -1,4 +1,4 @@
-function [xmin xmax zmin zmax step dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters()
+function [xmin xmax ymin ymax zmin zmax step dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters()
 
 Par_file_PIEZO ='../DATA/Par_file_PIEZO';
 
@@ -6,6 +6,11 @@ Par_file_PIEZO ='../DATA/Par_file_PIEZO';
 xmin = str2num(xmin);
 [xmax_status xmax] = system(['grep xmax ' Par_file_PIEZO ' | cut -d = -f 2']);
 xmax = str2num(xmax);
+
+[ymin_status ymin] = system(['grep ymin ' Par_file_PIEZO ' | cut -d = -f 2']);
+ymin = str2num(ymin);
+[ymax_status ymax] = system(['grep ymax ' Par_file_PIEZO ' | cut -d = -f 2']);
+ymax = str2num(ymax);
 
 [zmin_status zmin] = system(['grep zmin ' Par_file_PIEZO ' | cut -d = -f 2']);
 zmin = str2num(zmin);

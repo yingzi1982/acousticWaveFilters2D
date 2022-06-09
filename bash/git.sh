@@ -4,7 +4,8 @@
 #http://kbroman.org/github_tutorial/pages/init.html
 
 operation=$1
-folder="../README.md ../backup/* ../bash/*sh ../figures/* ../gmt/*cpt ../gmt/*sh ../octave/*m ../slurm/*sh ../backup/Par_file.part"
+folder="../README.md ../bash/*sh ../figures/* ../gmt/*cpt ../gmt/*sh ../octave/*m ../slurm/*sh ../backup/Par_file.part"
+#../backup/* 
 
 #folder=$2
 

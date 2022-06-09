@@ -4,7 +4,7 @@ clear all
 close all
 clc
 
-[xmin xmax zmin zmax step dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters;
+[xmin xmax  ymin ymax zmin zmax step dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters;
 dx = step;
 dz = step;
 nx = round((xmax-xmin)/dx+1);
