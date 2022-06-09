@@ -1,14 +1,11 @@
 #!/bin/bash
+filter_type=SAW
+filter_dimension=2D
+piezoelectric_effect=converse
 
-module purge
+#./octave.sh generate_electrodeConductSurface.m $filter_type $filter_dimension
+#
+#./octave.sh generate_electricFields.m $filter_dimension
 
-echo -13.07019135 51.15862502 > ../backup/sr
-echo -13.14 51.1456 > ../backup/rc
+./octave.sh generate_piezoelectricity.m $piezoelectric_effect $filter_dimension
 
-#./create_geological_data.sh
-
-./octave.sh generate_sources.m
-
-./create_model.sh
-
-./octave.sh generate_stations.m

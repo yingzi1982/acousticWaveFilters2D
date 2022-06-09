@@ -4,76 +4,91 @@ clear all
 close all
 clc
 
-[xmin xmax  ymin ymax zmin zmax step dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters;
-dx = step;
-dz = step;
-nx = round((xmax-xmin)/dx+1);
-nz = round((zmax-zmin)/dz+1);
-
-dy = step;
-ymin = -dy;
-ymax = dy;
-ny = 3;
-
-x = linspace(xmin,xmax,nx);
-y = linspace(ymin,ymax,ny);
-z = linspace(zmin,zmax,nz);
-[X Y Z] = meshgrid (x,y,z);
-%---------------------------------
-
+%[X Y Z] = meshgrid (x,y,z);
 arg_list = argv ();
 if length(arg_list) > 0
-  piezoelectricEffect = arg_list{1};
+  piezoelectric_effect = arg_list{1};
+  filter_dimension = arg_list{2};
 else
-  piezoelectricEffect = input('Please input direct or converse piezoelectric effect ','s');
+  [piezoelectric_effect filter_dimension]= input('Please input direct or converse piezoelectric effect and filter dimension','s');
 end
 
-switch piezoelectricEffect
+[xmin xmax  ymin ymax zmin zmax step dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters;
+dx=step;
+dy=step;
+dz=step;
+nx = round((xmax-xmin)/dx+1);
+ny = round((ymax-ymin)/dy+1);
+nz = round((zmax-zmin)/dz+1);
+x = linspace(xmin,xmax,nx);
+y = linspace(xmin,xmax,nx);
+z = linspace(zmin,zmax,nz);
+
+switch piezoelectric_effect
 case 'direct'
 %
 case 'converse'
-electricFields=dlmread('../backup/electricFields');
-Ex = electricFields(:,[6]);
-Ey = zeros(size(Ex));
-Ez = electricFields(:,[7]);
-E = [Ex Ey Ez];
-E = transpose(E);
+switch filter_dimension
+case '2D'
+  [X Z] = meshgrid(x,z);
+  electricFields=dlmread('../backup/electricFields');
+  Ex = electricFields(:,[6]);
+  Ez = electricFields(:,[7]);
+  E = [Ex Ez];
+  E = transpose(E);
+  piezoelectric_constant = piezoelectric_constant([1 3],[1 3 5]);
+
+  stress = -transpose(piezoelectric_constant)*E;
+
+  stress1 = reshape(stress(1,:),nz,nx);
+  stress2 = reshape(stress(2,:),nz,nx);
+  stress3 = reshape(stress(3,:),nz,nx);
+
+  [stress1partialx, stress1partialz] = gradient(stress1,dx,dz);
+  [stress2partialx, stress2partialz] = gradient(stress2,dx,dz);
+  [stress3partialx, stress3partialz] = gradient(stress3,dx,dz);
+
+  bodyforce_x = (stress1partialx + stress3partialz);
+  bodyforce_z = (stress2partialz + stress3partialx);
+  [bodyforce_theta,bodyforce_rho] = cart2pol(bodyforce_x,bodyforce_z);
+  bodyforce=[reshape(X,[],1) reshape(Z,[],1) reshape(bodyforce_rho,[],1) reshape(bodyforce_theta,[],1) reshape(bodyforce_x,[],1) reshape(bodyforce_z,[],1)];
+case '3D'
+  %[X Y Z] = meshgrid(x,y,z);
+  %electricFields=dlmread('../backup/electricFields');
+  %Ex = electricFields(:,[6]);
+  %Ey = zeros(size(Ex));
+  %Ez = electricFields(:,[7]);
+  %E = [Ex Ey Ez];
+  %E = transpose(E);
+ 
+  %stress = -transpose(piezoelectric_constant)*E;
+ 
+  %stress1 = reshape(stress(1,:),ny,nx,nz);
+  %stress2 = reshape(stress(2,:),ny,nx,nz);
+  %stress3 = reshape(stress(3,:),ny,nx,nz);
+  %stress4 = reshape(stress(4,:),ny,nx,nz);
+  %stress5 = reshape(stress(5,:),ny,nx,nz);
+  %stress6 = reshape(stress(6,:),ny,nx,nz);
+ 
+  %[stress1partialx, stress1partialy, stress1partialz] = gradient(stress1,dx,dy,dz);
+  %[stress2partialx, stress2partialy, stress2partialz] = gradient(stress2,dx,dy,dz);
+  %[stress3partialx, stress3partialy, stress3partialz] = gradient(stress3,dx,dy,dz);
+  %[stress4partialx, stress4partialy, stress4partialz] = gradient(stress4,dx,dy,dz);
+  %[stress5partialx, stress5partialy, stress5partialz] = gradient(stress5,dx,dy,dz);
+  %[stress6partialx, stress6partialy, stress6partialz] = gradient(stress6,dx,dy,dz);
+ 
+  %bodyforce_x = (stress1partialx + stress5partialz + stress6partialy);
+  %bodyforce_y = (stress2partialy + stress4partialz + stress6partialx);
+  %bodyforce_z = (stress3partialz + stress4partialy + stress5partialx);
+ 
+ 
+  %%[bodyforce_theta,bodyforce_rho] = cart2pol(bodyforce_x,bodyforce_z);
+  %%bodyforce=[reshape(X,[],1) reshape(Z,[],1) reshape(bodyforce_rho,[],1) reshape(bodyforce_theta,[],1) reshape(bodyforce_x,[],1) reshape(bodyforce_z,[],1)];
 otherwise
-disp(['Plesse input direct/converse!'])
+error('Wrong filter dimension!')
 end
+otherwise
+error('Wrong piezoelectric effect!')
 
-stress = -transpose(piezoelectric_constant)*E;
-
-stress1 = permute(repmat(permute((reshape(stress(1,:),nz,nx)),[2 1]),1,1,3),[3,1 2]);
-stress2 = permute(repmat(permute((reshape(stress(2,:),nz,nx)),[2 1]),1,1,3),[3,1 2]);
-stress3 = permute(repmat(permute((reshape(stress(3,:),nz,nx)),[2 1]),1,1,3),[3,1 2]);
-stress4 = permute(repmat(permute((reshape(stress(4,:),nz,nx)),[2 1]),1,1,3),[3,1 2]);
-stress5 = permute(repmat(permute((reshape(stress(5,:),nz,nx)),[2 1]),1,1,3),[3,1 2]);
-stress6 = permute(repmat(permute((reshape(stress(6,:),nz,nx)),[2 1]),1,1,3),[3,1 2]);
-
-[stress1partialx, stress1partialy, stress1partialz] = gradient(stress1,dx,dy,dz);
-[stress2partialx, stress2partialy, stress2partialz] = gradient(stress2,dx,dy,dz);
-[stress3partialx, stress3partialy, stress3partialz] = gradient(stress3,dx,dy,dz);
-[stress4partialx, stress4partialy, stress4partialz] = gradient(stress4,dx,dy,dz);
-[stress5partialx, stress5partialy, stress5partialz] = gradient(stress5,dx,dy,dz);
-[stress6partialx, stress6partialy, stress6partialz] = gradient(stress6,dx,dy,dz);
-
-bodyforce_x = (stress1partialx + stress5partialz + stress6partialy);
-bodyforce_y = (stress2partialy + stress4partialz + stress6partialx);
-bodyforce_z = (stress3partialz + stress4partialy + stress5partialx);
-
-Y_slice_index = 2;
-
-X = squeeze(X(Y_slice_index,:,:));
-Z = squeeze(Z(Y_slice_index,:,:));
-
-bodyforce_x = squeeze(bodyforce_x(Y_slice_index,:,:));
-bodyforce_z = squeeze(bodyforce_z(Y_slice_index,:,:));
-
-[bodyforce_theta,bodyforce_rho] = cart2pol(bodyforce_x,bodyforce_z);
-%format shortEng
-%disp(['Max force amplitude = ' num2str(max(bodyforce_rho(:)))])
-%max(bodyforce_rho(:))
-
-bodyforce=[reshape(X,[],1) reshape(Z,[],1) reshape(bodyforce_rho,[],1) reshape(bodyforce_theta,[],1) reshape(bodyforce_x,[],1) reshape(bodyforce_z,[],1)];
+end
 dlmwrite('../backup/bodyforceField',bodyforce,' ');
