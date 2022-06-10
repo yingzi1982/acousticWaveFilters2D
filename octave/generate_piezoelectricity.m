@@ -82,8 +82,8 @@ case '3D'
   %bodyforce_z = (stress3partialz + stress4partialy + stress5partialx);
  
  
-  %%[bodyforce_theta,bodyforce_rho] = cart2pol(bodyforce_x,bodyforce_z);
-  %%bodyforce=[reshape(X,[],1) reshape(Z,[],1) reshape(bodyforce_rho,[],1) reshape(bodyforce_theta,[],1) reshape(bodyforce_x,[],1) reshape(bodyforce_z,[],1)];
+  %%[bodyforce_azimuth,bodyforce_elevation, bodyforce_rho] = cart2sph(bodyforce_x,bodyforce_y,bodyforce_z);
+  %%bodyforce=[reshape(X,[],1) reshape(Z,[],1) reshape(bodyforce_azimuth,[],1) reshape(bodyforce_elevation,[],1)  reshape(bodyforce_rho,[],1)reshape(bodyforce_x,[],1) reshape(bodyforce_y,[],1) reshape(bodyforce_z,[],1)];
 otherwise
 error('Wrong filter dimension!')
 end

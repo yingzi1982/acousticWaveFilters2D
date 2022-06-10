@@ -12,3 +12,4 @@ nearestVal = A(nearestIndex);
 %  nearestVal(ia) = A(temp);
 %end
 %end
+endfunction
