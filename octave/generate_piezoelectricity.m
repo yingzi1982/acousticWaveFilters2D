@@ -31,9 +31,9 @@ case 'converse'
 switch filter_dimension
 case '2D'
   [X Z] = meshgrid(x,z);
-  electricFields=dlmread('../backup/electricFields');
-  Ex = electricFields(:,[6]);
-  Ez = electricFields(:,[7]);
+  electric=dlmread('../backup/electric');
+  Ex = electric(:,[5]);
+  Ez = electric(:,[6]);
   E = [Ex Ez];
   E = transpose(E);
   piezoelectric_constant = piezoelectric_constant([1 3],[1 3 5]);
@@ -54,10 +54,10 @@ case '2D'
   bodyforce=[reshape(X,[],1) reshape(Z,[],1) reshape(bodyforce_rho,[],1) reshape(bodyforce_theta,[],1) reshape(bodyforce_x,[],1) reshape(bodyforce_z,[],1)];
 case '3D'
   %[X Y Z] = meshgrid(x,y,z);
-  %electricFields=dlmread('../backup/electricFields');
-  %Ex = electricFields(:,[6]);
+  %electric=dlmread('../backup/electric');
+  %Ex = electric(:,[6]);
   %Ey = zeros(size(Ex));
-  %Ez = electricFields(:,[7]);
+  %Ez = electric(:,[7]);
   %E = [Ex Ey Ez];
   %E = transpose(E);
  
@@ -91,4 +91,4 @@ otherwise
 error('Wrong piezoelectric effect!')
 
 end
-dlmwrite('../backup/bodyforceField',bodyforce,' ');
+dlmwrite('../backup/bodyforce',bodyforce,' ');

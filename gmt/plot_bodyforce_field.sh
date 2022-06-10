@@ -34,7 +34,7 @@ backupfolder=../backup/
 figfolder=../figures/
 mkdir -p $figfolder
 
-name=bodyforceField
+name=bodyforce
 originalxyz=$backupfolder/$name
 unit_axis=0.000001
 width=2.2
