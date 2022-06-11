@@ -9,3 +9,6 @@ piezoelectric_effect=converse
 
 ./octave.sh generate_piezoelectricity.m $piezoelectric_effect $filter_dimension
 
+./gmt.sh
+
+./git.sh push
