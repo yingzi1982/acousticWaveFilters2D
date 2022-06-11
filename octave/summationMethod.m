@@ -8,7 +8,6 @@ switch filter_dimension
 case '2D'
 
 [X Z] = meshgrid (x,z);
-mesh_size = size(X);
 grid_x = reshape(X,[],1);
 grid_z = reshape(Z,[],1);
 
@@ -32,14 +31,14 @@ source_z = [finger_z finger_z finger_z+smallShift finger_z-smallShift];
 [SOURCE_Z FINGER_Z] = meshgrid(source_z,finger_z);
 
 M_SOURCE_FINGER = log(sqrt((SOURCE_X-FINGER_X).^2 + (SOURCE_Z-FINGER_Z).^2));
-Q_SOURCE = M_SOURCE_FINGER\finger_V';
-%Q_SOURCE = linsolve(M,finger_V');
+%Q_SOURCE = M_SOURCE_FINGER\finger_V';
+Q_SOURCE = linsolve(M_SOURCE_FINGER,finger_V');
 
 [SOURCE_X GRID_X] = meshgrid(source_x,grid_x);
 [SOURCE_Z GRID_Z] = meshgrid(source_z,grid_z);
 M_SOURCE_GRID = log(sqrt((SOURCE_X-GRID_X).^2 + (SOURCE_Z-GRID_Z).^2));
 V = M_SOURCE_GRID*Q_SOURCE;
-V = reshape(V,mesh_size);
+V = reshape(V,length(z),length(x));
 
 case '3D'
 otherwise
