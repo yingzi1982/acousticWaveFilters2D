@@ -30,13 +30,13 @@ source_z = [finger_z finger_z finger_z+smallShift finger_z-smallShift];
 [SOURCE_X FINGER_X] = meshgrid(source_x,finger_x);
 [SOURCE_Z FINGER_Z] = meshgrid(source_z,finger_z);
 
-M_SOURCE_FINGER = log(norm([SOURCE_X SOURCE_Z]-[FINGER_X FINGER_Z]));
+M_SOURCE_FINGER = log(sqrt((SOURCE_X-FINGER_X).^2 + (SOURCE_Z-FINGER_Z).^2));
 %Q_SOURCE = M_SOURCE_FINGER\finger_V';
 Q_SOURCE = linsolve(M_SOURCE_FINGER,finger_V');
 
 [SOURCE_X GRID_X] = meshgrid(source_x,grid_x);
 [SOURCE_Z GRID_Z] = meshgrid(source_z,grid_z);
-M_SOURCE_GRID = log(norm([SOURCE_X SOURCE_Z]-[GRID_X GRID_Z]));
+M_SOURCE_GRID = log(sqrt((SOURCE_X-GRID_X).^2 + (SOURCE_Z-GRID_Z).^2));
 V = M_SOURCE_GRID*Q_SOURCE;
 V = reshape(V,length(z),length(x));
 
