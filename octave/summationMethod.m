@@ -2,7 +2,7 @@ function [V] = summationMethod(x,y,z,positive_finger,negative_finger,positive_fi
 
 dx=x(2)-x(1);
 step=dx;
-smallShift = step/5;
+smallShift = step/10;
 
 switch filter_dimension
 case '2D'
