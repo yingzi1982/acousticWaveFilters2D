@@ -1,7 +1,8 @@
-function [V] = summationMethod(x,y,z,positive_finger,negative_finger,positive_finger_V,negative_finger_V,filter_dimension,filter_type)
+function [V] = summationMethod(x,y,z,positive_finger,negative_finger,positive_finger_V,negative_finger_V,filter_dimension)
 
 dx=x(2)-x(1);
-smallShift = dx/5;
+step=dx;
+smallShift = step/10;
 
 switch filter_dimension
 case '2D'
@@ -24,20 +25,20 @@ finger_x = [negative_finger_x positive_finger_x];
 finger_z = [negative_finger_z positive_finger_z];
 finger_V = [negative_finger_V positive_finger_V];
 
-source_x = [negative_finger_x positive_finger_x];
-source_z = [negative_finger_z+smallShift positive_finger_z+smallShift];
+source_x = [finger_x+smallShift finger_x-smallShift finger_x finger_x];
+source_z = [finger_z finger_z finger_z+smallShift finger_z-smallShift];
 
 [SOURCE_X FINGER_X] = meshgrid(source_x,finger_x);
 [SOURCE_Z FINGER_Z] = meshgrid(source_z,finger_z);
 
 M_SOURCE_FINGER = log(sqrt((SOURCE_X-FINGER_X).^2 + (SOURCE_Z-FINGER_Z).^2));
-Q_FINGER = M_SOURCE_FINGER \finger_V';
-%Q_FINGER = linsolve(M,finger_V');
+Q_SOURCE = M_SOURCE_FINGER\finger_V';
+%Q_SOURCE = linsolve(M,finger_V');
 
 [SOURCE_X GRID_X] = meshgrid(source_x,grid_x);
 [SOURCE_Z GRID_Z] = meshgrid(source_z,grid_z);
 M_SOURCE_GRID = log(sqrt((SOURCE_X-GRID_X).^2 + (SOURCE_Z-GRID_Z).^2));
-V = M_SOURCE_GRID*Q_FINGER;
+V = M_SOURCE_GRID*Q_SOURCE;
 V = reshape(V,mesh_size);
 
 case '3D'
