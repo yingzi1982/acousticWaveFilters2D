@@ -62,7 +62,7 @@ echo $field_max
 
 
 gmt begin $fig pdf
-gmt clear settings
+gmt clear cashe
 gmt gmtset MAP_FRAME_AXES WeSn
 
 echo $lowerLimit
