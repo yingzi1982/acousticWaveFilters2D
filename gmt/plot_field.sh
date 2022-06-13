@@ -4,7 +4,6 @@ conda activate gmt6
 #--------------------------------------------------------------------
 rm -f gmt.conf
 rm -f gmt.history
-gmt gmtset MAP_FRAME_AXES WeSn
 
 name=$1
 unit=$2
@@ -63,7 +62,7 @@ echo $field_max
 
 
 gmt begin $fig pdf
-#gmt set MAP_GRID_PEN_PRIMARY thinnest,-
+gmt gmtset MAP_FRAME_AXES WeSn
 
 echo $lowerLimit
 echo $upperLimit
