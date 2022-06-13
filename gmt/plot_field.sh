@@ -55,7 +55,7 @@ inc=`grep step $DATAFolder\Par_file_PIEZO | cut -d = -f 2 | awk -v unit="$unit" 
 field_min=`gmt gmtinfo $originalxyz -C | awk '{print $5}'`
 field_max=`gmt gmtinfo $originalxyz -C | awk '{print $6}'`
 
-gmt begin $name pdf
+gmt begin \figFolder$name pdf
 
 gmt makecpt -C$cpt -T$lowerLimit/$upperLimit -Iz
 
