@@ -62,7 +62,7 @@ echo $field_max
 
 
 gmt begin $fig pdf
-#gmt gmtset MAP_FRAME_AXES WeSn
+gmt gmtset MAP_FRAME_AXES WeSn
 
 echo $lowerLimit
 echo $upperLimit
