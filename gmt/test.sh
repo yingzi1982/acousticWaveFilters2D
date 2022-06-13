@@ -1,8 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 source /pdc/software/21.11/eb/software/Anaconda3/2021.05/bin/activate
 conda activate gmt6
-###!/usr/bin/env bash
 #		GMT EXAMPLE 13
 #
 # Purpose:	Illustrate vectors and contouring

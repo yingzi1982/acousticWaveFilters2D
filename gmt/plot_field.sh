@@ -1,10 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 source /pdc/software/21.11/eb/software/Anaconda3/2021.05/bin/activate
 conda activate gmt6
 #--------------------------------------------------------------------
-rm -f gmt.conf
-rm -f gmt.history
-
 name=$1
 unit=$2
 scale=$3
@@ -61,8 +58,7 @@ echo $field_min
 echo $field_max
 
 
-gmt begin $fig pdf
-gmt clear cashe
+gmt begin $fig
 gmt gmtset MAP_FRAME_AXES WeSn
 
 echo $lowerLimit
