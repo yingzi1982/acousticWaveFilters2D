@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 source /pdc/software/21.11/eb/software/Anaconda3/2021.05/bin/activate
 conda activate gmt6
-gmt gmtset MAP_FRAME_TYPE plain
 gmt gmtset MAP_FRAME_PEN thick
-gmt gmtset MAP_TICK_PEN thick
 #--------------------------------------------------------------------
 name=$1
 unit=$2
