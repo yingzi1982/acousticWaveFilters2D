@@ -77,10 +77,6 @@ gmt colorbar -Dx$domain -C$cpt -Bxa1f0.5 -By+l"$scale$label"
 
 gmt end
 rm -f $grd $xgrd $zgrd
-exit
-
-
-
 #-----------------------------------------------------
 rm -f gmt.conf
 rm -f gmt.history
