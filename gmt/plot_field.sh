@@ -65,6 +65,9 @@ echo $field_max
 gmt begin $fig pdf
 #gmt set MAP_GRID_PEN_PRIMARY thinnest,-
 
+echo $lowerLimit
+echo $upperLimit
+
 gmt makecpt -C$cpt -T$lowerLimit/$upperLimit -Iz
 
 gmt psbasemap -R$region -J$projection  -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"
@@ -81,7 +84,7 @@ fi
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt psxy -Ss0.005i -Gred -N
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/negative_finger | gmt psxy -Ss0.005i -Ggreen -N
 
-gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+l"10@+13@+N/m@+2@+"
+gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+l"$scale$unit"
 
 gmt end
 rm -f $grd $xgrd $zgrd
