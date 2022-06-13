@@ -6,7 +6,6 @@ rm -f gmt.conf
 rm -f gmt.history
 gmt gmtset MAP_FRAME_AXES WeSn
 
-
 name=$1
 unit=$2
 scale=$3
@@ -59,11 +58,14 @@ inc=`grep step $DATAFolder\Par_file_PIEZO | cut -d = -f 2 | awk -v unit="$unit" 
 
 field_min=`gmt gmtinfo $originalxyz -C | awk '{print $5}'`
 field_max=`gmt gmtinfo $originalxyz -C | awk '{print $6}'`
+echo $field_min
+echo $field_max
+
 
 gmt begin $fig pdf
 #gmt set MAP_GRID_PEN_PRIMARY thinnest,-
 
-gmt makecpt -C$cpt -T$lowerLimit/$upperLimit -Iz
+gmt makecpt -C$cpt -T$lowerLimit/$upperLimit # -Iz
 
 gmt psbasemap -R$region -J$projection  -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"
 awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $3/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R$region -I$inc -G$grd
