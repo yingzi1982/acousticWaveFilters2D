@@ -11,6 +11,7 @@ label=$4
 backupFolder=../backup/
 DATAFolder=../DATA/
 figFolder=../figures/
+fig=$figFolder$name
 mkdir -p $figFolder
 originalxyz=$backupFolder$name
 grd=$backupFolder$name\.nc
@@ -55,7 +56,7 @@ inc=`grep step $DATAFolder\Par_file_PIEZO | cut -d = -f 2 | awk -v unit="$unit" 
 field_min=`gmt gmtinfo $originalxyz -C | awk '{print $5}'`
 field_max=`gmt gmtinfo $originalxyz -C | awk '{print $6}'`
 
-gmt begin \figFolder$name pdf
+gmt begin $fig pdf
 
 gmt makecpt -C$cpt -T$lowerLimit/$upperLimit -Iz
 
