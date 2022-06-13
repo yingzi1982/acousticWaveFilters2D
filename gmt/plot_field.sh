@@ -59,7 +59,7 @@ gmt begin $fig
 
 gmt makecpt -C$cpt -T$lowerLimit/$upperLimit -Iz
 
-gmt psbasemap -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"
+gmt basemap -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"
 awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $3/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R$region -I$inc -G$grd
 gmt grdimage $grd -C$cpt
 
@@ -70,8 +70,8 @@ awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $6/scale}' $orig
 gmt grdvector $bodyforce_xgrd $bodyforce_zgrd -Ix1 -J  -Q0.1i+eAl+n0.25i+h0.1 -W1p -S10i -N 
 fi
 
-awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt psxy -Ss0.005i -Gred -N
-awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/negative_finger | gmt psxy -Ss0.005i -Ggreen -N
+awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt plot -Ss0.005i -Gred -N
+awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/negative_finger | gmt plot -Ss0.005i -Ggreen -N
 
 gmt colorbar -Dx$domain -C$cpt -Bxa1f0.5 -By+l"$scale$label"
 
