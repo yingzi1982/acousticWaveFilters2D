@@ -25,13 +25,13 @@ if [ $column_number -eq 3 ]
 then
 #echo 'Plotting scalar field of data at' $originalxyz
 cpt=GMT_seis.cpt
-lowerLimit=0
+lowerLimit=-1
 upperLimit=1
 elif [ $column_number -eq 6 ]
 then
 #echo 'Plotting vector field of data at' $originalxyz
 cpt=GMT_hot.cpt
-lowerLimit=0
+lowerLimit=-1
 upperLimit=1
 fi
 
