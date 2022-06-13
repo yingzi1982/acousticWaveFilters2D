@@ -48,11 +48,11 @@ region=$xmin/$xmax/$zmin/$zmax
 
 inc=`grep step $DATAFolder\Par_file_PIEZO | cut -d = -f 2 | awk -v unit="$unit" '{print $1/unit}'`
 
-#colorbar_width=$height
-#colorbar_height=0.16
-#colorbar_horizontal_position=`echo "$width+0.1" | bc -l`
-#colorbar_vertical_position=`echo "$colorbar_width/2" | bc -l`
-#domain=$colorbar_horizontal_position\i/$colorbar_vertical_position\i/$colorbar_width\i/$colorbar_height\i
+colorbar_width=$height
+colorbar_height=0.16
+colorbar_horizontal_position=`echo "$width+0.1" | bc -l`
+colorbar_vertical_position=`echo "$colorbar_width/2" | bc -l`
+domain=$colorbar_horizontal_position\i/$colorbar_vertical_position\i/$colorbar_width\i/$colorbar_height\i
 
 #--------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ echo $field_max
 gmt begin $fig pdf
 #gmt set MAP_GRID_PEN_PRIMARY thinnest,-
 
-gmt makecpt -C$cpt -T$lowerLimit/$upperLimit # -Iz
+gmt makecpt -C$cpt -T$lowerLimit/$upperLimit -Iz
 
 gmt psbasemap -R$region -J$projection  -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"
 awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $3/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R$region -I$inc -G$grd
@@ -81,7 +81,7 @@ fi
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt psxy -Ss0.005i -Gred -N
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/negative_finger | gmt psxy -Ss0.005i -Ggreen -N
 
-#gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+l"10@+13@+N/m@+2@+"
+gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+l"10@+13@+N/m@+2@+"
 
 gmt end
 rm -f $grd $xgrd $zgrd
