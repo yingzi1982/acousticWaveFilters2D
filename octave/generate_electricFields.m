@@ -25,7 +25,7 @@ y = linspace(xmin,xmax,nx);
 z = linspace(zmin,zmax,nz);
 %---------------------------------
 positive_finger_V = 1;
-negative_finger_V = -1;
+negative_finger_V = 0;
 %---------------------------------
 positive_finger = dlmread('../backup/positive_finger',' ');
 negative_finger = dlmread('../backup/negative_finger',' ');
