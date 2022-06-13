@@ -2,6 +2,8 @@
 source /pdc/software/21.11/eb/software/Anaconda3/2021.05/bin/activate
 conda activate gmt6
 #--------------------------------------------------------------------
+rm -f gmt.conf
+rm -f gmt.history
 
 name=$1
 unit=$2
