@@ -84,7 +84,7 @@ fi
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt psxy -Ss0.005i -Gred -N
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/negative_finger | gmt psxy -Ss0.005i -Ggreen -N
 
-gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+l"$scale$unit"
+gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+l"$scale$label"
 
 gmt end
 rm -f $grd $xgrd $zgrd
