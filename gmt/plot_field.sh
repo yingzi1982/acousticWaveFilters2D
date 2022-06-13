@@ -54,19 +54,12 @@ domain=$colorbar_horizontal_position\i/$colorbar_vertical_position\i/$colorbar_w
 
 field_min=`gmt gmtinfo $originalxyz -C | awk '{print $5}'`
 field_max=`gmt gmtinfo $originalxyz -C | awk '{print $6}'`
-echo $field_min
-echo $field_max
-
 
 gmt begin $fig
-gmt gmtset MAP_FRAME_AXES WeSn
-
-echo $lowerLimit
-echo $upperLimit
 
 gmt makecpt -C$cpt -T$lowerLimit/$upperLimit -Iz
 
-gmt psbasemap -R$region -J$projection  -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"
+gmt psbasemap -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"
 awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $3/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$lowerLimit -Lu$upperLimit -R$region -I$inc -G$grd
 gmt grdimage $grd -C$cpt
 
@@ -80,7 +73,7 @@ fi
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt psxy -Ss0.005i -Gred -N
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/negative_finger | gmt psxy -Ss0.005i -Ggreen -N
 
-gmt psscale -Dx$domain -C$cpt -Bxa1f0.5 -By+l"$scale$label"
+gmt colorbar -Dx$domain -C$cpt -Bxa1f0.5 -By+l"$scale$label"
 
 gmt end
 rm -f $grd $xgrd $zgrd
