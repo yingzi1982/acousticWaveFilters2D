@@ -68,7 +68,7 @@ if [ $column_number -eq 6 ]
 then
 awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $5/scale}' $originalxyz | gmt surface -R$region -I$inc -G$xgrd
 awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $6/scale}' $originalxyz | gmt surface -R$region -I$inc -G$zgrd
-gmt grdvector $xgrd $zgrd -Ix1 -Q0.1i+eAl+n0.25i+h0.1 -W1p -S10i -N 
+gmt grdvector $xgrd $zgrd -Ix3 -Q0.1i+eAl+n0.25i+h0.1 -W1p -S10i -N 
 fi
 
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt plot -Ss0.005i -Gred -N
