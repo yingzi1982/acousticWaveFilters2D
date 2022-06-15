@@ -46,8 +46,8 @@ cpt=$backupFolder$name\.cpt
 
 originalxyz=$backupFolder$name
 grd=$backupFolder$name\.nc
-xgrd=$backupFolder$name_x\.nc
-zgrd=$backupFolder$name_z\.nc
+xgrd=$backupFolder$name\_x.nc
+zgrd=$backupFolder$name\_z.nc
 
 column_number=`head -n 1 $originalxyz | awk '{print NF}'`
 
