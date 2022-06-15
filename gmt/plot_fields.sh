@@ -63,14 +63,15 @@ fi
 
 #-----------------------------------------------------
 gmt begin $fig pdf
-gmt makecpt -C$cpt -T$scalarLowerLimit/$scalarUpperLimit
+gmt makecpt -C$cpt -T$scalarLowerLimit/$scalarUpperLimit -Iz
 
 gmt basemap -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"
 gmt grdimage $grd
 
 if [ $column_number -eq 6 ]
 then
-gmt grdvector $xgrd $zgrd -Ix1 -J$projection -Q0.1i+eAl+n0.25i+h0.1 -W1p -S10i -N 
+#gmt grdvector $xgrd $zgrd -Ix1 -Q0.1i+eAl+n0.25i+h0.1 -W1p -S10i -N 
+echo ''
 fi
 
 gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$label"
