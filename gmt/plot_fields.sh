@@ -10,28 +10,14 @@ label=$4
 backupFolder=../backup/
 DATAFolder=../DATA/
 figFolder=../figures/
-fig=$figFolder$name
 mkdir -p $figFolder
+fig=$figFolder$name
 originalxyz=$backupFolder$name
 grd=$backupFolder$name\.nc
 xgrd=$backupFolder$name_x\.nc
 zgrd=$backupFolder$name_z\.nc
 
 column_number=`head -n 1 $originalxyz | awk '{print NF}'`
-
-if [ $column_number -eq 3 ]
-then
-#echo 'Plotting scalar field of data at' $originalxyz
-cpt=GMT_seis.cpt
-lowerLimit=0
-upperLimit=1
-elif [ $column_number -eq 6 ]
-then
-#echo 'Plotting vector field of data at' $originalxyz
-cpt=GMT_hot.cpt
-lowerLimit=0
-upperLimit=1
-fi
 
 xmin=`gmt gmtinfo $originalxyz -C | awk -v unit="$unit" '{print $1/unit}'`
 xmax=`gmt gmtinfo $originalxyz -C | awk -v unit="$unit" '{print $2/unit}'`
@@ -53,28 +39,42 @@ domain=$colorbar_horizontal_position\i/$colorbar_vertical_position\i/$colorbar_w
 
 #--------------------------------------------------------------------
 
-field_min=`gmt gmtinfo $originalxyz -C | awk '{print $5}'`
-field_max=`gmt gmtinfo $originalxyz -C | awk '{print $6}'`
+amplitude_min=`gmt gmtinfo $originalxyz -C | awk '{print $5}'`
+amplitude_max=`gmt gmtinfo $originalxyz -C | awk '{print $6}'`
 
+scalarLowerLimit=0
+scalarUpperLimit=1
+vectorLowerLimit=-1
+vectorUpperLimit=1
+
+awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $3/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$scalarLowerLimit -Lu$scalarUpperLimit -R$region -I$inc -G$grd
+
+if [ $column_number -eq 3 ]
+then
+cpt=GMT_green2red.cpt
+elif [ $column_number -eq 6 ]
+then
+cpt=GMT_hot.cpt
+awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $5/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$vectorUpperLimit -R$region -I$inc -G$xgrd
+awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $6/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$VectorUpperLimit -R$region -I$inc -G$zgrd
+fi
+
+#-----------------------------------------------------
 gmt begin $fig pdf
-
-gmt makecpt -C$cpt -T$lowerLimit/$upperLimit -Iz
+gmt makecpt -C$cpt -T$scalarLowerLimit/$scalarUpperLimit
 
 gmt basemap -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"
-awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $3/scale}' $originalxyz | gmt surface -R$region -I$inc -G$grd
 gmt grdimage $grd
 
 if [ $column_number -eq 6 ]
 then
-awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $5/scale}' $originalxyz | gmt surface -R$region -I$inc -G$xgrd
-awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $6/scale}' $originalxyz | gmt surface -R$region -I$inc -G$zgrd
 gmt grdvector $xgrd $zgrd -Ix3 -Q0.1i+eAl+n0.25i+h0.1 -W1p -S10i -N 
 fi
 
+gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$label"
+
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt plot -Ss0.005i -Gred -N
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/negative_finger | gmt plot -Ss0.005i -Ggreen -N
-
-gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$label"
 
 gmt end
 rm -f $grd $xgrd $zgrd
