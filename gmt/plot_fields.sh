@@ -51,7 +51,7 @@ awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $3/scale}' $orig
 
 if [ $column_number -eq 3 ]
 then
-cpt=GMT_green2red.cpt
+cpt=GMT_seis.cpt
 elif [ $column_number -eq 6 ]
 then
 cpt=GMT_hot.cpt
