@@ -79,7 +79,7 @@ scalarUpperLimit=1
 vectorLowerLimit=-1
 vectorUpperLimit=1
 
-awk -v unit="$unit" -v scale="$amplitude_max" '{print $1/unit, $2/unit, $3/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$scalarLowerLimit -Lu$scalarUpperLimit -R$region -I$inc -G$grd
+awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $3/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$scalarLowerLimit -Lu$scalarUpperLimit -R$region -I$inc -G$grd
 
 if [ $column_number -eq 3 ]
 then
