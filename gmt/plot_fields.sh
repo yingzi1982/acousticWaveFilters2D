@@ -100,6 +100,7 @@ gmt grdimage -R -J -B $grd -C$cpt -O -K >> $ps
 if [ $column_number -eq 6 ]
 then
 #gmt grdvector $xgrd $zgrd -J -Ix1 -Q0.1i+eAl+n0.25i+h0.1 -W1p,gray -S15i -N -O -K >> $ps
+echo ''
 fi
 
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt psxy -R -J -Ss0.005i -Gred   -N -O -K >> $ps
