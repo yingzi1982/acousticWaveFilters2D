@@ -8,9 +8,9 @@ rm -f gmt.history
 
 gmt gmtset MAP_FRAME_AXES WeSn
 gmt gmtset MAP_FRAME_TYPE plain
-#gmt gmtset MAP_FRAME_PEN thick
-#gmt gmtset MAP_TICK_PEN thick
-#gmt gmtset MAP_TICK_LENGTH_PRIMARY -3p
+gmt gmtset MAP_FRAME_PEN thick
+gmt gmtset MAP_TICK_PEN thick
+gmt gmtset MAP_TICK_LENGTH_PRIMARY -3p
 #gmt gmtset MAP_DEGREE_SYMBOL none
 #gmt gmtset MAP_GRID_CROSS_SIZE_PRIMARY 0.0i
 #gmt gmtset MAP_GRID_CROSS_SIZE_SECONDARY 0.0i
@@ -31,9 +31,10 @@ gmt gmtset PS_PAGE_ORIENTATION portrait
 
 #--------------------------------------------------------------------
 name=$1
-unit=$2
-scale=$3
-label=$4
+scale=$2
+label=$3
+
+unit=1E-6
 
 backupFolder=../backup/
 DATAFolder=../DATA/
@@ -48,8 +49,6 @@ originalxyz=$backupFolder$name
 grd=$backupFolder$name\.nc
 xgrd=$backupFolder$name\_x.nc
 zgrd=$backupFolder$name\_z.nc
-
-column_number=`head -n 1 $originalxyz | awk '{print NF}'`
 
 xmin=`gmt gmtinfo $originalxyz -C | awk -v unit="$unit" '{print $1/unit}'`
 xmax=`gmt gmtinfo $originalxyz -C | awk -v unit="$unit" '{print $2/unit}'`
@@ -81,6 +80,7 @@ vectorUpperLimit=1
 
 awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $3/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$scalarLowerLimit -Lu$scalarUpperLimit -R$region -I$inc -G$grd
 
+column_number=`head -n 1 $originalxyz | awk '{print NF}'`
 if [ $column_number -eq 3 ]
 then
 original_cpt=GMT_seis.cpt
