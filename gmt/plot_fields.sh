@@ -70,7 +70,7 @@ gmt grdimage $grd
 
 if [ $column_number -eq 6 ]
 then
-gmt grdvector $xgrd $zgrd -Ix1 -Q0.1i+eAl+n0.25i+h0.1 -W1p -S10i -N 
+gmt grdvector $xgrd $zgrd -Ix1 -J$projection -Q0.1i+eAl+n0.25i+h0.1 -W1p -S10i -N 
 fi
 
 gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$label"
