@@ -7,10 +7,10 @@ rm -f gmt.conf
 rm -f gmt.history
 
 gmt gmtset MAP_FRAME_AXES WeSn
-gmt gmtset MAP_FRAME_TYPE plain
+#gmt gmtset MAP_FRAME_TYPE plain
 gmt gmtset MAP_FRAME_PEN thick
 gmt gmtset MAP_TICK_PEN thick
-gmt gmtset MAP_TICK_LENGTH_PRIMARY -3p
+#gmt gmtset MAP_TICK_LENGTH_PRIMARY -3p
 #gmt gmtset MAP_DEGREE_SYMBOL none
 #gmt gmtset MAP_GRID_CROSS_SIZE_PRIMARY 0.0i
 #gmt gmtset MAP_GRID_CROSS_SIZE_SECONDARY 0.0i
