@@ -4,9 +4,9 @@ source /pdc/software/21.11/eb/software/Anaconda3/2021.05/bin/activate
 conda activate gmt6
 #gmt defaults
 
-gmt set MAP_FRAME_TYPE plain
-gmt set MAP_FRAME_PEN thick
-
+#gmt set MAP_FRAME_TYPE plain
+gmt set MAP_FRAME_PEN thickest
+gmt set FONT 12p,Helvetica,black
 
 #--------------------------------------------------------------------
 name=$1
