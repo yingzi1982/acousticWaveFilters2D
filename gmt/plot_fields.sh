@@ -7,7 +7,7 @@ rm -f gmt.conf
 rm -f gmt.history
 
 #gmt set MAP_FRAME_TYPE plain
-gmt set MAP_FRAME_PEN thickest
+gmt set MAP_FRAME_PEN thick
 #gmt set MAP_DEFAULT_PEN thick
 #gmt set FONT 12p,Helvetica,black
 
@@ -73,8 +73,9 @@ fi
 gmt begin $fig
 gmt makecpt -C$cpt -T$scalarLowerLimit/$scalarUpperLimit -Iz
 
-gmt basemap -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"s
-gmt grdimage $grd
+#gmt basemap -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"s
+gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"s
+#gmt grdimage $grd
 
 if [ $column_number -eq 6 ]
 then
@@ -84,8 +85,7 @@ fi
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt plot -Ss0.005i -Gred   -N
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/negative_finger | gmt plot -Ss0.005i -Ggreen -N
 
-#gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$label"
-gmt colorbar -DjCT+w4i+o0/2c+h -Baf
+gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$label"
 
 gmt end
 #-----------------------------------------------------
