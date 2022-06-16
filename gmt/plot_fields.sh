@@ -27,7 +27,7 @@ xmax=`gmt info $originalxyz -C | awk -v unit="$unit" '{print $2/unit}'`
 zmin=`gmt info $originalxyz -C | awk -v unit="$unit" '{print $3/unit}'`
 zmax=`gmt info $originalxyz -C | awk -v unit="$unit" '{print $4/unit}'`
 
-width=2.2
+width=6.2
 height=`echo "$width*(($zmax)-($zmin))/(($xmax)-($xmin))" | bc -l`
 projection=X$width\i/$height\i
 region=$xmin/$xmax/$zmin/$zmax
