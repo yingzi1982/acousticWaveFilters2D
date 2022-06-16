@@ -2,7 +2,7 @@
 #module load gmt
 source /pdc/software/21.11/eb/software/Anaconda3/2021.05/bin/activate
 conda activate gmt6
-#gmt defaults
+gmt defaults > gmt.conf
 
 #gmt set MAP_FRAME_TYPE plain
 gmt set MAP_FRAME_PEN thick
@@ -81,7 +81,7 @@ fi
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt plot -Ss0.005i -Gred   -N
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/negative_finger | gmt plot -Ss0.005i -Ggreen -N
 
-gmt colorbar -Dx$domain -B+pthick -Bxa1f0.5 -By+l"$scale$label"
+gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$label"
 gmt end
 #-----------------------------------------------------
 rm -f $grd $xgrd $zgrd
