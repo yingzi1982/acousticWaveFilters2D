@@ -72,7 +72,7 @@ fi
 gmt begin $fig
 gmt makecpt -C$cpt -T$scalarLowerLimit/$scalarUpperLimit -Iz
 
-gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"s
+gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"
 
 if [ $column_number -eq 6 ]
 then
