@@ -4,6 +4,10 @@ source /pdc/software/21.11/eb/software/Anaconda3/2021.05/bin/activate
 conda activate gmt6
 #gmt defaults
 
+gmt set MAP_FRAME_TYPE plain
+gmt set MAP_FRAME_PEN thick
+
+
 #--------------------------------------------------------------------
 name=$1
 scale=$2
@@ -27,7 +31,7 @@ xmax=`gmt info $originalxyz -C | awk -v unit="$unit" '{print $2/unit}'`
 zmin=`gmt info $originalxyz -C | awk -v unit="$unit" '{print $3/unit}'`
 zmax=`gmt info $originalxyz -C | awk -v unit="$unit" '{print $4/unit}'`
 
-width=6.2
+width=2.2
 height=`echo "$width*(($zmax)-($zmin))/(($xmax)-($xmin))" | bc -l`
 projection=X$width\i/$height\i
 region=$xmin/$xmax/$zmin/$zmax
