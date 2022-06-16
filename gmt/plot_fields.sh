@@ -7,7 +7,7 @@ rm -f gmt.conf
 rm -f gmt.history
 
 #gmt set MAP_FRAME_TYPE plain
-gmt set MAP_FRAME_PEN thick
+#gmt set MAP_FRAME_PEN thick
 #gmt set MAP_DEFAULT_PEN thick
 #gmt set FONT 12p,Helvetica,black
 
@@ -73,9 +73,7 @@ fi
 gmt begin $fig
 gmt makecpt -C$cpt -T$scalarLowerLimit/$scalarUpperLimit -Iz
 
-#gmt basemap -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"s
 gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"s
-#gmt grdimage $grd
 
 if [ $column_number -eq 6 ]
 then
