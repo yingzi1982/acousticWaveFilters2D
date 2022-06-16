@@ -6,10 +6,9 @@ conda activate gmt6
 rm -f gmt.conf
 rm -f gmt.history
 
-#gmt set MAP_FRAME_TYPE plain
-#gmt set MAP_FRAME_PEN thick
-#gmt set MAP_DEFAULT_PEN thick
-#gmt set FONT 12p,Helvetica,black
+gmt set MAP_FRAME_TYPE plain
+gmt set MAP_FRAME_PEN thick
+gmt set FONT 12p,Helvetica,black
 
 #--------------------------------------------------------------------
 name=$1
