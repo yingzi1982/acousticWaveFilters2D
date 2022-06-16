@@ -2,6 +2,8 @@
 #module load gmt
 source /pdc/software/21.11/eb/software/Anaconda3/2021.05/bin/activate
 conda activate gmt6
+gmt defaults
+exit
 
 rm -f gmt.conf
 rm -f gmt.history
