@@ -81,6 +81,7 @@ fi
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt plot -Ss0.005i -Gred   -N
 awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/negative_finger | gmt plot -Ss0.005i -Ggreen -N
 
+gmt set MAP_FRAME_PEN thicker
 gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$label"
 
 gmt end
