@@ -101,9 +101,9 @@ if [ $type == 'V2' ]
 then
 gmt begin $fig
 gmt makecpt -C$cpt -T$vectorLowerLimit/$vectorUpperLimit -Iz
-gmt subplot begin 1x1 -M0.2i -Fs$width\i/0 -R$region -J$projection -A+jTR+o8p 
+gmt subplot begin 2x1 -M0.2i -Fs$width\i/0 -R$region -J$projection -A+jTR+o8p 
 
-gmt subplot set 0,0 -Ce3c
+gmt subplot set 0,0 
 gmt grdimage $xgrd -BWeSn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
 
 awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger | gmt plot -Ss0.005i -Gred   -N
