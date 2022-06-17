@@ -20,8 +20,8 @@ inc=`grep step ../DATA/Par_file_PIEZO | cut -d = -f 2`
 #zscale=$12
 #zunit=$13
 
-./plot_fields.sh potential S GMT_seis.cpt 1E0 V $inc X 1E-6 m $inc Z 1E-6 m 
-#./plot_fields.sh electric  1E6 V/m
-#./plot_fields.sh bodyforce 1E13 N/m@+2@+
+./plot2D.sh potential S GMT_seis.cpt 1E0  V        $inc X 1E-6 m $inc Z 1E-6 m 
+./plot2D.sh electric  V GMT_hot.cpt  1E6  V/m      $inc X 1E-6 m $inc Z 1E-6 m 
+./plot2D.sh bodyforce V GMT_hot.cpt  1E13 N/m@+2@+ $inc X 1E-6 m $inc Z 1E-6 m 
 
 
