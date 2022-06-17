@@ -70,12 +70,17 @@ then
 awk -v xscale="$xscale" -v zscale="$zscale" -v scale="$scale" '{print $1/xscale, $2/zscale, $3/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$scalarLowerLimit -Lu$scalarUpperLimit -R$region -I$inc -G$grd
 fi
 
-if [ $type == 'V' ] || [ $type == 'V2' ]
+if [ $type == 'V' ]
 then
 awk -v xscale="$xscale" -v zscale="$zscale" -v amplitude_max="$amplitude_max" '{print $1/xscale, $2/xscale, $5/amplitude_max}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$vectorUpperLimit -R$region -I$inc -G$xgrd
 awk -v xscale="$xscale" -v zscale="$zscale" -v amplitude_max="$amplitude_max" '{print $1/xscale, $2/xscale, $6/amplitude_max}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$vectorUpperLimit -R$region -I$inc -G$zgrd
 fi
 
+if [ $type == 'V2' ]
+then
+awk -v xscale="$xscale" -v zscale="$zscale" -v scale="$scale" '{print $1/xscale, $2/xscale, $5/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$vectorUpperLimit -R$region -I$inc -G$xgrd
+awk -v xscale="$xscale" -v zscale="$zscale" -v scale="$scale" '{print $1/xscale, $2/xscale, $6/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$vectorUpperLimit -R$region -I$inc -G$zgrd
+fi
 #-----------------------------------------------------
 if [ $type == 'S' ] || [ $type == 'V' ]
 then
