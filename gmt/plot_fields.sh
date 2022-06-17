@@ -5,17 +5,25 @@ conda activate gmt6
 #gmt defaults > gmt.conf
 rm -f gmt.conf
 rm -f gmt.history
-
-gmt set MAP_FRAME_TYPE plain
-gmt set MAP_FRAME_PEN thin
-gmt set FONT 12p,Helvetica,black
-
+#gmt set MAP_FRAME_TYPE plain
+#gmt set MAP_FRAME_PEN thin
+#gmt set FONT 12p,Helvetica,black
 #--------------------------------------------------------------------
-name=$1
-scale=$2
-label=$3
+name=${1}
+type=${2}
+cpt=${3}
+scale=${4}
+unit=${5}
 
-unit=1E-6
+xinc=${6}
+xlabel=${7}
+xscale=${8}
+xunit=${9}
+
+zinc=${10}
+zlabel=${11}
+zscale=${12}
+zunit=${13}
 
 backupFolder=../backup/
 DATAFolder=../DATA/
@@ -28,17 +36,19 @@ grd=$backupFolder$name\.nc
 xgrd=$backupFolder$name\_x.nc
 zgrd=$backupFolder$name\_z.nc
 
-xmin=`gmt info $originalxyz -C | awk -v unit="$unit" '{print $1/unit}'`
-xmax=`gmt info $originalxyz -C | awk -v unit="$unit" '{print $2/unit}'`
-zmin=`gmt info $originalxyz -C | awk -v unit="$unit" '{print $3/unit}'`
-zmax=`gmt info $originalxyz -C | awk -v unit="$unit" '{print $4/unit}'`
+xmin=`gmt info $originalxyz -C | awk -v xscale="$xscale" '{print $1/xscale}'`
+xmax=`gmt info $originalxyz -C | awk -v xscale="$xscale" '{print $2/xscale}'`
+zmin=`gmt info $originalxyz -C | awk -v zscale="$zscale" '{print $3/zscale}'`
+zmax=`gmt info $originalxyz -C | awk -v zscale="$zscale" '{print $4/zscale}'`
 
 width=2.2
 height=`echo "$width*(($zmax)-($zmin))/(($xmax)-($xmin))" | bc -l`
 projection=X$width\i/$height\i
 region=$xmin/$xmax/$zmin/$zmax
 
-inc=`grep step $DATAFolder\Par_file_PIEZO | cut -d = -f 2 | awk -v unit="$unit" '{print $1/unit}'`
+xinc=`echo $xinc | awk -v xscale="$xscale" '{print $1/xscale}'`
+zinc=`echo $zinc | awk -v zscale="$zscale" '{print $1/zscale}'`
+inc=$xinc/$zinc
 
 colorbar_width=$height
 colorbar_height=0.16
@@ -55,38 +65,35 @@ scalarUpperLimit=1
 vectorLowerLimit=-1
 vectorUpperLimit=1
 
-awk -v unit="$unit" -v scale="$scale" '{print $1/unit, $2/unit, $3/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$scalarLowerLimit -Lu$scalarUpperLimit -R$region -I$inc -G$grd
-
-column_number=`head -n 1 $originalxyz | awk '{print NF}'`
-if [ $column_number -eq 3 ]
+if [ $type == 'S' ] || [ $type == 's' ]
 then
-cpt=GMT_seis.cpt
-elif [ $column_number -eq 6 ]
-then
-cpt=GMT_hot.cpt
-awk -v unit="$unit" -v scale="$amplitude_max" '{print $1/unit, $2/unit, $5/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$vectorUpperLimit -R$region -I$inc -G$xgrd
-awk -v unit="$unit" -v scale="$amplitude_max" '{print $1/unit, $2/unit, $6/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$vectorUpperLimit -R$region -I$inc -G$zgrd
+awk -v xscale="$xscale" -v zscale="$zscale" -v scale="$scale" '{print $1/xscale, $2/zscale, $3/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$scalarLowerLimit -Lu$scalarUpperLimit -R$region -I$inc -G$grd
+else
+awk -v xscale="$xscale" -v zscale="$zscale" -v amplitude_max="$amplitude_max" '{print $1/xscale, $2/xscale, $5/amplitude_max}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$vectorUpperLimit -R$region -I$inc -G$xgrd
+awk -v xscale="$xscale" -v zscale="$zscale" -v amplitude_max="$amplitude_max" '{print $1/xscale, $2/xscale, $6/amplitude_max}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$vectorUpperLimit -R$region -I$inc -G$xgrd
 fi
 
 #-----------------------------------------------------
 gmt begin $fig
 gmt makecpt -C$cpt -T$scalarLowerLimit/$scalarUpperLimit -Iz
 
-gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"X ($unit\m) " -By10f5+l"Z ($unit\m)"
+gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"zlabel ($zscale$zunit)"
 
-if [ $column_number -eq 6 ]
+if [ $type == 'V' ] || [ $type == 'v' ]
 then
 gmt grdvector $xgrd $zgrd -Ix1 -Q0.1i+eAl+n0.25i+h0.1 -W1p,gray -S20i -N
 fi
 
-awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/positive_finger | gmt plot -Ss0.005i -Gred   -N
-awk -v unit="$unit" '{print $1/unit, $2/unit}' $backupFolder/negative_finger | gmt plot -Ss0.005i -Ggreen -N
+awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger | gmt plot -Ss0.005i -Gred   -N
+awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\negative_finger | gmt plot -Ss0.005i -Ggreen -N
 
-gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$label"
+gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$unit"
 
 gmt end
 #-----------------------------------------------------
 rm -f $grd $xgrd $zgrd
 
+rm -f gmt.conf
+rm -f gmt.history
 #module unload gmt
 conda deactivate
