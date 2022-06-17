@@ -106,7 +106,7 @@ if [ $type == 'V2' ]
 then
 gmt begin $fig
 gmt makecpt -C$cpt -T$vectorLowerLimit/$vectorUpperLimit -Iz
-gmt subplot begin 2x1 -M0.0i/0.03i -Fs$width\i/0 -Srl -Scb -R$region -J$projection -A+jTR+o8p
+gmt subplot begin 2x1 -M0.0i/0.035i -Fs$width\i/0 -Srl -Scb -R$region -J$projection -A+jTR+o8p
 
 gmt subplot set 0,0 
 gmt grdimage $xgrd -Bwesn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
