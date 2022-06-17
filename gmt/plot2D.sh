@@ -29,7 +29,7 @@ backupFolder=../backup/
 DATAFolder=../DATA/
 figFolder=../figures/
 mkdir -p $figFolder
-fig=$figFolder$name
+fig=$figFolder$name\_$type
 
 originalxyz=$backupFolder$name
 grd=$backupFolder$name\.nc
@@ -65,12 +65,12 @@ scalarUpperLimit=1
 vectorLowerLimit=-1
 vectorUpperLimit=1
 
-if [ $type == 'S' ] || [ $type == 'V' ]
+if [ $type == 'S' ] || [ $type == 'V1' ]
 then
 awk -v xscale="$xscale" -v zscale="$zscale" -v scale="$scale" '{print $1/xscale, $2/zscale, $3/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$scalarLowerLimit -Lu$scalarUpperLimit -R$region -I$inc -G$grd
 fi
 
-if [ $type == 'V' ]
+if [ $type == 'V1' ]
 then
 awk -v xscale="$xscale" -v zscale="$zscale" -v amplitude_max="$amplitude_max" '{print $1/xscale, $2/xscale, $5/amplitude_max}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$vectorUpperLimit -R$region -I$inc -G$xgrd
 awk -v xscale="$xscale" -v zscale="$zscale" -v amplitude_max="$amplitude_max" '{print $1/xscale, $2/xscale, $6/amplitude_max}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$vectorUpperLimit -R$region -I$inc -G$zgrd
@@ -82,14 +82,14 @@ awk -v xscale="$xscale" -v zscale="$zscale" -v scale="$scale" '{print $1/xscale,
 awk -v xscale="$xscale" -v zscale="$zscale" -v scale="$scale" '{print $1/xscale, $2/xscale, $6/scale}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$vectorLowerLimit -Lu$vectorUpperLimit -R$region -I$inc -G$zgrd
 fi
 #-----------------------------------------------------
-if [ $type == 'S' ] || [ $type == 'V' ]
+if [ $type == 'S' ] || [ $type == 'V1' ]
 then
 gmt begin $fig
 gmt makecpt -C$cpt -T$scalarLowerLimit/$scalarUpperLimit -Iz
 
 gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
 
-if [ $type == 'V' ]
+if [ $type == 'V1' ]
 then
 gmt grdvector $xgrd $zgrd -Ix1 -Q0.1i+eAl+n0.25i+h0.1 -W1p,gray -S20i -N
 fi
@@ -106,7 +106,6 @@ if [ $type == 'V2' ]
 then
 gmt begin $fig
 gmt makecpt -C$cpt -T$vectorLowerLimit/$vectorUpperLimit -Iz
-#gmt subplot begin 2x1 -M0.2i -Fs$width\i/0 -R$region -J$projection -A+jTR+o8p 
 gmt subplot begin 2x1 -M0.0i/0.0i -Fs$width\i/0 -R$region -J$projection -A+jTR+o8p
 
 gmt subplot set 0,0 
