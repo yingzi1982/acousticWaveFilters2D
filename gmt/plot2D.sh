@@ -77,6 +77,8 @@ awk -v xscale="$xscale" -v zscale="$zscale" -v amplitude_max="$amplitude_max" '{
 fi
 
 #-----------------------------------------------------
+if [ $type == 'S' ] || [ $type == 'V' ]
+then
 gmt begin $fig
 gmt makecpt -C$cpt -T$scalarLowerLimit/$scalarUpperLimit -Iz
 
@@ -93,6 +95,7 @@ awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $bac
 gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$unit"
 
 gmt end
+fi
 #-----------------------------------------------------
 rm -f $grd $xgrd $zgrd
 
