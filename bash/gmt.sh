@@ -24,5 +24,5 @@ inc=`grep step ../DATA/Par_file_PIEZO | cut -d = -f 2`
 #./plot2D.sh electric  V  GMT_hot.cpt  1E6  V/m      $inc X 1E-6 m $inc Z 1E-6 m 
 #./plot2D.sh bodyforce V  GMT_hot.cpt  1E13 N/m@+2@+ $inc X 1E-6 m $inc Z 1E-6 m 
 
-./plot2D.sh bodyforce V2 GMT_hot.cpt  1E13 N/m@+2@+ $inc X 1E-6 m $inc Z 1E-6 m 
+./plot2D.sh bodyforce V2 GMT_seis.cpt  1E13 N/m@+2@+ $inc X 1E-6 m $inc Z 1E-6 m 
 
