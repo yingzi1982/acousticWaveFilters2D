@@ -77,7 +77,7 @@ fi
 gmt begin $fig
 gmt makecpt -C$cpt -T$scalarLowerLimit/$scalarUpperLimit -Iz
 
-gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"zlabel ($zscale$zunit)"
+gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
 
 if [ $type == 'V' ] || [ $type == 'v' ]
 then
