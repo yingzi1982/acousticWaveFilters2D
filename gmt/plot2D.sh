@@ -108,6 +108,11 @@ gmt grdimage $xgrd -BWeSn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel (
 
 awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger | gmt plot -Ss0.005i -Gred   -N
 awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\negative_finger | gmt plot -Ss0.005i -Ggreen -N
+gmt subplot set 1,0 
+gmt grdimage $zgrd -BWeSn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
+
+awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger | gmt plot -Ss0.005i -Gred   -N
+awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\negative_finger | gmt plot -Ss0.005i -Ggreen -N
 
 gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$unit"
 
