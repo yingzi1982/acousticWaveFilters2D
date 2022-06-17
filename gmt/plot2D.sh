@@ -107,7 +107,7 @@ then
 gmt begin $fig
 gmt makecpt -C$cpt -T$vectorLowerLimit/$vectorUpperLimit -Iz
 #gmt subplot begin 2x1 -M0.2i -Fs$width\i/0 -R$region -J$projection -A+jTR+o8p 
-gmt subplot begin 2x2 -Fs8c -M5p -A -SCb -SRl -R$region
+gmt subplot begin 2x2 -Fs8c -M5p -SCb -SRl -R$region -J$projection -A+jTR+o8p
 
 gmt subplot set 0,0 
 gmt grdimage $xgrd -Bwesn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
