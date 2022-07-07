@@ -1,9 +1,16 @@
 #!/bin/bash
+filter_type=$1
+filter_dimension=$2
+piezoelectric_effect=$3
 
-./octave.sh generate_electrodeConductSurface.m SAW 2D
+if [ $piezoelectric_effect == 'converse' ]
+then
 
-./octave.sh generate_electricFields.m 2D
-exit
+./octave.sh generate_electrodeContactSurface.m $filter_type $filter_dimension
+./octave.sh generate_electricFields.m $filter_type $filter_dimension
 
-./octave.sh generate_piezoelectricity.m converse
+elif [ $piezoelectric_effect == 'direct' ]
+then
+fi
 
+./octave.sh generate_piezoelectricity.m $piezoelectric_effect $filter_dimension

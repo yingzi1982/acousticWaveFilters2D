@@ -34,8 +34,8 @@ switch filter_dimension
 case '2D'
 
 [X Z] = meshgrid (x,z);
-V = relaxationMethod(x,y,z,positive_finger,negative_finger,positive_finger_V,negative_finger_V,filter_dimension);
-%V = summationMethod(x,y,z,positive_finger,negative_finger,positive_finger_V,negative_finger_V,filter_dimension);
+%V = relaxationMethod(x,y,z,positive_finger,negative_finger,positive_finger_V,negative_finger_V,filter_dimension);
+V = summationMethod(x,y,z,positive_finger,negative_finger,positive_finger_V,negative_finger_V,filter_dimension);
 
 
 [E_x E_z] = gradient(V,dx,dz);
