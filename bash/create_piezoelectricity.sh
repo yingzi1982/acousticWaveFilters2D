@@ -11,6 +11,7 @@ then
 
 elif [ $piezoelectric_effect == 'direct' ]
 then
+echo ' '
 fi
 
 ./octave.sh generate_piezoelectricity.m $piezoelectric_effect $filter_dimension
