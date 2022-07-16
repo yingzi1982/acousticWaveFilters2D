@@ -4,25 +4,36 @@ clear all
 close all
 clc
 
-%[X Y Z] = meshgrid (x,y,z);
 arg_list = argv ();
 if length(arg_list) > 0
   piezoelectric_effect = arg_list{1};
   filter_dimension = arg_list{2};
 else
-  [piezoelectric_effect filter_dimension]= input('Please input direct or converse piezoelectric effect and filter dimension','s');
+  error('Please input direct or converse piezoelectric effect and filter dimension');
 end
 
-[xmin xmax  ymin ymax zmin zmax step dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters;
-dx=step;
-dy=step;
-dz=step;
+[piezo]=generate_piezomaterial_parameters(filter_dimension);
+xmin = piezo.xmin;
+ymin = piezo.ymin;            
+zmin = piezo.zmin;            
+
+xmax = piezo.xmax;            
+ymax = piezo.ymax;            
+zmax = piezo.zmax;            
+
+dx = piezo.dx;                
+dy = piezo.dy;                
+dz = piezo.dz;                
+
 nx = round((xmax-xmin)/dx+1);
 ny = round((ymax-ymin)/dy+1);
 nz = round((zmax-zmin)/dz+1);
+
 x = linspace(xmin,xmax,nx);
 y = linspace(xmin,xmax,nx);
 z = linspace(zmin,zmax,nz);
+
+piezoelectric_constant = piezo.piezoelectric_constant;
 
 switch piezoelectric_effect
 case 'direct'
@@ -51,7 +62,13 @@ case '2D'
   bodyforce_x = (stress1partialx + stress3partialz);
   bodyforce_z = (stress2partialz + stress3partialx);
   [bodyforce_theta,bodyforce_rho] = cart2pol(bodyforce_x,bodyforce_z);
+
   bodyforce=[reshape(X,[],1) reshape(Z,[],1) reshape(bodyforce_rho,[],1) reshape(bodyforce_theta,[],1) reshape(bodyforce_x,[],1) reshape(bodyforce_z,[],1)];
+  polygon_piezo = piezo.polygon;
+  [in,on] = inpolygon (bodyforce(:,1), bodyforce(:,2), polygon_piezo(:,1), polygon_piezo(:,2));
+  mask_piezo = in | on;
+  bodyforce = bodyforce(mask_piezo,:);
+
 case '3D'
   %[X Y Z] = meshgrid(x,y,z);
   %electric=dlmread('../backup/electric');

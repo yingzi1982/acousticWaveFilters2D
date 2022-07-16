@@ -9,17 +9,26 @@ if length(arg_list) > 0
   filter_type  = arg_list{1};
   filter_dimension = arg_list{2};
 else
-  [arg_list] = input('Please input filter type and dimension ','s');
+  error('Please input filter type and dimension.');
 end
 
+[piezo]=generate_piezomaterial_parameters(filter_dimension);
+xmin = piezo.xmin;
+ymin = piezo.ymin;
+zmin = piezo.zmin;
 
-[xmin xmax  ymin ymax zmin zmax step dielecctric_constant piezoelectric_constant elastic_constant]=read_piezomaterial_parameters;
-dx=step;
-dy=step;
-dz=step;
+xmax = piezo.xmax;
+ymax = piezo.ymax;
+zmax = piezo.zmax;
+
+dx = piezo.dx;
+dy = piezo.dy;
+dz = piezo.dz;
+
 nx = round((xmax-xmin)/dx+1);
 ny = round((ymax-ymin)/dy+1);
 nz = round((zmax-zmin)/dz+1);
+
 x = linspace(xmin,xmax,nx);
 y = linspace(xmin,xmax,nx);
 z = linspace(zmin,zmax,nz);

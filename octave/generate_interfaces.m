@@ -4,9 +4,26 @@ clear all
 close all
 clc
 
-[NELEM_PML_THICKNESSStatus NELEM_PML_THICKNESS] = system('grep NELEM_PML_THICKNESS ../backup/Par_file.part | cut -d = -f 2');
-NELEM_PML_THICKNESS = str2num(NELEM_PML_THICKNESS);
+arg_list = argv ();
 
+if length(arg_list) > 0
+  filter_type = arg_list{1};
+  filter_dimension = arg_list{2};
+else
+  error("Please input filter type and filter dimension.")
+end
+
+switch filter_type
+case 'SAW'
+zmax = 0;
+zmin = -10.0E-6;
+case 'BAW'
+otherwise
+error('Wrong filter type!')
+end
+
+switch filter_dimension
+case '2D'
 [xminStatus xmin] = system('grep xmin ../backup/Par_file.part | cut -d = -f 2');
 xmin = str2num(xmin);
 
@@ -20,32 +37,36 @@ xNumber = nx + 1;
 dx = (xmax - xmin)/nx;
 x=linspace(xmin,xmax,xNumber);
 
-%zmin = xmin;
-%zmax = xmax;
-zmin=-3600;
-zmax = 0;
 dz = dx;
-
 nz = round((zmax - zmin)/dz);
 
+ymin = 0;
+ymax = 0;
+ny = 1;
+dy=dx;
+
 fileID = fopen(['../backup/meshInformation'],'w');
-fprintf(fileID, 'xmin = %f\n', xmin);
-fprintf(fileID, 'zmin = %f\n', zmin);
+fprintf(fileID, 'xmin = %g\n', xmin);
+fprintf(fileID, 'ymin = %g\n', ymin);
+fprintf(fileID, 'zmin = %g\n', zmin);
 
 fprintf(fileID, '\n');
 
-fprintf(fileID, 'xmax = %f\n', xmax);
-fprintf(fileID, 'zmax = %f\n', zmax);
+fprintf(fileID, 'xmax = %g\n', xmax);
+fprintf(fileID, 'ymax = %g\n', ymax);
+fprintf(fileID, 'zmax = %g\n', zmax);
 
 fprintf(fileID, '\n');
 
-fprintf(fileID, 'dx = %f\n', dx);
-fprintf(fileID, 'dz = %f\n', dz);
+fprintf(fileID, 'dx = %g\n', dx);
+fprintf(fileID, 'dy = %g\n', dy);
+fprintf(fileID, 'dz = %g\n', dz);
 
-fprintf(fileID, '\n');
-
-fprintf(fileID, 'nx = %i\n', nx);
-fprintf(fileID, 'nz = %i\n', nz);
+%fprintf(fileID, '\n');
+%
+%fprintf(fileID, 'nx = %i\n', nx);
+%fprintf(fileID, 'ny = %i\n', ny);
+%fprintf(fileID, 'nz = %i\n', nz);
 fclose(fileID);
 
 interfaces = [zmin zmax];
@@ -63,13 +84,18 @@ for ninterface = [1:length(interfaces)]
   fprintf(fileID, '%i\n', xNumber)
   fprintf(fileID, '%s\n', '#')
   for ix = [1:xNumber]
-    fprintf(fileID, '%f %f\n', [x(ix), subInterfaces(ninterface,ix)])
+    fprintf(fileID, '%g %g\n', [x(ix), subInterfaces(ninterface,ix)])
   end
   fprintf(fileID, '%s\n', '#')
 end
 
-for nlayer = [1:length(layers)] 
+for nlayer = [1:length(layers)]
   fprintf(fileID, '%i\n', layers(nlayer))
   fprintf(fileID, '%s\n', '#')
 end
 fclose(fileID);
+
+case '3D'
+otherwise
+error('Wrong flter dimension!')
+end

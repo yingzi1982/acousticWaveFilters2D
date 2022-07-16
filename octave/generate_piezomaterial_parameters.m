@@ -1,5 +1,4 @@
-function [xmin ymin zmin xmax ymax zmax dx dy dz dielecctric_constant piezoelectric_constant elastic_constant density]=generate_piezomaterial_parameters()
-
+function [piezo]=generate_piezomaterial_parameters(filter_dimension)
 meshInformation_file ='../backup/meshInformation';
 
 [xmin_status xmin] = system(['grep xmin ' meshInformation_file ' | cut -d = -f 2']);
@@ -26,10 +25,15 @@ dy = str2num(dy);
 [dz_status dz] = system(['grep dz ' meshInformation_file ' | cut -d = -f 2']);
 dz = str2num(dz);
 
+x = [xmin:dx:xmax];
+y = [ymin:dy:ymax];
+z = [zmin:dz:zmax];
+
+
 dielecctric_constant=...
 [85.2    0    0;
     0 85.2    0;
-    0    0 28.7].*8.55.*10.^(-12);
+    0    0 28.7].*8.55.*(10.^(-12)=;
 
 piezoelectric_constant=...
 [    0    0   0    0 3.83 -2.37; ...
@@ -45,6 +49,58 @@ elastic_constant=...
      0      0     0      0 0.085 0.728].*10^(11); 
 
 density = 4650;
+
+Vp = 7000;
+Vs = 4500;
+QKappa = 9999;
+QMu    = 9999;
+
 if ~issymmetric(elastic_constant)
   error(['The elastic contant matrix is not symmetric!'])
 end
+
+switch filter_dimension
+case '2D'
+z_top_interface = zmax*ones(size(x));
+z_bottom_interface = zmin*ones(size(x));
+
+x_left_interface = xmin*ones(size(z));
+x_right_interface = xmax*ones(size(z));
+
+
+top_interface    = [transpose(x) transpose(z_top_interface)];
+right_interface  = [transpose(x_right_interface) transpose(z)];
+bottom_interface = [transpose(x) transpose(z_bottom_interface)];
+left_interface   = [transpose(x_left_interface) transpose(z)];
+
+polygon = [top_interface;flipud(right_interface);flipud(bottom_interface);left_interface];
+dlmwrite('../backup/polygon_piezo',polygon,' ');
+case '3D'
+otherwise
+error('Wrong filter dimension!')
+end
+
+%xmin ymin zmin xmax ymax zmax dx dy dz dielecctric_constant piezoelectric_constant elastic_constant density
+piezo.xmin = xmin;
+piezo.ymin = ymin;
+piezo.zmin = zmin;
+
+piezo.xmax = xmax;
+piezo.ymax = ymax;
+piezo.zmax = zmax;
+
+piezo.dx = dx;
+piezo.dy = dy;
+piezo.dz = dz;
+
+piezo.dielecctric_constant = dielecctric_constant;
+piezo.piezoelectric_constant = piezoelectric_constant;
+piezo.elastic_constant = elastic_constant;
+piezo.density = density;
+
+piezo.Vp = Vp;
+piezo.Vs = Vs;
+piezo.QKappa = QKappa;
+piezo.QMu = QMu;
+
+piezo.polygon = polygon;
