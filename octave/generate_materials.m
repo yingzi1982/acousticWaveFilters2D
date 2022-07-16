@@ -25,8 +25,8 @@ QMu = piezo.QMu;
 
 switch filter_dimension
 case '2D'
-%piezo_material = [2 rho c(1,1) c(1,3) c(1,5) c(3,3) c(3,5) c(5,5) c(1,2) c(2,3) c(2,5) 0 0 0];
-piezo_material = [1 rho Vp Vs 0 0  QKappa QMu  0 0 0 0 0 0];
+piezo_material = [2 rho c(1,1) c(1,3) c(1,5) c(3,3) c(3,5) c(5,5) c(1,2) c(2,3) c(2,5) 0 0 0];
+%piezo_material = [1 rho Vp Vs 0 0  QKappa QMu  0 0 0 0 0 0];
 
 materials = [piezo_material];
 
