@@ -25,13 +25,13 @@ dy = str2num(dy);
 [dz_status dz] = system(['grep dz ' meshInformation_file ' | cut -d = -f 2']);
 dz = str2num(dz);
 
-nx = round((xmax-xmin)/dx);
-ny = round((ymax-ymin)/dy);
-nz = round((zmax-zmin)/dz);
+nx = round((xmax-xmin)/dx+1);
+ny = round((ymax-ymin)/dy+1);
+nz = round((zmax-zmin)/dz+1);
 
-x = linspace(xmin+dx,xmax-dx,nx);
-y = linspace(ymin+dy,ymax-dy,ny);
-z = linspace(zmin+dz,zmax-dz,nz);
+x = linspace(xmin,xmax,nx);
+y = linspace(ymin,ymax,ny);
+z = linspace(zmin,zmax,nz);
 
 dielecctric_constant=...
 [85.2    0    0;...
