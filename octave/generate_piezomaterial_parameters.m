@@ -25,10 +25,13 @@ dy = str2num(dy);
 [dz_status dz] = system(['grep dz ' meshInformation_file ' | cut -d = -f 2']);
 dz = str2num(dz);
 
-x = [xmin:dx:xmax];
-y = [ymin:dy:ymax];
-z = [zmin:dz:zmax];
+nx = round((xmax-xmin)/dx);
+ny = round((ymax-ymin)/dy);
+nz = round((zmax-zmin)/dz);
 
+x = linspace(xmin+dx,xmax-dx,nx);
+y = linspace(ymin+dy,ymax-dy,ny);
+z = linspace(zmin+dz,zmax-dz,nz);
 
 dielecctric_constant=...
 [85.2    0    0;...
@@ -47,6 +50,13 @@ elastic_constant=...
  0.085 -0.085     0  0.595     0     0;...
      0      0     0      0 0.595 0.085;...
      0      0     0      0 0.085 0.728]*(1.0e11); 
+%elastic_constant=...
+%[2.030  0.573 0.752      0     0     0;...
+ %0.573  2.030 0.752      0     0     0;...
+ %0.752  0.752 2.424      0     0     0;...
+     %0      0     0  0.595     0     0;...
+     %0      0     0      0 0.595     0;...
+     %0      0     0      0     0 0.728]*(1.0e11); 
 
 density = 4650;
 
@@ -68,12 +78,13 @@ x_left_interface = xmin*ones(size(z));
 x_right_interface = xmax*ones(size(z));
 
 
-top_interface    = [transpose(x) transpose(z_top_interface)];
-right_interface  = [transpose(x_right_interface) transpose(z)];
-bottom_interface = [transpose(x) transpose(z_bottom_interface)];
-left_interface   = [transpose(x_left_interface) transpose(z)];
+%top_interface    = [transpose(x) transpose(z_top_interface)];
+%right_interface  = [transpose(x_right_interface) transpose(z)];
+%bottom_interface = [transpose(x) transpose(z_bottom_interface)];
+%left_interface   = [transpose(x_left_interface) transpose(z)];
+%polygon = [top_interface;flipud(right_interface);flipud(bottom_interface);left_interface];
 
-polygon = [top_interface;flipud(right_interface);flipud(bottom_interface);left_interface];
+polygon = [xmin zmax; xmax zmax; xmax zmin; xmin zmin];
 dlmwrite('../backup/polygon_piezo',polygon,' ');
 case '3D'
 otherwise
@@ -92,6 +103,14 @@ piezo.zmax = zmax;
 piezo.dx = dx;
 piezo.dy = dy;
 piezo.dz = dz;
+
+piezo.nx = nx;
+piezo.ny = ny;
+piezo.nz = nz;
+
+piezo.x = x;
+piezo.y = y;
+piezo.z = z;
 
 piezo.dielecctric_constant = dielecctric_constant;
 piezo.piezoelectric_constant = piezoelectric_constant;

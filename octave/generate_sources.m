@@ -15,6 +15,9 @@ end
 ATTENUATION_f0_REFERENCE = str2num(ATTENUATION_f0_REFERENCE);
 f0 = ATTENUATION_f0_REFERENCE;
 
+[NELEM_PML_THICKNESS_status NELEM_PML_THICKNESS] = system('grep NELEM_PML_THICKNESS ../backup/Par_file.part | cut -d = -f 2');
+NELEM_PML_THICKNESS = str2num(NELEM_PML_THICKNESS);
+
 [nt_status nt] = system('grep ^NSTEP\  ../backup/Par_file.part | cut -d = -f 2');
 nt = str2num(nt);
 [dt_status dt] = system('grep ^DT ../backup/Par_file.part | cut -d = -f 2');
@@ -60,7 +63,28 @@ bodyforce_z = bodyforce(:,2);
 bodyforce_rho = bodyforce(:,3);
 bodyforce_theta = bodyforce(:,4);
 
-selection_index = find(bodyforce_rho/max(bodyforce_rho)>=.05);
+[absorbbottom_status absorbbottom] = system('grep ^absorbbottom\  ../backup/Par_file.part | cut -d = -f 2');
+[absorbright_status   absorbright] = system('grep ^absorbright\  ../backup/Par_file.part | cut -d = -f 2');
+[absorbtop_status       absorbtop] = system('grep ^absorbtop\  ../backup/Par_file.part | cut -d = -f 2');
+[absorbleft_status     absorbleft] = system('grep ^absorbleft\  ../backup/Par_file.part | cut -d = -f 2');
+
+if strcmp ('.true.', strtrim(absorbbottom))
+absorbbottom
+end
+
+if strcmp ('.true.', strtrim(absorbright))
+absorbright
+end
+
+if strcmp ('.true.', strtrim(absorbtop))
+absorbtop
+end
+
+if strcmp ('.true.', strtrim(absorbleft))
+absorbleft
+end
+
+selection_index = find(bodyforce_rho/max(bodyforce_rho)>=.01);
 
 source_number = length(selection_index);
 source_size = size(selection_index);

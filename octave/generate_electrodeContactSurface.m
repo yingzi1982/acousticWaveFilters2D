@@ -13,25 +13,12 @@ else
 end
 
 [piezo]=generate_piezomaterial_parameters(filter_dimension);
-xmin = piezo.xmin;
-ymin = piezo.ymin;            
-zmin = piezo.zmin;            
+x = piezo.x;
+y = piezo.y;
+z = piezo.z;
 
-xmax = piezo.xmax;            
-ymax = piezo.ymax;            
-zmax = piezo.zmax;            
-
-dx = piezo.dx;                
-dy = piezo.dy;                
-dz = piezo.dz;                
-
-nx = round((xmax-xmin)/dx+1);
-ny = round((ymax-ymin)/dy+1);
-nz = round((zmax-zmin)/dz+1);
-
-x = linspace(xmin,xmax,nx);
-y = linspace(xmin,xmax,nx);
-z = linspace(zmin,zmax,nz);
+dx = piezo.dx;
+zmax = piezo.zmax;
 %---------------------------------
 
 unit_length = 1.0E-6;
@@ -45,6 +32,7 @@ finger_period = 2*(finger_width+finger_gap);
 period_width = (finger_width +finger_gap)*2; % positive+gap+negative+gap
   switch filter_dimension
   case '2D'
+
   single_negative_finger_x = [-finger_gap/2-finger_width:dx:-finger_gap/2];
   single_positive_finger_x = [ finger_gap/2:dx:finger_width+finger_gap/2];
 

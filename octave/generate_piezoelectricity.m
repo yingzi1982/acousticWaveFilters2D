@@ -13,25 +13,17 @@ else
 end
 
 [piezo]=generate_piezomaterial_parameters(filter_dimension);
-xmin = piezo.xmin;
-ymin = piezo.ymin;            
-zmin = piezo.zmin;            
-
-xmax = piezo.xmax;            
-ymax = piezo.ymax;            
-zmax = piezo.zmax;            
-
 dx = piezo.dx;                
 dy = piezo.dy;                
 dz = piezo.dz;                
 
-nx = round((xmax-xmin)/dx+1);
-ny = round((ymax-ymin)/dy+1);
-nz = round((zmax-zmin)/dz+1);
+nx = piezo.nx;                
+ny = piezo.ny;                
+nz = piezo.nz;                
 
-x = linspace(xmin,xmax,nx);
-y = linspace(xmin,xmax,nx);
-z = linspace(zmin,zmax,nz);
+x = piezo.x;
+y = piezo.y;
+z = piezo.z;
 
 piezoelectric_constant = piezo.piezoelectric_constant;
 
