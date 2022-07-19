@@ -56,12 +56,12 @@ s(1:length(s_cut)) = s_cut;
 
 switch filter_dimension 
 case '2D'
-bodyforce=load('../backup/bodyforce');
+force=load('../backup/force');
 
-bodyforce_x = bodyforce(:,1);
-bodyforce_z = bodyforce(:,2);
-bodyforce_rho = bodyforce(:,3);
-bodyforce_theta = bodyforce(:,4);
+force_x = force(:,1);
+force_z = force(:,2);
+force_rho = force(:,3);
+force_theta = force(:,4);
 
 [absorbbottom_status absorbbottom] = system('grep ^absorbbottom\  ../backup/Par_file.part | cut -d = -f 2');
 [absorbright_status   absorbright] = system('grep ^absorbright\  ../backup/Par_file.part | cut -d = -f 2');
@@ -84,16 +84,16 @@ if strcmp ('.true.', strtrim(absorbleft))
 absorbleft
 end
 
-selection_index = find(bodyforce_rho/max(bodyforce_rho)>=.01);
+selection_index = find(force_rho/max(force_rho)>=.01);
 
 source_number = length(selection_index);
 source_size = size(selection_index);
 
-xs = bodyforce_x(selection_index);
-zs = bodyforce_z(selection_index);
+xs = force_x(selection_index);
+zs = force_z(selection_index);
 
-anglesource = rad2deg(bodyforce_theta(selection_index) - pi/2);
-factor = bodyforce_rho(selection_index);
+anglesource = rad2deg(force_theta(selection_index) - pi/2);
+factor = force_rho(selection_index);
 
 source_surf                     = [repmat({'.false.'},1,source_number)];
 source_type                     = [1]*ones(source_size);

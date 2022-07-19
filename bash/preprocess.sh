@@ -10,11 +10,8 @@ sed -i "s/$oldString/$newString/g" ../backup/Par_file.part
 
 ./create_model.sh $filter_type $filter_dimension
 
-piezoelectric_effect=converse
-./create_piezoelectricity.sh $filter_type $filter_dimension $piezoelectric_effect
+./create_piezoelectricity.sh $filter_type $filter_dimension converse
 
-./octave.sh generate_sources.m $filter_dimension
+./create_sources.sh $filter_dimension
 
-./octave.sh generate_stations.m  $filter_type $filter_dimension
-
-#./gmt.sh preprocess
+./create_stations.sh  $filter_type $filter_dimension

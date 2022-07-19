@@ -53,6 +53,7 @@ case '2D'
 
   bodyforce_x = (stress1partialx + stress3partialz);
   bodyforce_z = (stress2partialz + stress3partialx);
+
   [bodyforce_theta,bodyforce_rho] = cart2pol(bodyforce_x,bodyforce_z);
 
   bodyforce=[reshape(X,[],1) reshape(Z,[],1) reshape(bodyforce_rho,[],1) reshape(bodyforce_theta,[],1) reshape(bodyforce_x,[],1) reshape(bodyforce_z,[],1)];
@@ -61,6 +62,16 @@ case '2D'
   mask_piezo = in | on;
   bodyforce = bodyforce(mask_piezo,:);
 
+  force_x = bodyforce_x*dx*dz;
+  force_z = bodyforce_z*dx*dz;
+
+  [force_theta,force_rho] = cart2pol(force_x,force_z);
+
+  force=[reshape(X,[],1) reshape(Z,[],1) reshape(force_rho,[],1) reshape(force_theta,[],1) reshape(force_x,[],1) reshape(force_z,[],1)];
+  polygon_piezo = piezo.polygon;
+  [in,on] = inpolygon (force(:,1), force(:,2), polygon_piezo(:,1), polygon_piezo(:,2));
+  mask_piezo = in | on;
+  force = force(mask_piezo,:);
 case '3D'
   %[X Y Z] = meshgrid(x,y,z);
   %electric=dlmread('../backup/electric');
@@ -101,3 +112,4 @@ error('Wrong piezoelectric effect!')
 
 end
 dlmwrite('../backup/bodyforce',bodyforce,' ');
+dlmwrite('../backup/force',force,' ');
