@@ -22,7 +22,7 @@ coordinate=`cat ../backup/SA_coordinate`
 snapshot_x=`cat ../backup/SA_snapshots_x | awk -v i="$i" '{print $i}'`
 snapshot_z=`cat ../backup/SA_snapshots_z | awk -v i="$i" '{print $i}'`
 paste <(echo "$coordinate") <(echo "$snapshot_x")  <(echo "$snapshot_z") --delimiters ' ' | awk '{print $1,$2,0,0,$3,$4}' > $snapshot_file
-./plot2D.sh $snapshot V2  '-CGMT_seis.cpt -Iz'  1E-12 m $dx2 X 1E-6 m $dz2 Z 1E-6 m
+./plot2D.sh $snapshot V2  '-CGMT_seis.cpt -Iz'  1E-11 m $dx2 X 1E-6 m $dz2 Z 1E-6 m
 rm $snapshot_file
 done
 exit

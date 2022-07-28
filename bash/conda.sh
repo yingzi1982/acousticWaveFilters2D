@@ -1,5 +1,6 @@
 #!/bin/bash 
 
+source /pdc/software/21.11/eb/software/Anaconda3/2021.05/bin/activate
 pkg_name=ghostscript
 
 conda create --name $pkg_name
