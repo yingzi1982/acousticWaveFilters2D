@@ -21,7 +21,7 @@ traceImageFile=../backup/$traceImage
 traceImage_zFile=../backup/$traceImage_z
 tmax=4.0e-8
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$4}' > $traceImage_zFile
-./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt' 1E-11 m $dx X 1E-6 m $dt Time 1E-9 s off
+./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 1E-11 m $dx X 1E-6 m $dt Time 1E-9 s off
 rm $traceImage_zFile
 exit
 #--------------------------------------------------
