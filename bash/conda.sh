@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-pkg_name=xxx
+pkg_name=ghostscript
 
 conda create --name $pkg_name
 conda activate $pkg_name
