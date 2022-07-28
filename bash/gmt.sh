@@ -27,9 +27,10 @@ rm $snapshot_file
 done
 exit
 
-module load PDC ghostscript
+module load PDC ghostscript PrgEnv-gnu
 cd ../figures
-snapshot_file_list=`ls -v snapshots_*pdf`
+snapshot_file_list=`ls -v snapshot_*_V2.pdf`
 gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=snapshots.pdf $snapshot_file_list
-rm -f snapshots_*.pdf
-module unload PDC ghostscript
+rm -f snapshot_*_V2.pdf
+module unload PDC ghostscript PrgEnv-gnu
+
