@@ -15,27 +15,19 @@ dt=2.0e-10
 #./plot2DField.sh bodyforce V2  '-CGMT_seis.cpt -Iz'  1E13 N/m@+2@+ $dx X 1E-6 m $dz Z 1E-6 m on
 
 #--------------------------------------------------
-#traceImage=LA_trace_image
-#traceImage_x=$traceImage\_x
-#traceImage_z=$traceImage\_z
-#traceImageFile=../backup/$traceImage
-#traceImage_xFile=../backup/$traceImage_x
-#traceImage_zFile=../backup/$traceImage_z
-#tmax=4.0e-8
-#cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$3}' > $traceImage_xFile
-#cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$4}' > $traceImage_zFile
-#./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 1E-11 m $dx X 1E-6 m $dt Time 1E-9 s off
-#./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 1E-11 m $dx X 1E-6 m $dt Time 1E-9 s off
-#rm $traceImage_xFile
-#rm $traceImage_zFile
 traceImage=LA_trace_image
-traceImage2=LA_trace_image2
+traceImage_x=$traceImage\_x
+traceImage_z=$traceImage\_z
 traceImageFile=../backup/$traceImage
-traceImageFile2=../backup/$traceImage2
+traceImage_xFile=../backup/$traceImage_x
+traceImage_zFile=../backup/$traceImage_z
 tmax=4.0e-8
-cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,0,0,$3,$4}' > $traceImageFile2
-./plot2DField.sh $traceImage2 V2 '-CGMT_gray.cpt -Iz' 1E-11 m $dx X 1E-6 m $dt Time 1E-9 s off
-rm $traceImageFile2
+cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$3}' > $traceImage_xFile
+cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$4}' > $traceImage_zFile
+./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 1E-11 m $dx X 1E-6 m $dt Time 1E-9 s off
+./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 1E-11 m $dx X 1E-6 m $dt Time 1E-9 s off
+rm $traceImage_xFile
+rm $traceImage_zFile
 exit
 #--------------------------------------------------
 
