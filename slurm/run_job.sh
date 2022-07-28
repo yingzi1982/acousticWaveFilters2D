@@ -1,9 +1,9 @@
 #!/bin/bash 
 
-#SBATCH -A ngear019b #ucd01 dias01 nuig02 ngear015c ngear019b
-##SBATCH -p DevQ # DevQ: 4 nodes x 1 hours; ProdQ: 40 nodes x 72 hours
-#SBATCH -N 1
-#SBATCH -t 20:00:00
+#SBATCH -A snic2022-22-620 #pdc-test-2022
+#SBATCH -p shared #main long shared memory
+#SBATCH -c 1
+#SBATCH -t 5:00:00
 #SBATCH -o output.txt
 #SBATCH -e error.txt
 #SBATCH --mail-user=yingzi.ying@me.com
@@ -11,6 +11,10 @@
 
 #cd $SLURM_SUBMIT_DIR
 
+filter_type=SAW
+filter_dimension=2D
+
 cd ../bash
-./preprocess.sh
-#./postprocess.sh
+#./preprocess.sh $filter_type $filter_dimension
+#./specfem.sh $filter_dimension
+./postprocess.sh $filter_type $filter_dimension

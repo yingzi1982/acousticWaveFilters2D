@@ -15,8 +15,8 @@ case $filter_dimension in
 #----------------------------------
 2D)
 cp -r ../DATA/ $workingDir
-cp -r ../xmeshfem2D $workingDir
-cp -r ../xspecfem2D $workingDir
+cp -r ../bin/xmeshfem2D $workingDir
+cp -r ../bin/xspecfem2D $workingDir
 
 cd $workingDir
 

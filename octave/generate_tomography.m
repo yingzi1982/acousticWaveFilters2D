@@ -53,7 +53,7 @@ if strcmp(readMeshFromFile,'yes')
   %x_mesh = reshape(reshape(x_mesh,[],1),nz,nx);
   %z_mesh = reshape(reshape(z_mesh,[],1),nz,nx);
 else
-  disp(['creating regular mesh'])
+  %disp(['creating regular mesh'])
   x_mesh = [xmin+dx/2:dx:xmax-dx/2];
   z_mesh = [zmin+dz/2:dz:zmax-dz/2];
 

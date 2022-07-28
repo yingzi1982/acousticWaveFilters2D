@@ -2,12 +2,11 @@
 
 #SBATCH -A snic2022-22-620 #pdc-test-2022
 #SBATCH -p main #main long shared memory
-#SBATCH -J  specfem
-#SBATCH -N 2
-#SBATCH -t 10:00:00
+#SBATCH -J specfem
+#SBATCH -t 3:00:00
 #SBATCH -o output.txt
 #SBATCH -e error.txt
-##SBATCH --ntasks-per-node=128
+#SBATCH -N 1
 #SBATCH --mail-user=yingzi.ying@me.com
 #SBATCH --mail-type=ALL
 
@@ -19,4 +18,4 @@ filter_dimension=2D
 cd ../bash
 ./preprocess.sh $filter_type $filter_dimension
 ./specfem.sh $filter_dimension
-#./postprocess.sh
+#./postprocess.sh $filter_type $filter_dimension

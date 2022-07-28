@@ -4,68 +4,133 @@ clear all
 close all
 clc
 
-CARRAY_flag =1;
+arg_list = argv ();
+if length(arg_list) > 0
+  filter_type = arg_list{1};
+  filter_dimension = arg_list{2};
+else
+  error("Please input filter type and filter dimension.")
+end
 
-backup_folder=['../backup/'];
-DATA_folder=['../DATA/'];
-%signal_folder=['../OUTPUT_FILES/'];
-signal_folder=['/ichec/work/ngear019b/yingzi/18A/OUTPUT_FILES/'];
+[runningNameStatus runningName] = system('grep ^title ../DATA/Par_file | cut -d = -f 2');
+signal_folder=['/cfs/klemming/projects/snic/snic2022-22-620/yingzi/' strtrim(runningName) '/OUTPUT_FILES/'];
 
-%receiver = load([backup_folder 'receiver']);
+%backup_folder=['../backup/'];
 
-source_signal = load([backup_folder 'plot_source_time_function.txt']);
-t = source_signal(:,1);
-
-[ATTENUATION_f0_REFERENCEStatus ATTENUATION_f0_REFERENCE] = system('grep ^ATTENUATION_f0_REFERENCE ../backup/Par_file.part | cut -d = -f 2');
-ATTENUATION_f0_REFERENCE = str2num(ATTENUATION_f0_REFERENCE);
-f0 = ATTENUATION_f0_REFERENCE;
-
-resample_rate=1;
+time_resample_rate=2;
+station_resample_rate=2;
 
 startRowNumber=0;
 startColumnNumber=1;
 
-%----------------------------
-
-fileID = fopen([DATA_folder 'STATIONS']);
+fileID = fopen(['../DATA/STATIONS']);
 station = textscan(fileID,'%s %s %f %f %f %f');
 fclose(fileID);
 
 stationName = station{1};
 networkName = station{2};
-station_x = station{3};
-station_z = station{4};
-[station_theta,station_rho] = cart2pol(station_x,station_z);
-
-
+longorUTM = station{3};
+latorUTM = station{4};
+elevation = station{5};
+burial = station{6};
 stationNumber = length(stationName);
-band='.PRE.semp';
+band_x='.BXX.semd';
+band_y='.BXY.semd';
+band_z='.BXZ.semd';
+
+switch filter_type
+case 'SAW'
+
+switch filter_dimension
+case '2D'
+
+LA_flag =1;
+SA_flag=1;
+
 %------------------------------------
-if CARRAY_flag
-  CARRAY_index=find(strcmp("CARRAY",networkName));
-  CARRAY_stationNumber=length(CARRAY_index);
+if LA_flag
+  LA_index=find(strcmp("LA",networkName));
+  LA_index = LA_index(1:station_resample_rate:end);
 
+  LA_stationNumber=length(LA_index);
 
-  CARRAY_x = station_x(CARRAY_index);
-  CARRAY_z = station_z(CARRAY_index);
+  LA_range = longorUTM(LA_index);
 
-  CARRAY=[];
+  t = dlmread([signal_folder networkName{LA_index(1)} '.' stationName{LA_index(1)} band_x],'');
+  t = t(:,1);
+  t = t - t(1);
 
-  for nStation = 1:CARRAY_stationNumber
-    signal = dlmread([signal_folder networkName{CARRAY_index(nStation)} '.' stationName{CARRAY_index(nStation)} band],'',startRowNumber,startColumnNumber);
-    CARRAY = [CARRAY signal((1:resample_rate:end))];
+  LA_combined_signal_x = [];
+  LA_combined_signal_z = [];
+
+  for nStation = 1:LA_stationNumber
+    signal_x = dlmread([signal_folder networkName{LA_index(nStation)} '.' stationName{LA_index(nStation)} band_x],'',startRowNumber,startColumnNumber);
+    signal_z = dlmread([signal_folder networkName{LA_index(nStation)} '.' stationName{LA_index(nStation)} band_z],'',startRowNumber,startColumnNumber);
+    LA_combined_signal_x = [LA_combined_signal_x signal_x((1:time_resample_rate:end))];
+    LA_combined_signal_z = [LA_combined_signal_z signal_z((1:time_resample_rate:end))];
   end
-
- %polar_response = transpose(max(abs(CARRAY)));
- %polar_response = polar_response/max(polar_response)
- %polar_response = 20*log10(polar_response);
-
- polar_response = octavePSD([t(1:resample_rate:end) CARRAY],f0);
- polar_response = transpose(polar_response);
- polar_response = polar_response - max(polar_response);
-
- polar_response = [rad2deg(cart2pol([CARRAY_x CARRAY_z])) polar_response];
- dlmwrite('../backup/polar_response',polar_response,' ');
+LA_combined_signal_x = [t(1:time_resample_rate:end) LA_combined_signal_x];
+LA_combined_signal_z = [t(1:time_resample_rate:end) LA_combined_signal_z];
+LA_nt = 500;
+[LA_trace_image_x]=trace2image(LA_combined_signal_x,LA_nt,LA_range);
+[LA_trace_image_z]=trace2image(LA_combined_signal_z,LA_nt,LA_range);
+dlmwrite('../backup/LA_trace_image',[LA_trace_image_x LA_trace_image_z(:,end)],' ');
 end
 
 %------------------------------------
+if SA_flag
+  SA_set = {'SA'};
+  snapshot_start = 500;
+  snapshot_step = 500;
+  snapshot_end=length(t);
+  snapshot_index = snapshot_start:snapshot_step:snapshot_end;
+  snapshot_number = length(snapshot_index);
+  dlmwrite('../backup/snapshot_time',t(snapshot_index),' ');
+
+  for nSA=1:length(SA_set)
+    SA_name=SA_set{nSA};
+    SA_index=find(strcmp(SA_name,networkName));
+    SA_stationNumber=length(SA_index);
+
+    dlmwrite(['../backup/' SA_name '_coordinate'],[longorUTM(SA_index) latorUTM(SA_index)],' ');
+
+    segementLength=100;
+    segementNumber=ceil(SA_stationNumber/segementLength);
+
+    snapshots_x = [];
+    snapshots_z = [];
+
+    for nSegement = 1:segementNumber
+      SA_x=[];
+      SA_z=[];
+    for nSegementStation = 1:segementLength
+      nStation = nSegementStation + (nSegement -1)*segementLength;
+    if nStation<=SA_stationNumber
+      signal_x = dlmread([signal_folder networkName{SA_index(nStation)} '.' stationName{SA_index(nStation)} band_x],'',startRowNumber,startColumnNumber);
+      signal_z = dlmread([signal_folder networkName{SA_index(nStation)} '.' stationName{SA_index(nStation)} band_z],'',startRowNumber,startColumnNumber);
+      SA_x = [SA_x signal_x(snapshot_index)];
+      SA_z = [SA_z signal_z(snapshot_index)];
+    end
+    end
+    snapshots_x=[snapshots_x;transpose(SA_x)];
+    snapshots_z=[snapshots_z;transpose(SA_z)];
+    end
+    dlmwrite(['../backup/' SA_name '_snapshots_x'],snapshots_x,' ');
+    dlmwrite(['../backup/' SA_name '_snapshots_z'],snapshots_z,' ');
+  end
+end
+case '3D'
+otherwise
+error('Wrong filter dimension!')
+end
+
+case 'BAW'
+switch filter_dimension
+case '2D'
+case '3D'
+otherwise
+error('Wrong filter dimension!')
+end
+otherwise
+error('Wrong filter type!')
+end

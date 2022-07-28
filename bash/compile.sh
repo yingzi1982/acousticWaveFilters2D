@@ -1,5 +1,5 @@
 #!/bin/bash
-module load PrgEnv-cray
+#module load PrgEnv-cray
 
 # configure
 echo ">>configuring"
@@ -8,7 +8,7 @@ cd $currentdir
 cd ../../../
 #./configure CC=icc FC=ifort MPIFC=mpiifort --with-mpi > configure.log
 #./configure FC=gfortran CC=gcc MPIFC=mpif90 --with-mpi > configure.log
-./configure FC=ftn MPIFC=ftn CC=cc --with-mpi > configure.log
+./configure MPI_INC="${CRAY_MPICH2_DIR}/include" --with-mpi MPIFC=ftn MPICC=ccc FC=ftn CC=cc CXX=cc #> configure.log
 
 # make
 make clean > making.log
@@ -21,9 +21,9 @@ echo "made xspecfem2D"
 # link
 echo ">>coping executables"
 cd $currentdir
-cp -f ../../../bin/xmeshfem2D ../
+cp -f ../../../bin/xmeshfem2D ../bin
 echo "linked xmeshfem2D"
-cp -f ../../../bin/xspecfem2D ../
+cp -f ../../../bin/xspecfem2D ../bin
 echo "linked xspecfem2D"
 
-module unload PrgEnv-cray
+#module unload PrgEnv-cray

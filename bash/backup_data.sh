@@ -1,7 +1,7 @@
 #!/bin/bash
-#module load gmt
 
-workingDir=/ichec/work/ngear019b/yingzi/18A/
+runningName=`grep ^title ../DATA/Par_file | cut -d = -f 2 | sed -r "s/( )+//g"`
+workingDir=/cfs/klemming/projects/snic/snic2022-22-620/yingzi/$runningName/
 output_folder=$workingDir\OUTPUT_FILES/
 
 backup_folder=../backup/

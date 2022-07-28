@@ -38,11 +38,11 @@ nx = round((xmax-xmin)/dx+1);
 ny = round((ymax-ymin)/dy+1);
 nz = round((zmax-zmin)/dz+1);
 
-%x = linspace(xmin,xmax,nx);
-%y = linspace(xmin,xmax,nx);
-%z = linspace(zmin,zmax,nz);
+x = linspace(xmin,xmax,nx);
+y = linspace(xmin,xmax,nx);
+z = linspace(zmin,zmax,nz);
 
-resample_rate = 2;
+resample_rate = 1;
 [NELEM_PML_THICKNESS_status NELEM_PML_THICKNESS] = system('grep NELEM_PML_THICKNESS ../backup/Par_file.part | cut -d = -f 2');
 NELEM_PML_THICKNESS = str2num(NELEM_PML_THICKNESS);
 
@@ -51,9 +51,13 @@ case 'SAW'
 switch filter_dimension
 case '2D'
 LA_flag = 1;
-SA_flag = 0;
+SA_flag = 1;
 
-[x_station] = [xmin:dx*resample_rate:xmax];
+LA_resample_rate = 1;
+SA_resample_rate = 2;
+
+if(LA_flag)
+[x_station] = x(1:LA_resample_rate:end);
 [z_station] = [zmax];
 
 [x_station z_station] = ndgrid(x_station,z_station);
@@ -69,14 +73,14 @@ stationNumber = length(x_station);
 fileID = fopen(['../DATA/STATIONS'],'w');
 for nSTATIONS = 1:stationNumber
   stationName = ['S' int2str(nSTATIONS)];
-  if(LA_flag)
     fprintf(fileID,'%s  %s  %g  %g  %g  %g\n',stationName,networkName,x_station(nSTATIONS),z_station(nSTATIONS),elevation_station(nSTATIONS),burial_station(nSTATIONS));
-  end
 end
 fclose(fileID);
+end
 
-[x_station] = [xmin:dx*resample_rate:xmax];
-[z_station] = [zmin:dz*resample_rate:zmax];
+if(SA_flag)
+[x_station] = x(1:SA_resample_rate:end);
+[z_station] = z(1:SA_resample_rate:end);
 
 [x_station z_station] = ndgrid(x_station,z_station);
 
@@ -91,25 +95,23 @@ stationNumber = length(x_station);
 fileID = fopen(['../DATA/STATIONS'],'a');
 for nSTATIONS = 1:stationNumber
   stationName = ['S' int2str(nSTATIONS)];
-  if(SA_flag)
     fprintf(fileID,'%s  %s  %g  %g  %g  %g\n',stationName,networkName,x_station(nSTATIONS),z_station(nSTATIONS),elevation_station(nSTATIONS),burial_station(nSTATIONS));
-  end
 end
 fclose(fileID);
+end
 
-case 'BAW'
-otherwise
-error('Wrong filter type!') 
-end
 case '3D'
-switch filter_type
-case 'SAW'
-case 'BAW'
-otherwise
-error('Wrong filter type!') 
-end
 otherwise
 error('Wrong filter dimension!') 
 end
 
-
+case 'BAW'
+switch filter_dimension
+case '2D'
+case '3D'
+otherwise
+error('Wrong filter dimension!') 
+end
+otherwise
+error('Wrong filter type!') 
+end

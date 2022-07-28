@@ -69,22 +69,18 @@ force_theta = force(:,4);
 [absorbleft_status     absorbleft] = system('grep ^absorbleft\  ../backup/Par_file.part | cut -d = -f 2');
 
 if strcmp ('.true.', strtrim(absorbbottom))
-absorbbottom
 end
 
 if strcmp ('.true.', strtrim(absorbright))
-absorbright
 end
 
 if strcmp ('.true.', strtrim(absorbtop))
-absorbtop
 end
 
 if strcmp ('.true.', strtrim(absorbleft))
-absorbleft
 end
 
-selection_index = find(force_rho/max(force_rho)>=.01);
+selection_index = find(force_rho/max(force_rho)>=.05);
 
 source_number = length(selection_index);
 source_size = size(selection_index);

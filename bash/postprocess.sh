@@ -1,4 +1,6 @@
 #!/bin/bash
 
-./backup_data.sh
-./gmt.sh
+filter_type=$1
+filter_dimension=$2
+
+./process_data.sh $filter_type $filter_dimension
