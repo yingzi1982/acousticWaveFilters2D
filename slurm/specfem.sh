@@ -3,7 +3,7 @@
 #SBATCH -A snic2022-22-620 #pdc-test-2022
 #SBATCH -p main #main long shared memory
 #SBATCH -J specfem
-#SBATCH -t 3:00:00
+#SBATCH -t 10:00:00
 #SBATCH -o output.txt
 #SBATCH -e error.txt
 #SBATCH -N 1

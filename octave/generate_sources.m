@@ -80,7 +80,7 @@ end
 if strcmp ('.true.', strtrim(absorbleft))
 end
 
-selection_index = find(force_rho/max(force_rho)>=.05);
+selection_index = find(force_rho/max(force_rho)>=.1);
 
 source_number = length(selection_index);
 source_size = size(selection_index);
