@@ -3,4 +3,4 @@
 filter_type=$1
 filter_dimension=$2
 
-./octave.sh process_data.m $filter_type $filter_dimension
+./octave.sh combine_traces.m $filter_type $filter_dimension

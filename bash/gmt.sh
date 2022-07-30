@@ -28,7 +28,6 @@ cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$4}' > $traceI
 ./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 1E-11 m $dx X 1E-6 m $dt Time 1E-9 s on
 rm $traceImage_xFile
 rm $traceImage_zFile
-exit
 #--------------------------------------------------
 
 for i in $(seq 1 35)
