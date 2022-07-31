@@ -51,7 +51,7 @@ case 'SAW'
 switch filter_dimension
 case '2D'
 LA_flag = 1;
-SA_flag = 1;
+SA_flag = 0;
 
 LA_resample_rate = 1;
 SA_resample_rate = 2;

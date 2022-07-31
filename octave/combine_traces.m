@@ -45,7 +45,7 @@ switch filter_dimension
 case '2D'
 
 LA_flag =1;
-SA_flag=1;
+SA_flag=0;
 
 %------------------------------------
 if LA_flag
