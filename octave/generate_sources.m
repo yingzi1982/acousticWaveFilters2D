@@ -29,6 +29,7 @@ signal_type='ricker';
 switch signal_type
 case 'ricker'
 [t_cut s_cut] = ricker(f0, dt);
+%case 'sin'
 
 otherwise
 error('Wrong signal type!')

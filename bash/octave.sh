@@ -1,5 +1,6 @@
 #!/bin/bash
 #module load PDC octave/6.3.0
+#module load PDC intel-oneapi gnuplot octave
 source /pdc/software/21.11/eb/software/Anaconda3/2021.05/bin/activate
 conda activate octave7
 
@@ -13,3 +14,4 @@ cd ../octave
 
 conda deactivate
 #module unload PDC octave/6.3.0
+#module unload PDC intel-oneapi gnuplot octave

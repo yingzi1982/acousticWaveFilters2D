@@ -50,6 +50,7 @@ switch filter_type
 case 'SAW'
 switch filter_dimension
 case '2D'
+
 LA_flag = 1;
 SA_flag = 0;
 
@@ -70,7 +71,16 @@ elevation_station = zeros(size(x_station));
 burial_station = zeros(size(x_station));
 
 stationNumber = length(x_station);
-fileID = fopen(['../DATA/STATIONS'],'w');
+fileID = fopen(['../backup/STATIONS_' networkName],'w');
+for nSTATIONS = 1:stationNumber
+  stationName = ['S' int2str(nSTATIONS)];
+    fprintf(fileID,'%s  %s  %g  %g  %g  %g\n',stationName,networkName,x_station(nSTATIONS),z_station(nSTATIONS),elevation_station(nSTATIONS),burial_station(nSTATIONS));
+end
+fclose(fileID);
+
+z_station = z_station - dz;
+networkName = 'LA2';
+fileID = fopen(['../backup/STATIONS_' networkName],'w');
 for nSTATIONS = 1:stationNumber
   stationName = ['S' int2str(nSTATIONS)];
     fprintf(fileID,'%s  %s  %g  %g  %g  %g\n',stationName,networkName,x_station(nSTATIONS),z_station(nSTATIONS),elevation_station(nSTATIONS),burial_station(nSTATIONS));
@@ -92,7 +102,7 @@ elevation_station = zeros(size(x_station));
 burial_station = zeros(size(x_station));
 
 stationNumber = length(x_station);
-fileID = fopen(['../DATA/STATIONS'],'a');
+fileID = fopen(['../backup/STATIONS_' networkName],'w');
 for nSTATIONS = 1:stationNumber
   stationName = ['S' int2str(nSTATIONS)];
     fprintf(fileID,'%s  %s  %g  %g  %g  %g\n',stationName,networkName,x_station(nSTATIONS),z_station(nSTATIONS),elevation_station(nSTATIONS),burial_station(nSTATIONS));

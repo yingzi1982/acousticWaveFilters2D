@@ -14,8 +14,10 @@
 
 filter_type=SAW
 filter_dimension=2D
+LA_flag=1;
+SA_flag=0;
 
 cd ../bash
-./preprocess.sh $filter_type $filter_dimension
+#./preprocess.sh $filter_type $filter_dimension $LA_flag $SA_flag
 ./specfem.sh $filter_dimension
-#./postprocess.sh $filter_type $filter_dimension
+#./postprocess.sh $filter_type $filter_dimension $LA_flag $SA_flag
