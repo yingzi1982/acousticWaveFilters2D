@@ -18,7 +18,7 @@ signal_folder=['/cfs/klemming/projects/snic/snic2022-22-620/yingzi/' strtrim(run
 %backup_folder=['../backup/'];
 
 time_resample_rate=2;
-station_resample_rate=10;
+station_resample_rate=1;
 
 startRowNumber=0;
 startColumnNumber=1;
