@@ -48,20 +48,24 @@ LA_flag = 1;
 SA_flag = 0;
 %------------------------------------
 if LA_flag
-  LA_index=find(strcmp("LA",networkName));
-  LA2_index=find(strcmp("LA2",networkName));
+  LA_index = find(strcmp("LA",networkName));
+  LA2_index = find(strcmp("LA2",networkName));
 
   LA_index = LA_index(1:station_resample_rate:end);
   LA2_index = LA2_index(1:station_resample_rate:end);
 
-  LA_stationNumber=length(LA_index);
-  LA2_stationNumber=length(LA2_index);
+  LA_stationNumber = length(LA_index);
+  LA2_stationNumber = length(LA2_index);
+  if LA_stationNumber != LA2_stationNumber
+    error('The station numbers of arrays LA and LA2 are not equal!')
+  end
 
   LA_x = longorUTM(LA_index);
   LA2_x = longorUTM(LA2_index);
 
   LA_z = latorUTM(LA_index);
   LA2_z = latorUTM(LA2_index);
+
   LA_z = [LA2_z(1);LA_z(1)];
 
   t = dlmread([signal_folder networkName{LA_index(1)} '.' stationName{LA_index(1)} band_x],'');
@@ -88,18 +92,40 @@ if LA_flag
     LA2_combined_signal_x = [LA2_combined_signal_x signal2_x((1:time_resample_rate:end))];
     LA2_combined_signal_z = [LA2_combined_signal_z signal2_z((1:time_resample_rate:end))];
   end
-combined_signal_x = cat(3,LA2_combined_signal_x',LA_combined_signal_x');
-combined_signal_x = permute(combined_signal_x,[1 3 2]);
-
-combined_signal_z = cat(3,LA2_combined_signal_z',LA_combined_signal_z');
-combined_signal_z = permute(combined_signal_z,[1 3 2]);
-
 LA_combined_signal_together_x = [t LA_combined_signal_x];
 LA_combined_signal_together_z = [t LA_combined_signal_z];
 LA_nt = 500;
 [LA_trace_image_x]=trace2image(LA_combined_signal_together_x,LA_nt,LA_x);
 [LA_trace_image_z]=trace2image(LA_combined_signal_together_z,LA_nt,LA_x);
 dlmwrite('../backup/LA_trace_image',[LA_trace_image_x LA_trace_image_z(:,end)],' ');
+%------------------------------------
+combined_signal_x = cat(3,LA2_combined_signal_x',LA_combined_signal_x');
+combined_signal_x = permute(combined_signal_x,[1 3 2]);
+
+combined_signal_z = cat(3,LA2_combined_signal_z',LA_combined_signal_z');
+combined_signal_z = permute(combined_signal_z,[1 3 2]);
+
+[combined_signal_x_partialx, combined_signal_x_partialz, combined_signal_x_partialt] = gradient(combined_signal_x,dx,dz,dt);
+[combined_signal_z_partialx, combined_signal_z_partialz, combined_signal_z_partialt] = gradient(combined_signal_z,dx,dz,dt);
+strain1 = combined_signal_x_partialx;
+strain2 = combined_signal_z_partialz;
+strain3 = combined_signal_x_partialz + combined_signal_z_partialx;
+
+LA_strain1 = transpose(squeeze(strain1(:,2,:)));
+LA_strain2 = transpose(squeeze(strain2(:,2,:)));
+LA_strain3 = transpose(squeeze(strain3(:,2,:)));
+[piezo]=generate_piezomaterial_parameters(filter_dimension);
+piezoelectric_constant = piezo.piezoelectric_constant;
+piezoelectric_constant = piezoelectric_constant([1 3],[1 3 5]);
+LA_electric_displacement_x = piezoelectric_constant(1,1)*LA_strain1 + piezoelectric_constant(1,2)*LA_strain2 + piezoelectric_constant(1,3)*LA_strain3;
+LA_electric_displacement_z = piezoelectric_constant(2,1)*LA_strain1 + piezoelectric_constant(2,2)*LA_strain2 + piezoelectric_constant(2,3)*LA_strain3;
+LA_electric_displacement_together_x = [t LA_electric_displacement_x];
+LA_electric_displacement_together_z = [t LA_electric_displacement_z];
+%LA_nt = 500;
+[LA_electric_displacement_image_x]=trace2image(LA_electric_displacement_together_x,LA_nt,LA_x);
+[LA_electric_displacement_image_z]=trace2image(LA_electric_displacement_together_z,LA_nt,LA_x);
+dlmwrite('../backup/LA_electric_displacement_image',[LA_electric_displacement_image_x LA_electric_displacement_image_z(:,end)],' ');
+
 %------------------------------------
 end
 
