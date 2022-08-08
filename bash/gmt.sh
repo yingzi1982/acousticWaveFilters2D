@@ -1,5 +1,18 @@
 #!/bin/bash
 
+filter_dimension=2D
+
+if [ $filter_dimension == '2D' ]
+then
+bodyforce_unit=N/m@+2@+
+electric_displacement_unit=C/m
+
+elif [ $filter_dimension == '3D' ]
+then
+bodyforce_unit=N/m@+3@+
+electric_displacement_unit=C/m@+2@+
+fi
+
 cd ../gmt
 
 dx=`grep dx ../backup/meshInformation | cut -d = -f 2`
@@ -11,8 +24,8 @@ dt=2.0e-10
 #./plot2DField.sh potential S   '-CGMT_seis.cpt -Iz'  1E0  V        $dx X 1E-6 m $dz Z 1E-6 m on
 #./plot2DField.sh electric  V1  '-CGMT_hot.cpt -Iz'   1E6  V/m      $dx X 1E-6 m $dz Z 1E-6 m on
 #./plot2DField.sh electric  V2  '-CGMT_seis.cpt -Iz'  1E6  V/m      $dx X 1E-6 m $dz Z 1E-6 m on
-#./plot2DField.sh bodyforce V1  '-CGMT_hot.cpt -Iz'   1E13 N/m@+2@+ $dx X 1E-6 m $dz Z 1E-6 m on
-#./plot2DField.sh bodyforce V2  '-CGMT_seis.cpt -Iz'  1E13 N/m@+2@+ $dx X 1E-6 m $dz Z 1E-6 m on
+#./plot2DField.sh bodyforce V1  '-CGMT_hot.cpt -Iz'   1E13 $bodyforce_unit $dx X 1E-6 m $dz Z 1E-6 m on
+#./plot2DField.sh bodyforce V2  '-CGMT_seis.cpt -Iz'  1E13 $bodyforce_unit $dx X 1E-6 m $dz Z 1E-6 m on
 
 #--------------------------------------------------
 traceImage=LA_trace_image
@@ -39,8 +52,8 @@ traceImage_zFile=../backup/$traceImage_z
 tmax=4.0e-8
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$3}' > $traceImage_xFile
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$4}' > $traceImage_zFile
-./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 5E-5 C/m@+1@+ $dx X 1E-6 m $dt Time 1E-9 s on
-./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 5E-5 C/m@+1@+ $dx X 1E-6 m $dt Time 1E-9 s on
+./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 5E-5 $electric_displacement_unit $dx X 1E-6 m $dt Time 1E-9 s on
+./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 5E-5 $electric_displacement_unit $dx X 1E-6 m $dt Time 1E-9 s on
 rm $traceImage_xFile
 rm $traceImage_zFile
 exit
