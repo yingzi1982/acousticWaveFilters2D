@@ -18,7 +18,6 @@ signal_folder=['/cfs/klemming/projects/snic/snic2022-22-620/yingzi/' strtrim(run
 %backup_folder=['../backup/'];
 
 time_resample_rate=2;
-station_resample_rate=1;
 
 startRowNumber=0;
 startColumnNumber=1;
@@ -51,8 +50,8 @@ if LA_flag
   LA_index = find(strcmp("LA",networkName));
   LA2_index = find(strcmp("LA2",networkName));
 
-  LA_index = LA_index(1:station_resample_rate:end);
-  LA2_index = LA2_index(1:station_resample_rate:end);
+  LA_index = LA_index;
+  LA2_index = LA2_index;
 
   LA_stationNumber = length(LA_index);
   LA2_stationNumber = length(LA2_index);
@@ -61,7 +60,7 @@ if LA_flag
   end
 
   LA_x = longorUTM(LA_index);
-  LA2_x = longorUTM(LA2_index);
+  %LA2_x = longorUTM(LA2_index);
 
   LA_z = latorUTM(LA_index);
   LA2_z = latorUTM(LA2_index);
@@ -78,57 +77,77 @@ if LA_flag
 
   LA_combined_signal_x = [];
   LA_combined_signal_z = [];
-  LA2_combined_signal_x = [];
-  LA2_combined_signal_z = [];
-
   for nStation = 1:LA_stationNumber
     signal_x = dlmread([signal_folder networkName{LA_index(nStation)} '.' stationName{LA_index(nStation)} band_x],'',startRowNumber,startColumnNumber);
     signal_z = dlmread([signal_folder networkName{LA_index(nStation)} '.' stationName{LA_index(nStation)} band_z],'',startRowNumber,startColumnNumber);
     LA_combined_signal_x = [LA_combined_signal_x signal_x((1:time_resample_rate:end))];
     LA_combined_signal_z = [LA_combined_signal_z signal_z((1:time_resample_rate:end))];
+  end
 
+  LA2_combined_signal_x = [];
+  LA2_combined_signal_z = [];
+  for nStation = 1:LA2_stationNumber
     signal2_x = dlmread([signal_folder networkName{LA2_index(nStation)} '.' stationName{LA2_index(nStation)} band_x],'',startRowNumber,startColumnNumber);
     signal2_z = dlmread([signal_folder networkName{LA2_index(nStation)} '.' stationName{LA2_index(nStation)} band_z],'',startRowNumber,startColumnNumber);
     LA2_combined_signal_x = [LA2_combined_signal_x signal2_x((1:time_resample_rate:end))];
     LA2_combined_signal_z = [LA2_combined_signal_z signal2_z((1:time_resample_rate:end))];
   end
-LA_combined_signal_together_x = [t LA_combined_signal_x];
-LA_combined_signal_together_z = [t LA_combined_signal_z];
-LA_nt = 500;
-[LA_trace_image_x]=trace2image(LA_combined_signal_together_x,LA_nt,LA_x);
-[LA_trace_image_z]=trace2image(LA_combined_signal_together_z,LA_nt,LA_x);
-dlmwrite('../backup/LA_trace_image',[LA_trace_image_x LA_trace_image_z(:,end)],' ');
-%------------------------------------
-combined_signal_x = cat(3,LA2_combined_signal_x',LA_combined_signal_x');
-combined_signal_x = permute(combined_signal_x,[1 3 2]);
 
-combined_signal_z = cat(3,LA2_combined_signal_z',LA_combined_signal_z');
-combined_signal_z = permute(combined_signal_z,[1 3 2]);
+  LA_combined_signal_together_x = [t LA_combined_signal_x];
+  LA_combined_signal_together_z = [t LA_combined_signal_z];
+  LA_nt = 500;
+  [LA_trace_image_x]=trace2image(LA_combined_signal_together_x,LA_nt,LA_x);
+  [LA_trace_image_z]=trace2image(LA_combined_signal_together_z,LA_nt,LA_x);
+  dlmwrite('../backup/LA_trace_image',[LA_trace_image_x LA_trace_image_z(:,end)],' ');
+  %------------------------------------
+  combined_signal_x = cat(3,LA2_combined_signal_x',LA_combined_signal_x');
+  combined_signal_x = permute(combined_signal_x,[1 3 2]);
 
-[combined_signal_x_partialx, combined_signal_x_partialz, combined_signal_x_partialt] = gradient(combined_signal_x,dx,dz,dt);
-[combined_signal_z_partialx, combined_signal_z_partialz, combined_signal_z_partialt] = gradient(combined_signal_z,dx,dz,dt);
-strain1 = combined_signal_x_partialx;
-strain2 = combined_signal_z_partialz;
-strain3 = combined_signal_x_partialz + combined_signal_z_partialx;
+  combined_signal_z = cat(3,LA2_combined_signal_z',LA_combined_signal_z');
+  combined_signal_z = permute(combined_signal_z,[1 3 2]);
 
-LA_strain1 = transpose(squeeze(strain1(:,2,:)));
-LA_strain2 = transpose(squeeze(strain2(:,2,:)));
-LA_strain3 = transpose(squeeze(strain3(:,2,:)));
-[piezo]=generate_piezomaterial_parameters(filter_dimension);
-piezoelectric_constant = piezo.piezoelectric_constant;
-piezoelectric_constant = piezoelectric_constant([1 3],[1 3 5]);
-LA_electric_displacement_x = piezoelectric_constant(1,1)*LA_strain1 + piezoelectric_constant(1,2)*LA_strain2 + piezoelectric_constant(1,3)*LA_strain3;
-LA_electric_displacement_z = piezoelectric_constant(2,1)*LA_strain1 + piezoelectric_constant(2,2)*LA_strain2 + piezoelectric_constant(2,3)*LA_strain3;
-LA_electric_displacement_together_x = [t LA_electric_displacement_x];
-LA_electric_displacement_together_z = [t LA_electric_displacement_z];
-%LA_nt = 500;
-[LA_electric_displacement_image_x]=trace2image(LA_electric_displacement_together_x,LA_nt,LA_x);
-[LA_electric_displacement_image_z]=trace2image(LA_electric_displacement_together_z,LA_nt,LA_x);
-dlmwrite('../backup/LA_electric_displacement_image',[LA_electric_displacement_image_x LA_electric_displacement_image_z(:,end)],' ');
+  [combined_signal_x_partialx, combined_signal_x_partialz, combined_signal_x_partialt] = gradient(combined_signal_x,dx,dz,dt);
+  [combined_signal_z_partialx, combined_signal_z_partialz, combined_signal_z_partialt] = gradient(combined_signal_z,dx,dz,dt);
+  strain1 = combined_signal_x_partialx;
+  strain2 = combined_signal_z_partialz;
+  strain3 = combined_signal_x_partialz + combined_signal_z_partialx;
 
-%------------------------------------
-end
+  LA_strain1 = transpose(squeeze(strain1(:,end,:)));
+  LA_strain2 = transpose(squeeze(strain2(:,end,:)));
+  LA_strain3 = transpose(squeeze(strain3(:,end,:)));
+  [piezo]=generate_piezomaterial_parameters(filter_dimension);
+  piezoelectric_constant = piezo.piezoelectric_constant;
+  piezoelectric_constant = piezoelectric_constant([1 3],[1 3 5]);
+  LA_electric_displacement_x = piezoelectric_constant(1,1)*LA_strain1 + piezoelectric_constant(1,2)*LA_strain2 + piezoelectric_constant(1,3)*LA_strain3;
+  LA_electric_displacement_z = piezoelectric_constant(2,1)*LA_strain1 + piezoelectric_constant(2,2)*LA_strain2 + piezoelectric_constant(2,3)*LA_strain3;
+  LA_electric_displacement_together_x = [t LA_electric_displacement_x];
+  LA_electric_displacement_together_z = [t LA_electric_displacement_z];
+  %LA_nt = 500;
+  [LA_electric_displacement_image_x]=trace2image(LA_electric_displacement_together_x,LA_nt,LA_x);
+  [LA_electric_displacement_image_z]=trace2image(LA_electric_displacement_together_z,LA_nt,LA_x);
+  dlmwrite('../backup/LA_electric_displacement_image',[LA_electric_displacement_image_x LA_electric_displacement_image_z(:,end)],' ');
 
+  %------------------------------------
+  negative_finger=dlmread('../backup/negative_finger','');
+  positive_finger=dlmread('../backup/positive_finger','');
+
+  [negative_finger_x negative_finger_x_index]=findNearest(LA_x,negative_finger(:,1));
+  [positive_finger_x positive_finger_x_index]=findNearest(LA_x,positive_finger(:,1));
+
+  negative_finger_electric_displacement_x = LA_electric_displacement_x(:,negative_finger_x_index);
+  negative_finger_electric_displacement_z = LA_electric_displacement_z(:,negative_finger_x_index);
+
+  positive_finger_electric_displacement_x = LA_electric_displacement_x(:,positive_finger_x_index);
+  positive_finger_electric_displacement_z = LA_electric_displacement_z(:,positive_finger_x_index);
+
+  charge_on_negative_electrode = sum(-dx*negative_finger_electric_displacement_z,2);
+  charge_on_positive_electrode = sum(-dx*positive_finger_electric_displacement_z,2);
+  dlmwrite(['../backup/charge'],[t charge_on_negative_electrode charge_on_positive_electrode],' ');
+  current_on_negative_electrode = -gradient(charge_on_negative_electrode,dt);
+  current_on_positive_electrode = -gradient(charge_on_positive_electrode,dt);
+  current = current_on_positive_electrode-current_on_negative_electrode;
+  dlmwrite(['../backup/current'],[t current_on_negative_electrode current_on_positive_electrode current],' ');
+  end
 %------------------------------------
 if SA_flag
   SA_set = {'SA'};
@@ -172,6 +191,7 @@ if SA_flag
   end
 end
 case '3D'
+error('Wrong filter dimension!')
 otherwise
 error('Wrong filter dimension!')
 end
