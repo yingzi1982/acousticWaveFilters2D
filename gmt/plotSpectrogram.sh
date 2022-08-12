@@ -77,13 +77,13 @@ envelope_max=`gmt gmtinfo $envelope_xy -C | awk '{print $4}'`
 normalization=`echo $envelope_min $envelope_max | awk ' { if(sqrt($1^2)>(sqrt($2^2))) {print sqrt($1^2)} else {print sqrt($2^2)}}'`
 
 envelope_width=$width
-envelope_height=0.2
+envelope_height=0.1
 
 projection=X$envelope_width\i/$envelope_height\i
 region=$tmin/$tmax/-1/1
 echo $region
 
-cat $envelope_xy | awk  -v tscale="$tscale"  -v normalization="$normalization" '{print $1/tscale, $2/normalization}' | gmt plot -R$region -J$projection -Bwesn -Gred -W1p,black #-Yh+0.9i
+cat $envelope_xy | awk  -v tscale="$tscale"  -v normalization="$normalization" '{print $1/tscale, $2/normalization}' | gmt plot -R$region -J$projection -Bwesn -Ggray -W1p,black -Yh+0.1i
 #-----------------------------------------------------
 
 gmt end
