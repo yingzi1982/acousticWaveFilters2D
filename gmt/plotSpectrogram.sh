@@ -62,7 +62,17 @@ gmt makecpt -CGMT_seis.cpt -Iz -T$specgramLowerLimit/$specgramUpperLimit
 awk -v tscale="$tscale" -v fscale="$fscale" '{print $1/tscale, $2/fscale, $3}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$specgramLowerLimit -Lu$specgramUpperLimit -R$region -I$inc -G$grd
 
 gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"Time ($tscale\s)" -By5f2.5+l"Freq ($fscale\Hz)"
-cat $backupFolder$name\_envelope | gmt plot -Bwesn -Gred -W1p,black -Yh+$height\i
+
+envelope_min=-1
+envelope_max=1
+
+envelope_width=$width
+envelope_height=0.2
+
+projection=X$envelope_width\i/$envelope_height\i
+region=$tmin/$tmax/$envelope_min/$envelope_max
+
+cat $backupFolder$name\_envelope | gmt plot  -R$region -J$projection -Bwesn -Gred -W1p,black -Yh+0.9i
 
 
 #colorbar_width=$height
