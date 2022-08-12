@@ -40,7 +40,7 @@ projection=X$width\i/$height\i
 region=$tmin/$tmax/$fmin/$fmax
 
 nt=400
-nf=50
+nf=200
 
 tinc=`echo "($tmax-$tmin)/$nt" | bc -l`
 finc=`echo "($fmax-$fmin)/$nf" | bc -l`
@@ -51,7 +51,7 @@ inc=$tinc/$finc
 amplitude_min=`gmt info $originalxyz -C | awk '{print $5}'`
 amplitude_max=`gmt info $originalxyz -C | awk '{print $6}'`
 
-specgramLowerLimit=-200
+specgramLowerLimit=-50
 specgramUpperLimit=0
 
 
