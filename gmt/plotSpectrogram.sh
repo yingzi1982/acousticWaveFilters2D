@@ -68,7 +68,7 @@ colorbar_height=0.16
 colorbar_horizontal_position=`echo "$width+0.1" | bc -l`
 colorbar_vertical_position=`echo "$colorbar_width/2" | bc -l`
 domain=$colorbar_horizontal_position\i/$colorbar_vertical_position\i/$colorbar_width\i/$colorbar_height\i
-gmt colorbar -Dx$domain -Bxa50f25 -By+l"dB"
+gmt colorbar -Dx$domain -Bxa50f25 -By+l"dB/Hz"
 
 #-----------------------------------------------------
 #envelope_xy=$backupFolder$name\_envelope
