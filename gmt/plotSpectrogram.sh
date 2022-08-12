@@ -40,7 +40,7 @@ projection=X$width\i/$height\i
 region=$tmin/$tmax/$fmin/$fmax
 
 nt=400
-nf=200
+nf=50
 
 tinc=`echo "($tmax-$tmin)/$nt" | bc -l`
 finc=`echo "($fmax-$fmin)/$nf" | bc -l`
