@@ -34,7 +34,7 @@ fmin=0
 fmax=10
 
 width=2.2
-height=1.2
+height=0.8
 #height=`echo "$width*(($zmax)-($zmin))/(($xmax)-($xmin))" | bc -l`
 projection=X$width\i/$height\i
 region=$tmin/$tmax/$fmin/$fmax
@@ -64,12 +64,12 @@ awk -v tscale="$tscale" -v fscale="$fscale" '{print $1/tscale, $2/fscale, $3}' $
 gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"Time ($tscale\s)" -By5f2.5+l"Freq ($fscale\Hz)"
 
 
-colorbar_width=$height
-colorbar_height=0.16
-colorbar_horizontal_position=`echo "$width+0.1" | bc -l`
-colorbar_vertical_position=`echo "$colorbar_width/2" | bc -l`
-domain=$colorbar_horizontal_position\i/$colorbar_vertical_position\i/$colorbar_width\i/$colorbar_height\i
-gmt colorbar -Dx$domain -Bxa50f25 -By+l"dB"
+#colorbar_width=$height
+#colorbar_height=0.16
+#colorbar_horizontal_position=`echo "$width+0.1" | bc -l`
+#colorbar_vertical_position=`echo "$colorbar_width/2" | bc -l`
+#domain=$colorbar_horizontal_position\i/$colorbar_vertical_position\i/$colorbar_width\i/$colorbar_height\i
+#gmt colorbar -Dx$domain -Bxa50f25 -By+l"dB"
 
 gmt end
 #-----------------------------------------------------
