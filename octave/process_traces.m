@@ -37,13 +37,14 @@ band_x='.BXX.semd';
 band_y='.BXY.semd';
 band_z='.BXZ.semd';
 
+resampled_point_number = 500;
 switch filter_type
 case 'SAW'
 
 switch filter_dimension
 case '2D'
 
-LA_flag = 1;
+LA_flag = 0;
 SA_flag = 0;
 %------------------------------------
 if LA_flag
@@ -95,9 +96,8 @@ if LA_flag
 
   LA_combined_signal_together_x = [t LA_combined_signal_x];
   LA_combined_signal_together_z = [t LA_combined_signal_z];
-  LA_nt = 500;
-  [LA_trace_image_x]=trace2image(LA_combined_signal_together_x,LA_nt,LA_x);
-  [LA_trace_image_z]=trace2image(LA_combined_signal_together_z,LA_nt,LA_x);
+  [LA_trace_image_x]=trace2image(LA_combined_signal_together_x,resampled_point_number,LA_x);
+  [LA_trace_image_z]=trace2image(LA_combined_signal_together_z,resampled_point_number,LA_x);
   dlmwrite('../backup/LA_trace_image',[LA_trace_image_x LA_trace_image_z(:,end)],' ');
   %------------------------------------
   combined_signal_x = cat(3,LA2_combined_signal_x',LA_combined_signal_x');
@@ -122,14 +122,22 @@ if LA_flag
   LA_electric_displacement_z = piezoelectric_constant(2,1)*LA_strain1 + piezoelectric_constant(2,2)*LA_strain2 + piezoelectric_constant(2,3)*LA_strain3;
   LA_electric_displacement_together_x = [t LA_electric_displacement_x];
   LA_electric_displacement_together_z = [t LA_electric_displacement_z];
-  %LA_nt = 500;
-  [LA_electric_displacement_image_x]=trace2image(LA_electric_displacement_together_x,LA_nt,LA_x);
-  [LA_electric_displacement_image_z]=trace2image(LA_electric_displacement_together_z,LA_nt,LA_x);
+  [LA_electric_displacement_image_x]=trace2image(LA_electric_displacement_together_x,resampled_point_number,LA_x);
+  [LA_electric_displacement_image_z]=trace2image(LA_electric_displacement_together_z,resampled_point_number,LA_x);
   dlmwrite('../backup/LA_electric_displacement_image',[LA_electric_displacement_image_x LA_electric_displacement_image_z(:,end)],' ');
 
   %------------------------------------
   negative_finger=dlmread('../backup/negative_finger','');
   positive_finger=dlmread('../backup/positive_finger','');
+  finger_dx = negative_finger(2,1)-negative_finger(1,1);
+  if dx >= finger_dx
+    dx_ratio = round(dx/finger_dx);
+  else
+    dx_ratio = 1;
+  end
+  negative_finger = negative_finger(1:dx_ratio:end,:);
+  positive_finger = positive_finger(1:dx_ratio:end,:);
+  finger_dx = negative_finger(2,1)-negative_finger(1,1);
 
   [negative_finger_x negative_finger_x_index]=findNearest(LA_x,negative_finger(:,1));
   [positive_finger_x positive_finger_x_index]=findNearest(LA_x,positive_finger(:,1));
@@ -140,14 +148,35 @@ if LA_flag
   positive_finger_electric_displacement_x = LA_electric_displacement_x(:,positive_finger_x_index);
   positive_finger_electric_displacement_z = LA_electric_displacement_z(:,positive_finger_x_index);
 
-  charge_on_negative_electrode = sum(-dx*negative_finger_electric_displacement_z,2);
-  charge_on_positive_electrode = sum(-dx*positive_finger_electric_displacement_z,2);
-  dlmwrite(['../backup/charge'],[t charge_on_negative_electrode charge_on_positive_electrode],' ');
+  charge_on_negative_electrode = sum(-finger_dx*negative_finger_electric_displacement_z,2);
+  charge_on_positive_electrode = sum(-finger_dx*positive_finger_electric_displacement_z,2);
+
   current_on_negative_electrode = -gradient(charge_on_negative_electrode,dt);
   current_on_positive_electrode = -gradient(charge_on_positive_electrode,dt);
-  current = current_on_positive_electrode-current_on_negative_electrode;
-  dlmwrite(['../backup/current'],[t current_on_negative_electrode current_on_positive_electrode current],' ');
-  end
+  current = [t current_on_positive_electrode-current_on_negative_electrode];
+  dlmwrite(['../backup/current'],current,' ');
+end
+  current=dlmread(['../backup/current','']); #
+  current_envelope = trace2envelope(current,resampled_point_number);
+  dlmwrite(['../backup/current_envelope'],current_envelope,' ');
+
+  current_spectrum = trace2spectrum(current);
+  dlmwrite(['../backup/current_spectrum'],current_spectrum,' ');
+  
+  current_specgram = trace2specgram(current);
+  dlmwrite(['../backup/current_specgram'],current_specgram,' ');
+exit
+ 
+Fs=1000;
+ x = chirp([0:1/Fs:2],0,2,500);  # freq. sweep from 0-500 over 2 sec.
+whos x
+ step=ceil(20*Fs/1000)
+window=ceil(100*Fs/1000)
+fftn = 2^nextpow2(window)
+   [S, f, t] = specgram(x, fftn, window, window-step);
+whos S f t
+
+exit
 %------------------------------------
 if SA_flag
   SA_set = {'SA'};

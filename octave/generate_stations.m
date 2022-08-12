@@ -42,7 +42,6 @@ x = linspace(xmin,xmax,nx);
 y = linspace(xmin,xmax,nx);
 z = linspace(zmin,zmax,nz);
 
-resample_rate = 1;
 [NELEM_PML_THICKNESS_status NELEM_PML_THICKNESS] = system('grep NELEM_PML_THICKNESS ../backup/Par_file.part | cut -d = -f 2');
 NELEM_PML_THICKNESS = str2num(NELEM_PML_THICKNESS);
 

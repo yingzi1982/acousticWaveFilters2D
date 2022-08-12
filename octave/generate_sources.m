@@ -38,16 +38,7 @@ end
 sourceTimeFunction= [t_cut s_cut];
 save("-ascii",['../backup/sourceTimeFunction'],'sourceTimeFunction')
 
-nfft = 2^nextpow2(length(t_cut));
-S_cut = fft(s_cut,nfft);
-
-Fs=1/dt;
-f = transpose(Fs*(0:(nfft/2))/nfft);
-%PSD = 2*abs(S_cut(1:nfft/2+1)/nfft).^2;
-%PSD = 10*log10(PSD);
-%sourceFrequencySpetrum =[f,PSD];
-S_spectrum = 2*abs(S_cut(1:nfft/2+1)/nfft);
-sourceFrequencySpetrum =[f,S_spectrum];
+sourceFrequencySpetrum = trace2spectrum(sourceTimeFunction);
 save("-ascii",['../backup/sourceFrequencySpetrum'],'sourceFrequencySpetrum')
 
 s = zeros(nt,1);
