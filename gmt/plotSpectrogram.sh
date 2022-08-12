@@ -15,7 +15,7 @@ backupFolder=../backup/
 #DATAFolder=../DATA/
 figFolder=../figures/
 mkdir -p $figFolder
-fig=$figFolder$name
+fig=$figFolder$name\_specgram
 
 originalxyz=$backupFolder$name\_specgram
 grd=$backupFolder$name\_specgram\.nc
