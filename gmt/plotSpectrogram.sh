@@ -81,8 +81,9 @@ envelope_height=0.2
 
 projection=X$envelope_width\i/$envelope_height\i
 region=$tmin/$tmax/-1/1
+echo $region
 
-cat $envelope_xy | awk -v normalization="$normalization" '{print $1, $2/normalization}' | gmt plot -R$region -J$projection -Bwesn -Gred -W1p,black #-Yh+0.9i
+cat $envelope_xy | awk  -v tscale="$tscale"  -v normalization="$normalization" '{print $1/tscale, $2/normalization}' | gmt plot -R$region -J$projection -Bwesn -Gred -W1p,black #-Yh+0.9i
 #-----------------------------------------------------
 
 gmt end
