@@ -63,24 +63,27 @@ awk -v tscale="$tscale" -v fscale="$fscale" '{print $1/tscale, $2/fscale, $3}' $
 
 gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"Time ($tscale\s)" -By5f2.5+l"Freq ($fscale\Hz)"
 
-envelope_min=-1
-envelope_max=1
-
-envelope_width=$width
-envelope_height=0.2
-
-projection=X$envelope_width\i/$envelope_height\i
-region=$tmin/$tmax/$envelope_min/$envelope_max
-
-cat $backupFolder$name\_envelope | gmt plot  -R$region -J$projection -Bwesn -Gred -W1p,black -Yh+0.9i
-
-
 #colorbar_width=$height
 #colorbar_height=0.16
 #colorbar_horizontal_position=`echo "$width+0.1" | bc -l`
 #colorbar_vertical_position=`echo "$colorbar_width/2" | bc -l`
 #domain=$colorbar_horizontal_position\i/$colorbar_vertical_position\i/$colorbar_width\i/$colorbar_height\i
 #gmt colorbar -Dx$domain -Bxa50f25 -By+l"dB"
+
+#-----------------------------------------------------
+envelope_xy=$backupFolder$name\_envelope
+envelope_min=`gmt gmtinfo $envelope_xy -C | awk '{print $3}'`
+envelope_max=`gmt gmtinfo $envelope_xy -C | awk '{print $4}'`
+normalization=`echo $envelope_min $envelope_max | awk ' { if(sqrt($1^2)>(sqrt($2^2))) {print sqrt($1^2)} else {print sqrt($2^2)}}'`
+
+envelope_width=$width
+envelope_height=0.2
+
+projection=X$envelope_width\i/$envelope_height\i
+region=$tmin/$tmax/-1/1
+
+cat $envelope_xy | awk -v normalization="$normalization" '{print $1, $2/normalization}' | gmt plot -R$region -J$projection -Bwesn -Gred -W1p,black -Yh+0.9i
+#-----------------------------------------------------
 
 gmt end
 #-----------------------------------------------------
