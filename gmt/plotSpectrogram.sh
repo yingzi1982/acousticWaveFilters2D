@@ -34,7 +34,7 @@ fmin=0
 fmax=20
 
 width=2.2
-height=1.8
+height=1.2
 #height=`echo "$width*(($zmax)-($zmin))/(($xmax)-($xmin))" | bc -l`
 projection=X$width\i/$height\i
 region=$tmin/$tmax/$fmin/$fmax
