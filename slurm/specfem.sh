@@ -18,6 +18,6 @@ LA_flag=1;
 SA_flag=0;
 
 cd ../bash
-#./preprocess.sh $filter_type $filter_dimension
+./preprocess.sh $filter_type $filter_dimension
 ./specfem.sh $filter_dimension
 #./postprocess.sh $filter_type $filter_dimension
