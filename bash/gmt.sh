@@ -68,7 +68,7 @@ rm $traceImage_zFile
 fi
 #--------------------------------------------------
 
-if true; then
+if false; then
 traceImage=LA_electric_displacement_image
 traceImage_x=$traceImage\_x
 traceImage_z=$traceImage\_z
@@ -84,6 +84,6 @@ rm $traceImage_xFile
 rm $traceImage_zFile
 fi
 #--------------------------------------------------
-if false; then
+if true; then
 ./plotSpectrogram.sh
 fi
