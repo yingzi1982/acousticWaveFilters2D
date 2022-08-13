@@ -31,7 +31,7 @@ fmax=`gmt info $originalxyz -C | awk -v fscale="$fscale" '{print $4/fscale}'`
 tmin=0
 tmax=40
 fmin=0
-fmax=5
+fmax=10
 
 width=2.2
 height=0.8
