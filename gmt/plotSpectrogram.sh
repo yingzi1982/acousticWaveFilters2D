@@ -57,8 +57,7 @@ specgramUpperLimit=0
 
 gmt begin $fig
 
-#gmt makecpt -CGMT_rainbow.cpt -T$specgramLowerLimit/$specgramUpperLimit
-gmt makecpt -CGMT_seis.cpt -Iz -T$specgramLowerLimit/$specgramUpperLimit
+gmt makecpt -CGMT_rainbow.cpt -T$specgramLowerLimit/$specgramUpperLimit
 
 awk -v tscale="$tscale" -v fscale="$fscale" '{print $1/tscale, $2/fscale, $3}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$specgramLowerLimit -Lu$specgramUpperLimit -R$region -I$inc -G$grd
 
