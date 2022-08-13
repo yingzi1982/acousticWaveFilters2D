@@ -8,7 +8,7 @@ Fs=1/dt;
 dB_lower_limit=-1000;
 number_of_step = 250;
 step = round(length(t)/number_of_step);
-window = 8*step;
+window = 16*step;
 nfft = 2^nextpow2(window);
 noverlap= window-step;
 
