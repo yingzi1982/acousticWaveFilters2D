@@ -5,7 +5,7 @@ s = signal(:,2);
 dt = t(2)- t(1);
 Fs=1/dt;
 
-dB_lower_limit=-1000;
+dB_lower_limit=-100;
 number_of_step = 200;
 step = round(length(t)/number_of_step);
 window = 8*step;
