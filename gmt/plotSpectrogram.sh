@@ -61,7 +61,7 @@ gmt makecpt -CGMT_rainbow.cpt -Iz -T$specgramLowerLimit/$specgramUpperLimit
 
 awk -v tscale="$tscale" -v fscale="$fscale" '{print $1/tscale, $2/fscale, $3}' $originalxyz | gmt blockmean -R$region -I$inc | gmt surface -Ll$specgramLowerLimit -Lu$specgramUpperLimit -R$region -I$inc -G$grd
 
-gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"Time ($tscale\s)" -By4f2+l"Freq ($fscale\Hz)"
+gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"Time ($tscale\s)" -By2f1+l"Freq ($fscale\Hz)"
 
 colorbar_width=$height
 colorbar_height=0.16
