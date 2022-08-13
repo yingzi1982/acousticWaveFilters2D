@@ -1,8 +1,10 @@
 #!/bin/bash 
 
 #SBATCH -A snic2022-22-620 #pdc-test-2022
-#SBATCH -p shared #main long shared memory
-#SBATCH -c 1
+##SBATCH -p shared #main long shared memory
+##SBATCH -c 1
+#SBATCH -p main #main long shared memory
+#SBATCH -N 1
 #SBATCH -J processing
 #SBATCH -t 5:00:00
 #SBATCH -o output.txt

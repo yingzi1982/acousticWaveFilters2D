@@ -44,7 +44,7 @@ case 'SAW'
 switch filter_dimension
 case '2D'
 
-LA_flag = 0;
+LA_flag = 1;
 SA_flag = 0;
 %------------------------------------
 if LA_flag
@@ -155,28 +155,17 @@ if LA_flag
   current_on_positive_electrode = -gradient(charge_on_positive_electrode,dt);
   current = [t current_on_positive_electrode-current_on_negative_electrode];
   dlmwrite(['../backup/current'],current,' ');
-end
-  current=dlmread(['../backup/current','']); #
-  current_envelope = trace2envelope(current,resampled_point_number);
-  dlmwrite(['../backup/current_envelope'],current_envelope,' ');
 
-  current_spectrum = trace2spectrum(current);
-  dlmwrite(['../backup/current_spectrum'],current_spectrum,' ');
+  %current_envelope = trace2envelope(current,resampled_point_number);
+  %dlmwrite(['../backup/current_envelope'],current_envelope,' ');
+
+  %current_spectrum = trace2spectrum(current);
+  %dlmwrite(['../backup/current_spectrum'],current_spectrum,' ');
   
   current_specgram = trace2specgram(current);
   dlmwrite(['../backup/current_specgram'],current_specgram,' ');
-exit
- 
-Fs=1000;
- x = chirp([0:1/Fs:2],0,2,500);  # freq. sweep from 0-500 over 2 sec.
-whos x
- step=ceil(20*Fs/1000)
-window=ceil(100*Fs/1000)
-fftn = 2^nextpow2(window)
-   [S, f, t] = specgram(x, fftn, window, window-step);
-whos S f t
+end
 
-exit
 %------------------------------------
 if SA_flag
   SA_set = {'SA'};

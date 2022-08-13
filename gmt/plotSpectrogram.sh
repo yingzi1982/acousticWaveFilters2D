@@ -51,7 +51,7 @@ inc=$tinc/$finc
 amplitude_min=`gmt info $originalxyz -C | awk '{print $5}'`
 amplitude_max=`gmt info $originalxyz -C | awk '{print $6}'`
 
-specgramLowerLimit=-50
+specgramLowerLimit=-100
 specgramUpperLimit=0
 
 

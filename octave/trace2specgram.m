@@ -18,7 +18,7 @@ S = 2*abs(S);
 
 S = S/max(S(:));
 
-S=10*log10(S);
+S=20*log10(S);
 
 S(S<dB_lower_limit)=dB_lower_limit;
 
