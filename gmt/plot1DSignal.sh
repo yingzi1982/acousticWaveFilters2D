@@ -38,7 +38,7 @@ projection=X$width\i/$height\i
 
 gmt begin $fig
 
-awk -v xmin="$xmin" -v xscale="$xscale" -v resample_rate="$resample_rate" -v normalization="$normalization" 'NR%resample_rate==0 {print ($1-xmin)/xscale, $2/normalization}' $originalxy | gmt plot -J$projection -R$region -Bxa10f5+l"$xlabel ($xscale$xunit)" -Bya1f0.5 -Wthin,black #+l"Amp (x$normalization)"
+awk -v xmin="$xmin" -v xscale="$xscale" -v resample_rate="$resample_rate" -v normalization="$normalization" 'NR%resample_rate==0 {print ($1-xmin)/xscale, $2/normalization}' $originalxy | gmt plot -J$projection -R$region -Bxa2f1+l"$xlabel ($xscale$xunit)" -Bya1f0.5 -Wthin,black #+l"Amp (x$normalization)"
 gmt end
 
 rm -f gmt.conf
