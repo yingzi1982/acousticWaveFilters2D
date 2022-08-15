@@ -28,7 +28,7 @@ ymin=`gmt info $originalxy -C | awk '{print $3}'`
 ymax=`gmt info $originalxy -C | awk '{print $4}'`
 normalization=`echo $ymin $ymax | awk ' { if(sqrt($1^2)>(sqrt($2^2))) {print sqrt($1^2)} else {print sqrt($2^2)}}'|  awk '{printf "%d", $1}'`
 
-timeDuration=`echo $xmin $xmax | awk -v xscale="$xscale" '{print ($2-$1)/xscale}'`
+timeDuration=`echo $xmin $xmax | awk -v xscale="$xscale" '{print ($2-$1)/xscale+1}'`
 
 region=0/$timeDuration/-1/1
 
