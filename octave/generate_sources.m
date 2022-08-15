@@ -25,15 +25,26 @@ dt = str2num(dt);
 fs=1/dt;
 t =transpose([0:nt-1]*dt);
 
-signal_type='ricker';
+%signal_type='ricker';
+signal_type='chirp';
 switch signal_type
 case 'ricker'
 [t_cut s_cut] = ricker(f0, dt);
-%case 'sin'
+
+case 'chirp'
+f_start = 0;
+f_end = 5*f0;
+t_cut_duration = nt*dt/10;
+t_cut = transpose([0:dt:t_cut_duration]);
+%-----------------------
+s_cut = chirp(t_cut, f_start, t_cut_duration, f_end, 'linear', 90);
+%s_cut = s_cut.*hanning(length(s_cut));
 
 otherwise
 error('Wrong signal type!')
 end
+
+s_cut = s_cut/max(s_cut);
 
 sourceTimeFunction= [t_cut s_cut];
 save("-ascii",['../backup/sourceTimeFunction'],'sourceTimeFunction')

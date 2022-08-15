@@ -21,6 +21,11 @@ dx2=`echo $dx | awk '{print $1*2}'`
 dz2=`echo $dz | awk '{print $1*2}'`
 dt=2.0e-10
 #--------------------------------------------------
+if true; then
+./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s
+fi
+exit
+#--------------------------------------------------
 if false; then
 ./plot2DField.sh potential S   '-CGMT_seis.cpt -Iz'  1E0  V        $dx X 1E-6 m $dz Z 1E-6 m on
 ./plot2DField.sh electric  V1  '-CGMT_hot.cpt -Iz'   1E6  V/m      $dx X 1E-6 m $dz Z 1E-6 m on
@@ -84,6 +89,6 @@ rm $traceImage_xFile
 rm $traceImage_zFile
 fi
 #--------------------------------------------------
-if true; then
+if false; then
 ./plotSpectrogram.sh
 fi
