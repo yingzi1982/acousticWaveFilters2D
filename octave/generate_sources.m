@@ -33,7 +33,7 @@ case 'ricker'
 
 case 'chirp'
 f_start = 0;
-f_end = 5*f0;
+f_end = 10*f0;
 t_cut_duration = nt*dt/10;
 t_cut = transpose([0:dt:t_cut_duration]);
 %-----------------------
