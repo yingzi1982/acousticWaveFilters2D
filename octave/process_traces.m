@@ -22,6 +22,21 @@ time_resample_rate=1;
 startRowNumber=0;
 startColumnNumber=1;
 
+current_spectrum = dlmread(['../backup/current_spectrum'],'');
+voltage_spectrum = dlmread(['../backup/sourceFrequencySpetrum'],'');
+f = voltage_spectrum(:,1);
+f_cut = 10.0e9;
+select_index = find(f<=f_cut);
+f = f(select_index);
+voltage_spectrum = voltage_spectrum(select_index,2);
+current_spectrum = interp1(current_spectrum(select_index,1),current_spectrum(select_index,2),f,'linear','extrap');
+admittance =  current_spectrum./voltage_spectrum;
+admittance = 20*log10(admittance/max(admittance));
+admittance = [f admittance];
+dlmwrite(['../backup/admittance'],admittance,' ');
+
+exit
+
 fileID = fopen(['../DATA/STATIONS']);
 station = textscan(fileID,'%s %s %f %f %f %f');
 fclose(fileID);
@@ -155,13 +170,12 @@ if LA_flag
   current_on_positive_electrode = -gradient(charge_on_positive_electrode,dt);
   current = [t current_on_positive_electrode-current_on_negative_electrode];
   dlmwrite(['../backup/current'],current,' ');
-  max(current(:,2))
 
   %current_envelope = trace2envelope(current,resampled_point_number);
   %dlmwrite(['../backup/current_envelope'],current_envelope,' ');
 
-  %current_spectrum = trace2spectrum(current);
-  %dlmwrite(['../backup/current_spectrum'],current_spectrum,' ');
+  current_spectrum = trace2spectrum(current);
+  dlmwrite(['../backup/current_spectrum'],current_spectrum,' ');
   
   current_specgram = trace2specgram(current);
   dlmwrite(['../backup/current_specgram'],current_specgram,' ');

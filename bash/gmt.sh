@@ -21,7 +21,7 @@ dx2=`echo $dx | awk '{print $1*2}'`
 dz2=`echo $dz | awk '{print $1*2}'`
 dt=2.0e-10
 #--------------------------------------------------
-if true; then
+if false; then
 ./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 40" 2f1 Amp. 1E0 "" "-1 1" 1f0.5
 fi
 #--------------------------------------------------
@@ -55,7 +55,7 @@ module unload PDC ghostscript PrgEnv-gnu
 
 fi
 #--------------------------------------------------
-if true; then
+if false; then
 traceImage=LA_trace_image
 traceImage_x=$traceImage\_x
 traceImage_z=$traceImage\_z
@@ -90,4 +90,7 @@ fi
 #--------------------------------------------------
 if false; then
 ./plotSpectrogram.sh
+fi
+if true; then
+./plot1DSignal.sh admittance 1 Freq 1E9 Hz "0 10" 5f2.5 Admittance 1E0 "dB" "-100 0" 50f25
 fi
