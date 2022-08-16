@@ -22,7 +22,7 @@ dz2=`echo $dz | awk '{print $1*2}'`
 dt=2.0e-10
 #--------------------------------------------------
 if true; then
-./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 5" 2f1 Amp. 1 "aa" "-1 1" 1f0.5
+./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 4" 2f1 Amp. 1E0 "" "-1 1" 1f0.5
 fi
 exit
 #--------------------------------------------------
