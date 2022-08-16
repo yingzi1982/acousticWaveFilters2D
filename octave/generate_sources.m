@@ -46,14 +46,14 @@ end
 
 s_cut = s_cut/max(s_cut);
 
-sourceTimeFunction= [t_cut s_cut];
+s = zeros(nt,1);
+s(1:length(s_cut)) = s_cut;
+
+sourceTimeFunction= [t s];
 save("-ascii",['../backup/sourceTimeFunction'],'sourceTimeFunction')
 
 sourceFrequencySpetrum = trace2spectrum(sourceTimeFunction);
 save("-ascii",['../backup/sourceFrequencySpetrum'],'sourceFrequencySpetrum')
-
-s = zeros(nt,1);
-s(1:length(s_cut)) = s_cut;
 
 %------------------------------------
 

@@ -17,7 +17,7 @@ signal_folder=['/cfs/klemming/projects/snic/snic2022-22-620/yingzi/' strtrim(run
 
 %backup_folder=['../backup/'];
 
-time_resample_rate=2;
+time_resample_rate=1;
 
 startRowNumber=0;
 startColumnNumber=1;
@@ -155,6 +155,7 @@ if LA_flag
   current_on_positive_electrode = -gradient(charge_on_positive_electrode,dt);
   current = [t current_on_positive_electrode-current_on_negative_electrode];
   dlmwrite(['../backup/current'],current,' ');
+  max(current(:,2))
 
   %current_envelope = trace2envelope(current,resampled_point_number);
   %dlmwrite(['../backup/current_envelope'],current_envelope,' ');
