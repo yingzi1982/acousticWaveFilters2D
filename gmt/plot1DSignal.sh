@@ -39,7 +39,7 @@ ymax=`echo $yrange | awk '{print $2}'`
 region=$xmin/$xmax/$ymin/$ymax
 
 width=2.2
-height=0.8
+height=1
 projection=X$width\i/$height\i
 
 gmt begin $fig
