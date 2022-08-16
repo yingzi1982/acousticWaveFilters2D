@@ -24,7 +24,6 @@ dt=2.0e-10
 if true; then
 ./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 40" 2f1 Amp. 1E0 "" "-1 1" 1f0.5
 fi
-exit
 #--------------------------------------------------
 if false; then
 ./plot2DField.sh potential S   '-CGMT_seis.cpt -Iz'  1E0  V        $dx X 1E-6 m $dz Z 1E-6 m on
