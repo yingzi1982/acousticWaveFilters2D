@@ -49,13 +49,19 @@ txy = txy - max(txy);
 txy = [f txy];
 
 dlmwrite(['../backup/txy'],txy,' ');
-exit
+whos t current voltage
 %-----------------------------------
 current_spectrum = trace2spectrum([t current]);
 voltage_spectrum = trace2spectrum([t voltage]);
 f = voltage_spectrum(:,1);
-admittance_spectrum = current_spectrum(:,2)./voltage_spectrum(:,2)
+spectrum = voltage_spectrum(:,2);
+spectrum = spectrum/max(spectrum);
+max(spectrum)
+min(spectrum)
+spectrum = [f spectrum];
+dlmwrite(['../backup/spectrum'],spectrum,' ');
 exit
+%-----------------------------------
 
 f_cut = 10.0e9;
 select_index = find(f<=f_cut);
