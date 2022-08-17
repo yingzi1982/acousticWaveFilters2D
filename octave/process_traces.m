@@ -34,13 +34,10 @@ voltage = interp1(voltage(:,1),voltage(:,2),t,'linear');
 dt= t(2)-t(1);
 fs = 1/dt;
 
-nfft = 2^nextpow2(10*length(t));
+nfft = 2^nextpow2(length(t));
 
-%[txy f] = tfestimate (voltage, current, [], [], nfft, fs);
-current_spectrum = trace2spectrum([t current]);
-voltage_spectrum = trace2spectrum([t voltage]);
-f = voltage_spectrum(:,1);
-txy = current_spectrum(:,2)./voltage_spectrum(:,2);
+[txy f] = tfestimate (voltage, current, [], [], nfft, fs);
+txy = real(txy);
 
 f_cut = 10.0e9;
 select_index = find(f<=f_cut);
