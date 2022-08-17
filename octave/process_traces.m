@@ -54,7 +54,7 @@ whos t current voltage
 current_spectrum = trace2spectrum([t current]);
 voltage_spectrum = trace2spectrum([t voltage]);
 f = voltage_spectrum(:,1);
-spectrum = voltage_spectrum(:,2);
+spectrum = current_spectrum(:,2);
 spectrum = spectrum/max(spectrum);
 max(spectrum)
 min(spectrum)
