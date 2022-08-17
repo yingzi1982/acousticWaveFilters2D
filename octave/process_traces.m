@@ -36,7 +36,8 @@ fs = 1/dt;
 
 nfft = 2^nextpow2(length(t));
 
-[txy f] = tfestimate (voltage, current, [], [], nfft, fs);
+%[txy f] = tfestimate (voltage, current, [], [], nfft, fs);
+[txy f] = tfestimate (voltage, current);
 
 f_cut = 10.0e9;
 select_index = find(f<=f_cut);
@@ -44,7 +45,7 @@ txy = txy(select_index,:);
 f = f(select_index);
 
 txy =20*log10(abs(txy));
-txy = txy - max(txy)
+txy = txy - max(txy);
 
 txy = [f txy];
 
