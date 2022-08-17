@@ -92,7 +92,7 @@ if false; then
 ./plotSpectrogram.sh
 fi
 if true; then
-./plot1DSignal.sh current 10 Time 1E-9 s "0 40" 2f1 Amp. 1E0 "" "-4 4" 1f0.5
+./plot1DSignal.sh current 10 Time 1E-9 s "0 40" 20f10 Amp. 1E0 "" "-.04 .04" 1f0.5
 fi
 if true; then
 #./plot1DSignal.sh txy 1 Freq 1E9 Hz "0 10" 5f2.5 Txy 1E0 "dB" "-15 0" 5f2.5
