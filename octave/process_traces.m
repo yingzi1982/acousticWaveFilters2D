@@ -22,18 +22,50 @@ time_resample_rate=1;
 startRowNumber=0;
 startColumnNumber=1;
 
-current_spectrum = dlmread(['../backup/current_spectrum'],'');
-voltage_spectrum = dlmread(['../backup/sourceFrequencySpetrum'],'');
-f = voltage_spectrum(:,1);
+%-----------------------------------
+current = dlmread(['../backup/current'],'');
+voltage = dlmread(['../backup/sourceTimeFunction'],'');
+
+t = current(:,1);
+
+current = current(:,2);
+voltage = interp1(voltage(:,1),voltage(:,2),t,'linear');
+
+dt= t(2)-t(1);
+fs = 1/dt;
+
+nfft = 2^nextpow2(10*length(t));
+
+[txy f] = tfestimate (voltage, current, [], [], nfft, fs);
+
 f_cut = 10.0e9;
 select_index = find(f<=f_cut);
+txy = txy(select_index,:);
 f = f(select_index);
-voltage_spectrum = voltage_spectrum(select_index,2);
-current_spectrum = interp1(current_spectrum(select_index,1),current_spectrum(select_index,2),f,'linear','extrap');
-admittance =  current_spectrum./voltage_spectrum;
-admittance = 20*log10(admittance/max(admittance));
-admittance = [f admittance];
-dlmwrite(['../backup/admittance'],admittance,' ');
+
+txy =20*log10(abs(txy));
+txy = txy - max(txy)
+
+txy = [f txy];
+
+dlmwrite(['../backup/txy'],txy,' ');
+exit
+%-----------------------------------
+current_spectrum = trace2spectrum([t current]);
+voltage_spectrum = trace2spectrum([t voltage]);
+f = voltage_spectrum(:,1);
+admittance_spectrum = current_spectrum(:,2)./voltage_spectrum(:,2)
+exit
+
+f_cut = 10.0e9;
+select_index = find(f<=f_cut);
+
+f = f(select_index);
+admittance_spectrum = admittance_spectrum(select_index);
+
+admittance_spectrum = 20*log10(admittance_spectrum/max(admittance_spectrum));
+admittance_spectrum = [f admittance_spectrum];
+dlmwrite(['../backup/admittance_spectrum'],admittance_spectrum,' ');
 
 exit
 
