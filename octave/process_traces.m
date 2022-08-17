@@ -37,7 +37,10 @@ fs = 1/dt;
 nfft = 2^nextpow2(length(t));
 
 %[txy f] = tfestimate (voltage, current, [], [], nfft, fs);
-[txy f] = tfestimate (voltage, current);
+current_spectrum = trace2spectrum([t current]);
+voltage_spectrum = trace2spectrum([t voltage]);
+f = voltage_spectrum(:,1);
+txy = current_spectrum(:,2)./voltage_spectrum(:,2);
 
 f_cut = 10.0e9;
 select_index = find(f<=f_cut);
