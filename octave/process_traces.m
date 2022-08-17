@@ -36,12 +36,10 @@ fs = 1/dt;
 
 nfft = 2^nextpow2(length(t));
 
-[txy f] = tfestimate (voltage, current, [], [], nfft, fs,'shift');
-f
-exit
+[txy f] = tfestimate (voltage, current, [], [], nfft, fs);
 
 f_cut = 2.5e9;
-select_index = find(f>=0 | f<=f_cut);
+select_index = find(f<=f_cut);
 txy = txy(select_index,:);
 f = f(select_index);
 
