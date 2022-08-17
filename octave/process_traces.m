@@ -39,7 +39,7 @@ nfft = 2^nextpow2(length(t));
 [txy f] = tfestimate (voltage, current, [], [], nfft, fs);
 txy = real(txy);
 
-f_cut = 10.0e9;
+f_cut = 2.5e9;
 select_index = find(f<=f_cut);
 txy = txy(select_index,:);
 f = f(select_index);
