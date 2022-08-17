@@ -92,5 +92,5 @@ if false; then
 ./plotSpectrogram.sh
 fi
 if true; then
-./plot1DSignal.sh txy 1 Freq 1E9 Hz "0 10" 5f2.5 Txy 1E0 "dB" "-15 0" 5f2.5
+./plot1DSignal.sh txy 1 Freq 1E9 Hz "0 2.5" 0.5f0.25 Txy 1E0 "dB" "-15 0" 5f2.5
 fi
