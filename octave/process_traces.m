@@ -159,6 +159,8 @@ if LA_flag
   %current_envelope = trace2envelope(current,resampled_point_number);
   %dlmwrite(['../backup/current_envelope'],current_envelope,' ');
 
+  %t_cut_max = 
+
   current_spectrum = trace2spectrum(current);
   dlmwrite(['../backup/current_spectrum'],current_spectrum,' ');
   
@@ -169,7 +171,7 @@ if LA_flag
 
   voltage_spectrum = trace2spectrum(voltage);
 
-  f = current_spectrum(:,1);
+
 
   %voltage_spectrum = [f interp1(voltage_spectrum(:,1),voltage_spectrum(:,2),f,'linear')];
 
@@ -187,13 +189,16 @@ if LA_flag
   %[admittance_spectrum f] = tfestimate (voltage(:,2), current(:,2), window,noverlap, nfft, fs);
   %------------------------------------
 
-  f_cut_max = 2.9e9;
+  f = current_spectrum(:,1);
   f_cut_min = 0.1e9;
+  f_cut_max = 2.9e9;
   select_index = find(f>=f_cut_min | f<=f_cut_max);
-  admittance_spectrum = admittance_spectrum(select_index);
   f = f(select_index);
 
+  admittance_spectrum = admittance_spectrum(select_index);
+
   admittance_spectrum = 20*log10(admittance_spectrum/max(admittance_spectrum));
+  max(admittance_spectrum)
   admittance_spectrum = [f admittance_spectrum];
 
   dlmwrite(['../backup/admittance_spectrum'],admittance_spectrum,' ');
