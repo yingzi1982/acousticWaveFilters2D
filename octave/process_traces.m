@@ -185,7 +185,7 @@ if LA_flag
   %[admittance_spectrum f] = tfestimate (voltage(:,2), current(:,2), window,noverlap, nfft, fs);
   %------------------------------------
 
-  f_cut = 10.0e9;
+  f_cut = 5.0e9;
   select_index = find(f<=f_cut);
   admittance_spectrum = admittance_spectrum(select_index);
   f = f(select_index);
