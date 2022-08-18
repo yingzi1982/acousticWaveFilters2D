@@ -172,11 +172,11 @@ if LA_flag
   f = voltage_spectrum(:,1);
 
   %------------------------------------
-  admittance_spectrum = current_spectrum(:,2)./voltage_spectrum(:,2);
+  %admittance_spectrum = current_spectrum(:,2)./voltage_spectrum(:,2);
   %------------------------------------
-  %nfft = 2^nextpow2(length(t));
-  %fs = 1/dt;
-  %[admittance_spectrum f] = tfestimate (voltage(:,2), current(:,2), [], [], nfft, fs);
+  nfft = 2^nextpow2(length(t));
+  fs = 1/dt;
+  [admittance_spectrum f] = tfestimate (voltage(:,2), current(:,2), [], [], nfft, fs);
   %------------------------------------
 
   f_cut = 10.0e9;
