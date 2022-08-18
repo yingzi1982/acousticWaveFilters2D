@@ -225,12 +225,15 @@ if LA_flag
   f = voltage_spectrum(:,1);
 
   admittance_spectrum = current_spectrum(:,2)./voltage_spectrum(:,2);
+
+  %------------------------------------
+  nfft = 2^nextpow2(length(t));
+  fs = 1/dt;
+  [admittance_spectrum f] = tfestimate (voltage(:,1), current(:,1), [], [], nfft, fs);
+  %------------------------------------
+
   admittance_spectrum = 20*log10(admittance_spectrum/max(admittance_spectrum));
   admittance_spectrum = [f admittance_spectrum];
-
-  %nfft = 2^nextpow2(length(t));
-  %fs = 1/dt;
-  %[txy f] = tfestimate (voltage, current, [], [], nfft, fs);
 
   f_cut = 10.0e9;
   select_index = find(f<=f_cut);
