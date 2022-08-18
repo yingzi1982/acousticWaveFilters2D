@@ -71,19 +71,18 @@ domain=$colorbar_horizontal_position\i/$colorbar_vertical_position\i/$colorbar_w
 gmt colorbar -Dx$domain -Bxa50f25 -By+l"dB/Hz"
 
 #-----------------------------------------------------
-#envelope_xy=$backupFolder$name\_envelope
-#envelope_min=`gmt gmtinfo $envelope_xy -C | awk '{print $3}'`
-#envelope_max=`gmt gmtinfo $envelope_xy -C | awk '{print $4}'`
-#normalization=`echo $envelope_min $envelope_max | awk ' { if(sqrt($1^2)>(sqrt($2^2))) {print sqrt($1^2)} else {print sqrt($2^2)}}'`
+xy=$backupFolder$name
+ymin=`gmt gmtinfo $xy -C | awk '{print $3}'`
+ymax=`gmt gmtinfo $xy -C | awk '{print $4}'`
+normalization=`echo $ymin $ymax | awk ' { if(sqrt($1^2)>(sqrt($2^2))) {print sqrt($1^2)} else {print sqrt($2^2)}}'`
+
+width2=$width
+height2=0.1
+
+projection=X$width2\i/$height2\i
+region=$tmin/$tmax/-1/1
 #
-#envelope_width=$width
-#envelope_height=0.1
-#
-#projection=X$envelope_width\i/$envelope_height\i
-#region=$tmin/$tmax/-1/1
-#echo $region
-#
-#cat $envelope_xy | awk  -v tscale="$tscale"  -v normalization="$normalization" '{print $1/tscale, $2/normalization}' | gmt plot -R$region -J$projection -Bwesn -Ggray -W1p,black -Yh+0.1i
+cat $xy | awk  -v tscale="$tscale"  -v normalization="$normalization" '{print $1/tscale, $2/normalization}' | gmt plot -R$region -J$projection -Bwesn -Ggray -W1p,black -Y$height\i
 #-----------------------------------------------------
 #
 gmt end
