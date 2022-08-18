@@ -77,7 +77,7 @@ ymax=`gmt gmtinfo $xy -C | awk '{print $4}'`
 normalization=`echo $ymin $ymax | awk ' { if(sqrt($1^2)>(sqrt($2^2))) {print sqrt($1^2)} else {print sqrt($2^2)}}'`
 
 width2=$width
-height2=0.1
+height2=0.2
 
 projection=X$width2\i/$height2\i
 region=$tmin/$tmax/-1/1
