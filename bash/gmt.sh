@@ -92,6 +92,7 @@ if false; then
 ./plotSpectrogram.sh
 fi
 if true; then
+./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 5" 20f10 Amp. 1E0 "" "-1 1" 2f1
 ./plot1DSignal.sh current 10 Time 1E-9 s "0 40" 20f10 Amp. 1E0 "" "-.04 .04" 1f0.5
 fi
 if false; then
