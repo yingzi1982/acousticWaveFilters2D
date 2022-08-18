@@ -171,7 +171,7 @@ if LA_flag
 
   f = current_spectrum(:,1);
 
-  voltage_spectrum = [f interp1(voltage_spectrum(:,1),voltage_spectrum(:,2),f,'linear')];
+  %voltage_spectrum = [f interp1(voltage_spectrum(:,1),voltage_spectrum(:,2),f,'linear')];
 
   %------------------------------------
   admittance_spectrum = current_spectrum(:,2)./voltage_spectrum(:,2);
@@ -187,8 +187,9 @@ if LA_flag
   %[admittance_spectrum f] = tfestimate (voltage(:,2), current(:,2), window,noverlap, nfft, fs);
   %------------------------------------
 
-  f_cut = 5.0e9;
-  select_index = find(f<=f_cut);
+  f_cut_max = 2.9e9;
+  f_cut_min = 0.1e9;
+  select_index = find(f>=f_cut_min | f<=f_cut_max);
   admittance_spectrum = admittance_spectrum(select_index);
   f = f(select_index);
 
