@@ -152,7 +152,7 @@ NTSTEP_BETWEEN_OUTPUT_SEISMOS   = 10000
 
 # set to n to reduce the sampling rate of output seismograms by a factor of n
 # defaults to 1, which means no down-sampling
-NTSTEP_BETWEEN_OUTPUT_SAMPLE    = 2
+NTSTEP_BETWEEN_OUTPUT_SAMPLE    = 1
 
 # so far, this option can only be used if all the receivers are in acoustic elements
 USE_TRICK_FOR_BETTER_PRESSURE   = .false.

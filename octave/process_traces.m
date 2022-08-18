@@ -166,10 +166,12 @@ if LA_flag
   dlmwrite(['../backup/current_specgram'],current_specgram,' ');
 
   voltage = dlmread(['../backup/sourceTimeFunction'],'');
-  voltage = [t interp1(voltage(:,1),voltage(:,2),t,'linear')];
 
   voltage_spectrum = trace2spectrum(voltage);
-  f = voltage_spectrum(:,1);
+
+  f = current_spectrum(:,1);
+
+  voltage_spectrum = [f interp1(voltage_spectrum(:,1),voltage_spectrum(:,2),f,'linear')];
 
   %------------------------------------
   admittance_spectrum = current_spectrum(:,2)./voltage_spectrum(:,2);
