@@ -81,8 +81,9 @@ height2=0.2
 
 projection=X$width2\i/$height2\i
 region=$tmin/$tmax/-1/1
-#
-cat $xy | awk  -v tscale="$tscale"  -v normalization="$normalization" '{print $1/tscale, $2/normalization}' | gmt plot -R$region -J$projection -B -Ggray -W1p,black -Y$height\i
+
+resample_rate=10
+cat $xy | awk  -v tscale="$tscale"  -v normalization="$normalization" resample_rate="$resample_rate" 'NR%resample_rate==0' {print $1/tscale, $2/normalization}' | gmt plot -R$region -J$projection -B -Ggray -W1p,black -Y$height\i
 #-----------------------------------------------------
 #
 gmt end
