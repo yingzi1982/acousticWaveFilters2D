@@ -38,7 +38,7 @@ t_cut_duration = nt*dt/10;
 t_cut = transpose([0:dt:t_cut_duration]);
 %-----------------------
 s_cut = chirp(t_cut, f_start, t_cut_duration, f_end, 'linear', 90);
-%s_cut = s_cut.*hanning(length(s_cut));
+s_cut = s_cut.*hanning(length(s_cut));
 
 otherwise
 error('Wrong signal type!')
