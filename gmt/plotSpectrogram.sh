@@ -77,14 +77,15 @@ ymax=`gmt gmtinfo $xy -C | awk '{print $4}'`
 normalization=`echo $ymin $ymax | awk ' { if(sqrt($1^2)>(sqrt($2^2))) {print sqrt($1^2)} else {print sqrt($2^2)}}'`
 
 width2=$width
-height2=0.8
+height2=0.2
 
 projection=X$width2\i/$height2\i
 region=$tmin/$tmax/-1/1
 
+gmt gmtset MAP_FRAME_AXES wesn
+
 resample_rate=10
 cat $xy | awk  -v tscale="$tscale" -v normalization="$normalization" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/tscale, $2/normalization}' | gmt plot -R$region -J$projection -Y$height\i -Wthin,black
-
 
 #-----------------------------------------------------
 #
