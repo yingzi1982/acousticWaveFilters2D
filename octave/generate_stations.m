@@ -42,8 +42,13 @@ x = linspace(xmin,xmax,nx);
 y = linspace(xmin,xmax,nx);
 z = linspace(zmin,zmax,nz);
 
-[NELEM_PML_THICKNESS_status NELEM_PML_THICKNESS] = system('grep NELEM_PML_THICKNESS ../backup/Par_file.part | cut -d = -f 2');
-NELEM_PML_THICKNESS = str2num(NELEM_PML_THICKNESS);
+%[NELEM_PML_THICKNESS_status NELEM_PML_THICKNESS] = system('grep NELEM_PML_THICKNESS ../backup/Par_file.part | cut -d = -f 2');
+%NELEM_PML_THICKNESS = str2num(NELEM_PML_THICKNESS);
+
+%[absorbbottom_status absorbbottom] = system('grep absorbbottom ../backup/Par_file.part | cut -d = -f 2');
+%[absorbright_status absorbright] = system('grep absorbright ../backup/Par_file.part | cut -d = -f 2');
+%[absorbleft_status absorbleft] = system('grep absorbleft ../backup/Par_file.part | cut -d = -f 2');
+%[absorbtop_status absorbtop] = system('grep absorbtop ../backup/Par_file.part | cut -d = -f 2');
 
 switch filter_type
 case 'SAW'

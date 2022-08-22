@@ -57,7 +57,7 @@ if LA_flag
   LA_stationNumber = length(LA_index);
   LA2_stationNumber = length(LA2_index);
   if LA_stationNumber != LA2_stationNumber
-    error('The station numbers of arrays LA and LA2 are not equal!')
+    error('The station numbers of arrays LA and LA2 are not equal!');
   end
 
   LA_x = longorUTM(LA_index);
@@ -159,8 +159,6 @@ if LA_flag
   %current_envelope = trace2envelope(current,resampled_point_number);
   %dlmwrite(['../backup/current_envelope'],current_envelope,' ');
 
-  %t_cut_max = 
-
   current_spectrum = trace2spectrum(current);
   dlmwrite(['../backup/current_spectrum'],current_spectrum,' ');
   
@@ -170,7 +168,6 @@ if LA_flag
   voltage = dlmread(['../backup/sourceTimeFunction'],'');
 
   voltage_spectrum = trace2spectrum(voltage);
-
 
 
   %voltage_spectrum = [f interp1(voltage_spectrum(:,1),voltage_spectrum(:,2),f,'linear')];
@@ -198,7 +195,6 @@ if LA_flag
   admittance_spectrum = admittance_spectrum(select_index);
 
   admittance_spectrum = 20*log10(admittance_spectrum/max(admittance_spectrum));
-  max(admittance_spectrum)
   admittance_spectrum = [f admittance_spectrum];
 
   dlmwrite(['../backup/admittance_spectrum'],admittance_spectrum,' ');

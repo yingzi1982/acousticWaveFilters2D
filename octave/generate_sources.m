@@ -10,6 +10,26 @@ if length(arg_list) > 0
 else
   error('Please input filter dimension.');
 end
+[xmin_status xmin] = system('grep xmin ../backup/meshInformation | cut -d = -f 2');
+xmin = str2num(xmin);
+[xmax_status xmax] = system('grep xmax ../backup/meshInformation | cut -d = -f 2');
+xmax = str2num(xmax);
+[dx_status dx] = system('grep dx ../backup/meshInformation | cut -d = -f 2');
+dx = str2num(dx);
+
+[ymin_status ymin] = system('grep ymin ../backup/meshInformation | cut -d = -f 2');
+ymin = str2num(ymin);
+[ymax_status ymax] = system('grep ymax ../backup/meshInformation | cut -d = -f 2');
+ymax = str2num(ymax);
+[dy_status dy] = system('grep dy ../backup/meshInformation | cut -d = -f 2');
+dy = str2num(dy);
+
+[zmin_status zmin] = system('grep zmin ../backup/meshInformation | cut -d = -f 2');
+zmin = str2num(zmin);
+[zmax_status zmax] = system('grep zmax ../backup/meshInformation | cut -d = -f 2');
+zmax = str2num(zmax);
+[dz_status dz] = system('grep dz ../backup/meshInformation | cut -d = -f 2');
+dz = str2num(dz);
 
 [ATTENUATION_f0_REFERENCEStatus ATTENUATION_f0_REFERENCE] = system('grep ^ATTENUATION_f0_REFERENCE ../backup/Par_file.part | cut -d = -f 2');
 ATTENUATION_f0_REFERENCE = str2num(ATTENUATION_f0_REFERENCE);
@@ -72,19 +92,24 @@ force_theta = force(:,4);
 [absorbleft_status     absorbleft] = system('grep ^absorbleft\  ../backup/Par_file.part | cut -d = -f 2');
 
 if strcmp ('.true.', strtrim(absorbbottom))
+zmin = zmin + dz*(1+NELEM_PML_THICKNESS);
 end
 
 if strcmp ('.true.', strtrim(absorbright))
+xmax = xmax - dx*(1+NELEM_PML_THICKNESS);
 end
 
 if strcmp ('.true.', strtrim(absorbtop))
+zmax = zmax - dz*(1+NELEM_PML_THICKNESS);
 end
 
 if strcmp ('.true.', strtrim(absorbleft))
+xmin = xmin + dx*(1+NELEM_PML_THICKNESS);
 end
 
-selection_index = find(force_rho/max(force_rho)>=.05);
-%selection_index = find(force_rho/max(force_rho)>=0);
+amplitude_selection = force_rho/max(force_rho) >= .05;
+position_selection = force_x >= xmin & force_x <= xmax & force_z >= zmin & force_z <= zmax;
+selection_index = find(amplitude_selection & position_selection);
 
 source_number = length(selection_index);
 source_size = size(selection_index);
