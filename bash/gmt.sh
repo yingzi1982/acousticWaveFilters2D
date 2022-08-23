@@ -88,7 +88,7 @@ rm $traceImage_xFile
 rm $traceImage_zFile
 fi
 #--------------------------------------------------
-if false; then
+if true; then
 ./plotSpectrogram.sh
 fi
 if false; then
