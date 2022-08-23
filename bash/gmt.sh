@@ -97,5 +97,5 @@ if true; then
 #./plot1DSignal.sh sourceFrequencySpetrum 1 Freq 1E9 Hz "0 5" 5f2.5 Amp 1E-2 "V/Hz" "0 3" 1f0.5
 ./plot1DSignal.sh  charge 10 Time 1E-9 s "0 20" 10f5 Charge 1E-11 "C" "-1 1" 1f0.5
 ./plot1DSignal.sh current 10 Time 1E-9 s "0 20" 10f5 Current  1E-1 "A" "-1 1" 0.5f0.25
-./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0 5" 1f0.5 Amp 1E0 "" "-50 0" 25f12.5
+./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0 3" 1f0.5 Amp 1E0 "" "-50 0" 25f12.5
 fi
