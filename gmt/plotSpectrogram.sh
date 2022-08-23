@@ -29,7 +29,7 @@ fmin=`gmt info $originalxyz -C | awk -v fscale="$fscale" '{print $3/fscale}'`
 fmax=`gmt info $originalxyz -C | awk -v fscale="$fscale" '{print $4/fscale}'`
 
 tmin=0
-tmax=40
+tmax=20
 fmin=0
 fmax=4
 
