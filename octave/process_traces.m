@@ -135,6 +135,7 @@ if LA_flag
   else
     dx_ratio = 1;
   end
+
   negative_finger = negative_finger(1:dx_ratio:end,:);
   positive_finger = positive_finger(1:dx_ratio:end,:);
   finger_dx = negative_finger(2,1)-negative_finger(1,1);
