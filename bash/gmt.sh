@@ -88,16 +88,17 @@ rm $traceImage_xFile
 rm $traceImage_zFile
 fi
 #--------------------------------------------------
-if true; then
+if false; then
 ./plotSpectrogram.sh
 fi
 if true; then
-./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 5" 5f2.5 Amp 1E0 "V" "-1 1" 1f0.5
-./plot1DSignal.sh sourceFrequencySpetrum 1 Freq 1E9 Hz "0 5" 5f2.5 Amp 1E-2 "V/Hz" "0 3" 1f0.5
-./plot1DSignal.sh current 10 Time 1E-9 s "0 20" 20f10 Amp. 1E0 "" "-.04 .04" 0.04f0.02
-./plot1DSignal.sh charge_on_negative_electrode 10 Time 1E-9 s "0 20" 10f5 Amp. 1E-11 "" "-1 1" 0.5f0.25
+#./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 5" 5f2.5 Amp 1E0 "V" "-1 1" 1f0.5
+#./plot1DSignal.sh sourceFrequencySpetrum 1 Freq 1E9 Hz "0 5" 5f2.5 Amp 1E-2 "V/Hz" "0 3" 1f0.5
+#./plot1DSignal.sh current 10 Time 1E-9 s "0 20" 20f10 Amp. 1E0 "" "-.04 .04" 0.04f0.02
+./plot1DSignal.sh charge_on_negative_electrode 10 Time 1E-9 s "0 20" 10f5 Amp. 1E-11 "C" "-1 1" 1f0.5
+./plot1DSignal.sh charge_on_positive_electrode 10 Time 1E-9 s "0 20" 10f5 Amp. 1E-11 "C" "-1 1" 1f0.5
 #./plot1DSignal.sh current_spectrum 1 Freq 1E9 Hz "0 10" 5f2.5 Amp 1E-3 "V/Hz" "0 1" 1f0.5
-./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0 10" 5f2.5 Amp 1E0 "V/Hz" "-200 0" 10f5
+#./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0 10" 5f2.5 Amp 1E0 "V/Hz" "-200 0" 10f5
 fi
 if false; then
 #./plot1DSignal.sh txy 1 Freq 1E9 Hz "0 10" 5f2.5 Txy 1E0 "dB" "-15 0" 5f2.5
