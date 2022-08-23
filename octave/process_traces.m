@@ -145,18 +145,19 @@ if LA_flag
 
   negative_finger_electric_displacement_x = LA_electric_displacement_x(:,negative_finger_x_index);
   negative_finger_electric_displacement_z = LA_electric_displacement_z(:,negative_finger_x_index);
+
   positive_finger_electric_displacement_x = LA_electric_displacement_x(:,positive_finger_x_index);
   positive_finger_electric_displacement_z = LA_electric_displacement_z(:,positive_finger_x_index);
 
-  charge_on_negative_electrode = sum(-finger_dx*negative_finger_electric_displacement_z,2);
   charge_on_positive_electrode = sum(-finger_dx*positive_finger_electric_displacement_z,2);
-  dlmwrite(['../backup/charge_on_negative_electrode'],[t charge_on_negative_electrode],' ');
-  dlmwrite(['../backup/charge_on_positive_electrode'],[t charge_on_positive_electrode],' ');
-exit
+  charge = charge_on_positive_electrode;
+  current = -gradient(charge,dt);
 
-  current_on_negative_electrode = -gradient(charge_on_negative_electrode,dt);
-  current_on_positive_electrode = -gradient(charge_on_positive_electrode,dt);
-  current = [t current_on_positive_electrode-current_on_negative_electrode];
+  charge = [t charge];
+  current = [t current];
+
+  dlmwrite(['../backup/charge'],charge,' ');
+
   dlmwrite(['../backup/current'],current,' ');
 
   %current_envelope = trace2envelope(current,resampled_point_number);

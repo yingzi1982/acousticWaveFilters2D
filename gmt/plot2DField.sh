@@ -46,7 +46,6 @@ width=2.2
 height=`echo "$width*(($zmax)-($zmin))/(($xmax)-($xmin))" | bc -l`
 projection=X$width\i/$height\i
 region=$xmin/$xmax/$zmin/$zmax
-echo $region
 
 xinc=`echo $xinc | awk -v xscale="$xscale" '{print $1/xscale}'`
 zinc=`echo $zinc | awk -v zscale="$zscale" '{print $1/zscale}'`
