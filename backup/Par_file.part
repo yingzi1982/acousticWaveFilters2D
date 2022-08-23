@@ -21,7 +21,7 @@ NPROC                           = 256
 
 # time step parameters
 # total number of time steps
-NSTEP                           = 40000
+NSTEP                           = 40001
 
 # duration of a time step (see section "How to choose the time step" of the manual for how to do this)
 DT                              = 5.0e-13
@@ -209,7 +209,7 @@ APPROXIMATE_HESS_KL             = .false.
 # Perfectly Matched Layer (PML) boundaries
 # absorbing boundary active or not
 PML_BOUNDARY_CONDITIONS         = .true.
-NELEM_PML_THICKNESS             = 5
+NELEM_PML_THICKNESS             = 4
 ROTATE_PML_ACTIVATE             = .false.
 ROTATE_PML_ANGLE                = 30.
 # change the four parameters below only if you know what you are doing; they change the damping profiles inside the PMLs
@@ -269,9 +269,9 @@ tangential_detection_curve_file = ./DATA/courbe_eros_nodes  # file containing th
 interfacesfile                  = ./interfaces.dat
 
 # geometry of the model (origin lower-left corner = 0,0) and mesh description
-xmin                            = -2E-5
-xmax                            =  2E-5
-nx                              = 400
+xmin                            = -5E-5
+xmax                            =  5E-5
+nx                              = 500
 
 # absorbing boundary parameters (see absorbing_conditions above)
 absorbbottom                    = .true.
