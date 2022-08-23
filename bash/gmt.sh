@@ -55,7 +55,7 @@ module unload PDC ghostscript PrgEnv-gnu
 
 fi
 #--------------------------------------------------
-if false; then
+if true; then
 traceImage=LA_trace_image
 traceImage_x=$traceImage\_x
 traceImage_z=$traceImage\_z
@@ -72,7 +72,7 @@ rm $traceImage_zFile
 fi
 #--------------------------------------------------
 
-if false; then
+if true; then
 traceImage=LA_electric_displacement_image
 traceImage_x=$traceImage\_x
 traceImage_z=$traceImage\_z

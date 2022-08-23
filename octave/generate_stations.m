@@ -50,28 +50,33 @@ case 'SAW'
 switch filter_dimension
 case '2D'
 
-[absorbbottom_status absorbbottom] = system('grep absorbbottom ../backup/Par_file.part | cut -d = -f 2');
-[absorbright_status absorbright] = system('grep absorbright ../backup/Par_file.part | cut -d = -f 2');
-[absorbleft_status absorbleft] = system('grep absorbleft ../backup/Par_file.part | cut -d = -f 2');
-[absorbtop_status absorbtop] = system('grep absorbtop ../backup/Par_file.part | cut -d = -f 2');
+%[absorbbottom_status absorbbottom] = system('grep absorbbottom ../backup/Par_file.part | cut -d = -f 2');
+%[absorbright_status absorbright] = system('grep absorbright ../backup/Par_file.part | cut -d = -f 2');
+%[absorbleft_status absorbleft] = system('grep absorbleft ../backup/Par_file.part | cut -d = -f 2');
+%[absorbtop_status absorbtop] = system('grep absorbtop ../backup/Par_file.part | cut -d = -f 2');
+%
+%if strcmp ('.true.', strtrim(absorbbottom))
+%zmin = zmin + dz*(1+NELEM_PML_THICKNESS);
+%end
+%
+%if strcmp ('.true.', strtrim(absorbright))
+%xmax = xmax - dx*(1+NELEM_PML_THICKNESS);
+%end
+%
+%if strcmp ('.true.', strtrim(absorbtop))
+%zmax = zmax - dz*(1+NELEM_PML_THICKNESS);
+%end
+%
+%if strcmp ('.true.', strtrim(absorbleft))
+%xmin = xmin + dx*(1+NELEM_PML_THICKNESS);
+%end
 
-if strcmp ('.true.', strtrim(absorbbottom))
-zmin = zmin + dz*(1+NELEM_PML_THICKNESS);
-end
-
-if strcmp ('.true.', strtrim(absorbright))
-xmax = xmax - dx*(1+NELEM_PML_THICKNESS);
-end
-
-if strcmp ('.true.', strtrim(absorbtop))
-zmax = zmax - dz*(1+NELEM_PML_THICKNESS);
-end
-
-if strcmp ('.true.', strtrim(absorbleft))
-xmin = xmin + dx*(1+NELEM_PML_THICKNESS);
-end
-%x_selection = force_x >= xmin & force_x <= xmax;
-%z_selection = force_z >= zmin & force_z <= zmax;
+%------------
+xmin = -20e-6;
+xmax = 20e-6;
+zmin = zmin;
+zmax = zmax;
+%------------
 
 
 LA_flag = 1;
