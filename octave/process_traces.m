@@ -191,13 +191,15 @@ if LA_flag
   %------------------------------------
 
   f_cut_min = 0e9;
-  f_cut_max = 5e9;
+  f_cut_max = 3e9;
   select_index = find(f>=f_cut_min & f<=f_cut_max);
   f = f(select_index);
 
   admittance_spectrum = admittance_spectrum(select_index);
+min(admittance_spectrum)
+max(admittance_spectrum)
 
-  admittance_spectrum = 20*log10(admittance_spectrum/max(admittance_spectrum));
+  %admittance_spectrum = 20*log10(admittance_spectrum/max(admittance_spectrum));
   admittance_spectrum = [f admittance_spectrum];
 
   dlmwrite(['../backup/admittance_spectrum'],admittance_spectrum,' ');
