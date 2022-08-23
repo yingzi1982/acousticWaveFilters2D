@@ -150,10 +150,8 @@ if LA_flag
 
   charge_on_negative_electrode = sum(-finger_dx*negative_finger_electric_displacement_z,2);
   charge_on_positive_electrode = sum(-finger_dx*positive_finger_electric_displacement_z,2);
-  dlmwrite(['../backup/charge_on_negative_electrode'],charge_on_negative_electrode,' ');
-  dlmwrite(['../backup/charge_on_positive_electrode'],charge_on_positive_electrode,' ');
-max(charge_on_negative_electrode)
-max(charge_on_positive_electrode)
+  dlmwrite(['../backup/charge_on_negative_electrode'],[t charge_on_negative_electrode],' ');
+  dlmwrite(['../backup/charge_on_positive_electrode'],[t charge_on_positive_electrode],' ');
 exit
 
   current_on_negative_electrode = -gradient(charge_on_negative_electrode,dt);
