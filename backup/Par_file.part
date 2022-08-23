@@ -271,7 +271,7 @@ interfacesfile                  = ./interfaces.dat
 # geometry of the model (origin lower-left corner = 0,0) and mesh description
 xmin                            = -5E-5
 xmax                            =  5E-5
-nx                              = 500
+nx                              = 1000
 
 # absorbing boundary parameters (see absorbing_conditions above)
 absorbbottom                    = .true.
