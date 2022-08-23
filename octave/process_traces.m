@@ -191,7 +191,7 @@ if LA_flag
   %------------------------------------
 
   f_cut_min = 0e9;
-  f_cut_max = 3e9;
+  f_cut_max = 10e9;
   select_index = find(f>=f_cut_min & f<=f_cut_max);
   f = f(select_index);
 
