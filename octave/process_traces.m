@@ -150,7 +150,8 @@ if LA_flag
   positive_finger_electric_displacement_z = LA_electric_displacement_z(:,positive_finger_x_index);
 
   charge_on_positive_electrode = sum(-finger_dx*positive_finger_electric_displacement_z,2);
-  charge = charge_on_positive_electrode;
+  charge_on_negative_electrode = sum(-finger_dx*negative_finger_electric_displacement_z,2);
+  charge = charge_on_positive_electrode-charge_on_negative_electrode;
   current = -gradient(charge,dt);
 
   charge = [t charge];
