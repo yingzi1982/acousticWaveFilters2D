@@ -46,7 +46,7 @@ fs=1/dt;
 t =transpose([0:nt-1]*dt);
 
 signal_type='ricker';
-s%ignal_type='chirp';
+%signal_type='chirp';
 switch signal_type
 case 'ricker'
 [t_cut s_cut] = ricker(f0, dt);

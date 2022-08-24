@@ -40,6 +40,13 @@ V = summationMethod(x,y,z,positive_finger,negative_finger,positive_finger_V,nega
 E_x = -E_x;
 E_z = -E_z;
 
+E_x_negative_finger = interp2(X,Z,E_x,negative_finger(:,1),negative_finger(:,2),'linear');
+E_z_negative_finger = interp2(X,Z,E_z,negative_finger(:,1),negative_finger(:,2),'linear');
+E_x_positive_finger = interp2(X,Z,E_x,positive_finger(:,1),positive_finger(:,2),'linear');
+E_z_positive_finger = interp2(X,Z,E_z,positive_finger(:,1),positive_finger(:,2),'linear');
+dlmwrite('../backup/electric_negative_finger',[E_x_negative_finger E_z_negative_finger],' ');
+dlmwrite('../backup/electric_positive_finger',[E_x_positive_finger E_z_positive_finger],' ');
+
 [E_theta,E_rho] = cart2pol(E_x,E_z);
 
 electric=[reshape(X,[],1) reshape(Z,[],1) reshape(E_rho,[],1) reshape(E_theta,[],1) [reshape(E_x,[],1) reshape(E_z,[],1)]];

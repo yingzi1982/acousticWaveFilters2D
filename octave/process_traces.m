@@ -38,6 +38,7 @@ band_y='.BXY.semd';
 band_z='.BXZ.semd';
 
 resampled_point_number = 500;
+
 switch filter_type
 case 'SAW'
 
@@ -116,19 +117,44 @@ if LA_flag
   LA_strain2 = transpose(squeeze(strain2(:,end,:)));
   LA_strain3 = transpose(squeeze(strain3(:,end,:)));
   [piezo]=generate_piezomaterial_parameters(filter_dimension);
+
   piezoelectric_constant = piezo.piezoelectric_constant;
   piezoelectric_constant = piezoelectric_constant([1 3],[1 3 5]);
-  LA_electric_displacement_x = piezoelectric_constant(1,1)*LA_strain1 + piezoelectric_constant(1,2)*LA_strain2 + piezoelectric_constant(1,3)*LA_strain3;
-  LA_electric_displacement_z = piezoelectric_constant(2,1)*LA_strain1 + piezoelectric_constant(2,2)*LA_strain2 + piezoelectric_constant(2,3)*LA_strain3;
-  LA_electric_displacement_together_x = [t LA_electric_displacement_x];
-  LA_electric_displacement_together_z = [t LA_electric_displacement_z];
-  [LA_electric_displacement_image_x]=trace2image(LA_electric_displacement_together_x,resampled_point_number,LA_x);
-  [LA_electric_displacement_image_z]=trace2image(LA_electric_displacement_together_z,resampled_point_number,LA_x);
-  dlmwrite('../backup/LA_electric_displacement_image',[LA_electric_displacement_image_x LA_electric_displacement_image_z(:,end)],' ');
+
+  LA_electric_displacement_polarization_x = piezoelectric_constant(1,1)*LA_strain1 + piezoelectric_constant(1,2)*LA_strain2 + piezoelectric_constant(1,3)*LA_strain3;
+  LA_electric_displacement_polarization_z = piezoelectric_constant(2,1)*LA_strain1 + piezoelectric_constant(2,2)*LA_strain2 + piezoelectric_constant(2,3)*LA_strain3;
+
+  LA_electric_displacement_together_x_polarization = [t LA_electric_displacement_polarization_x];
+  LA_electric_displacement_together_z_polarization = [t LA_electric_displacement_polarization_z];
+  [LA_electric_displacement_image_x_polarization]=trace2image(LA_electric_displacement_together_x_polarization,resampled_point_number,LA_x);
+  [LA_electric_displacement_image_z_polarization]=trace2image(LA_electric_displacement_together_z_polarization,resampled_point_number,LA_x);
+  dlmwrite('../backup/LA_electric_displacement_polarization_image',[LA_electric_displacement_image_x_polarization LA_electric_displacement_image_z_polarization(:,end)],' ');
 
   %------------------------------------
+  dielectric_constant = piezo.dielectric_constant;
+  dielectric_constant = dielectric_constant([1 3],[1 3]);
+
+  sourceTimeFunction = dlmread(['../backup/sourceTimeFunction'],'');
+
+  electric_negative_finger = dlmread('../backup/electric_negative_finger','');
+  electric_positive_finger = dlmread('../backup/electric_positive_finger','');
+
+  negative_finger_electric_displacement_incident_x = dielectric_constant(1,1)*electric_negative_finger(:,1) + dielectric_constant(1,2)*electric_negative_finger(:,2);
+  negative_finger_electric_displacement_incident_z = dielectric_constant(2,1)*electric_negative_finger(:,1) + dielectric_constant(2,2)*electric_negative_finger(:,2);
+
+  positive_finger_electric_displacement_incident_x = dielectric_constant(1,1)*electric_positive_finger(:,1) + dielectric_constant(1,2)*electric_positive_finger(:,2);
+  positive_finger_electric_displacement_incident_z = dielectric_constant(2,1)*electric_positive_finger(:,1) + dielectric_constant(2,2)*electric_positive_finger(:,2);
+
+  negative_finger_electric_displacement_incident_x = sourceTimeFunction(:,2)*transpose(negative_finger_electric_displacement_incident_x);
+  negative_finger_electric_displacement_incident_z = sourceTimeFunction(:,2)*transpose(negative_finger_electric_displacement_incident_z);
+
+  positive_finger_electric_displacement_incident_x = sourceTimeFunction(:,2)*transpose(positive_finger_electric_displacement_incident_x);
+  positive_finger_electric_displacement_incident_z = sourceTimeFunction(:,2)*transpose(positive_finger_electric_displacement_incident_z);
+  %------------------------------------
+
   negative_finger=dlmread('../backup/negative_finger','');
   positive_finger=dlmread('../backup/positive_finger','');
+
   finger_dx = negative_finger(2,1)-negative_finger(1,1);
   if dx >= finger_dx
     dx_ratio = round(dx/finger_dx);
@@ -143,22 +169,22 @@ if LA_flag
   [negative_finger_x negative_finger_x_index]=findNearest(LA_x,negative_finger(:,1));
   [positive_finger_x positive_finger_x_index]=findNearest(LA_x,positive_finger(:,1));
 
-  negative_finger_electric_displacement_x = LA_electric_displacement_x(:,negative_finger_x_index);
-  negative_finger_electric_displacement_z = LA_electric_displacement_z(:,negative_finger_x_index);
+  negative_finger_electric_displacement_x = LA_electric_displacement_polarization_x(:,negative_finger_x_index) + negative_finger_electric_displacement_incident_x;
+  negative_finger_electric_displacement_z = LA_electric_displacement_polarization_z(:,negative_finger_x_index) + negative_finger_electric_displacement_incident_z;
 
-  positive_finger_electric_displacement_x = LA_electric_displacement_x(:,positive_finger_x_index);
-  positive_finger_electric_displacement_z = LA_electric_displacement_z(:,positive_finger_x_index);
+  positive_finger_electric_displacement_x = LA_electric_displacement_polarization_x(:,positive_finger_x_index) + positive_finger_electric_displacement_incident_x;
+  positive_finger_electric_displacement_z = LA_electric_displacement_polarization_z(:,positive_finger_x_index) + positive_finger_electric_displacement_incident_z;
 
   charge_on_positive_electrode = sum(-finger_dx*positive_finger_electric_displacement_z,2);
   charge_on_negative_electrode = sum(-finger_dx*negative_finger_electric_displacement_z,2);
-  charge = charge_on_positive_electrode-charge_on_negative_electrode;
+
+  charge = charge_on_positive_electrode;
   current = -gradient(charge,dt);
 
   charge = [t charge];
   current = [t current];
 
   dlmwrite(['../backup/charge'],charge,' ');
-
   dlmwrite(['../backup/current'],current,' ');
 
   %current_envelope = trace2envelope(current,resampled_point_number);
@@ -170,7 +196,7 @@ if LA_flag
   current_specgram = trace2specgram(current);
   dlmwrite(['../backup/current_specgram'],current_specgram,' ');
 
-  voltage = dlmread(['../backup/sourceTimeFunction'],'');
+  voltage = sourceTimeFunction;
 
   voltage_spectrum = trace2spectrum(voltage);
 
@@ -191,8 +217,8 @@ if LA_flag
   %[admittance_spectrum f] = tfestimate (voltage(:,2), current(:,2), window,noverlap, nfft, fs);
   %------------------------------------
 
-  f_cut_min = 0e9;
-  f_cut_max = 10e9;
+  f_cut_min = 0.1e9;
+  f_cut_max = 2.9e9;
   select_index = find(f>=f_cut_min & f<=f_cut_max);
   f = f(select_index);
 

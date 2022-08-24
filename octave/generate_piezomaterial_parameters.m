@@ -33,7 +33,7 @@ x = linspace(xmin,xmax,nx);
 y = linspace(ymin,ymax,ny);
 z = linspace(zmin,zmax,nz);
 
-dielecctric_constant=...
+dielectric_constant=...
 [85.2    0    0;...
     0 85.2    0;...
     0    0 28.7]*(8.55e-12);
@@ -91,7 +91,7 @@ otherwise
 error('Wrong filter dimension!')
 end
 
-%xmin ymin zmin xmax ymax zmax dx dy dz dielecctric_constant piezoelectric_constant elastic_constant density
+%xmin ymin zmin xmax ymax zmax dx dy dz dielectric_constant piezoelectric_constant elastic_constant density
 piezo.xmin = xmin;
 piezo.ymin = ymin;
 piezo.zmin = zmin;
@@ -112,7 +112,7 @@ piezo.x = x;
 piezo.y = y;
 piezo.z = z;
 
-piezo.dielecctric_constant = dielecctric_constant;
+piezo.dielectric_constant = dielectric_constant;
 piezo.piezoelectric_constant = piezoelectric_constant;
 piezo.elastic_constant = elastic_constant;
 piezo.density = density;
