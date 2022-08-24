@@ -223,10 +223,12 @@ if LA_flag
   f = f(select_index);
 
   admittance_spectrum = admittance_spectrum(select_index);
-min(admittance_spectrum)
-max(admittance_spectrum)
 
-  %admittance_spectrum = 20*log10(admittance_spectrum/max(admittance_spectrum));
+  admittance_spectrum = 20*log10(admittance_spectrum/max(admittance_spectrum));
+
+  min(admittance_spectrum)
+  max(admittance_spectrum)
+
   admittance_spectrum = [f admittance_spectrum];
 
   dlmwrite(['../backup/admittance_spectrum'],admittance_spectrum,' ');
