@@ -99,4 +99,6 @@ if true; then
 ./plot1DSignal.sh current 10 Time 1E-9 s "0 20" 10f5 Current  1E "A" "-1 1" 0.5f0.25
 #./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0 3" 1f0.5 Amp 1E0 "" "-50 0" 25f12.5
 ./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0.1 2.9" 1f0.5 Amp 1E0 "" "-30 0" 10f5
+./plot1DSignal.sh charge_on_positive_electrode_incident 10 Time 1E-9 s "0 20" 10f5 A  2E-10 "A" "-1 1" 0.5f0.25
+./plot1DSignal.sh charge_on_positive_electrode_piezo 10 Time 1E-9 s "0 20" 10f5 A  1E-11 "A" "-1 1" 0.5f0.25
 fi
