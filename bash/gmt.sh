@@ -22,8 +22,8 @@ dz2=`echo $dz | awk '{print $1*2}'`
 dt=2.0e-10
 xtick=50f25
 ztick=10f5
-heightRatio=0.28
-#heightRatio=0
+#heightRatio=0.28
+heightRatio=0
 #--------------------------------------------------
 if false; then
 ./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 40" 2f1 Amp. 1E0 "" "-1 1" 1f0.5
