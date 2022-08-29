@@ -19,11 +19,13 @@ xinc=${6}
 xlabel=${7}
 xscale=${8}
 xunit=${9}
+xtick=${10}
 
-zinc=${10}
-zlabel=${11}
-zscale=${12}
-zunit=${13}
+zinc=${11}
+zlabel=${12}
+zscale=${13}
+zunit=${14}
+ztick=${15}
 
 backupFolder=../backup/
 DATAFolder=../DATA/
@@ -87,7 +89,7 @@ then
 gmt begin $fig
 gmt makecpt $cpt -T$scalarLowerLimit/$scalarUpperLimit
 
-gmt grdimage $grd -R$region -J$projection -BWeSn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
+gmt grdimage $grd -R$region -J$projection -BWeSn -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$zlabel ($zscale$zunit)"
 
 if [ $type == 'V1' ]
 then
@@ -111,16 +113,14 @@ gmt makecpt $cpt -T$vectorLowerLimit/$vectorUpperLimit
 gmt subplot begin 2x1 -M0.0i/0.04i -Fs$width\i/0 -Srl -Scb -R$region -J$projection -A+jTR+o8p
 
 gmt subplot set 0,0 
-#gmt grdimage $xgrd -Bwesn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
-gmt grdimage $xgrd -Bwes -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
+gmt grdimage $xgrd -Bwesn -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$zlabel ($zscale$zunit)"
 
 if true; then
 awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger | gmt plot -Ss0.005i -Gred   -N
 awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\negative_finger | gmt plot -Ss0.005i -Ggreen -N
 fi
 gmt subplot set 1,0 
-#gmt grdimage $zgrd -BWeSn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
-gmt grdimage $zgrd -BWeS -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
+gmt grdimage $zgrd -BWeSn -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$zlabel ($zscale$zunit)"
 
 if true; then
 awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger | gmt plot -Ss0.005i -Gred   -N
