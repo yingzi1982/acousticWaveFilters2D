@@ -21,7 +21,7 @@ dx2=`echo $dx | awk '{print $1*2}'`
 dz2=`echo $dz | awk '{print $1*2}'`
 dt=2.0e-10
 xtick=10f5
-ytick=10f5
+ytick=20f10
 #--------------------------------------------------
 if false; then
 ./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 40" 2f1 Amp. 1E0 "" "-1 1" 1f0.5
@@ -57,8 +57,7 @@ module unload PDC ghostscript PrgEnv-gnu
 
 fi
 #--------------------------------------------------
-xtick=10f5
-ytick=10f5
+xtick2=10f5
 
 if false; then
 traceImage=LA_trace_image
@@ -70,8 +69,8 @@ traceImage_zFile=../backup/$traceImage_z
 tmax=4.0e-8
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$3}' > $traceImage_xFile
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$4}' > $traceImage_zFile
-./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 1E-11 m $dx X 1E-6 m $xtick $dt Time 1E-9 s $ytick
-./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 1E-11 m $dx X 1E-6 m $xtick $dt Time 1E-9 s $ytick
+./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 1E-11 m $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ytick
+./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 1E-11 m $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ytick
 rm $traceImage_xFile
 rm $traceImage_zFile
 fi
@@ -87,8 +86,8 @@ traceImage_zFile=../backup/$traceImage_z
 tmax=4.0e-8
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$3}' > $traceImage_xFile
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$4}' > $traceImage_zFile
-./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 5E-5 $electric_displacement_unit $dx X 1E-6 m $xtick $dt Time 1E-9 s $ytick
-./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 5E-5 $electric_displacement_unit $dx X 1E-6 m $xtick $dt Time 1E-9 s $ytick
+./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 5E-5 $electric_displacement_unit $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ytick
+./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 5E-5 $electric_displacement_unit $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ytick
 rm $traceImage_xFile
 rm $traceImage_zFile
 fi
