@@ -181,11 +181,10 @@ if LA_flag
 
   charge_on_positive_electrode_piezo = sum(-finger_dx*positive_finger_electric_displacement_piezo_z,2);
   charge_on_negative_electrode_piezo = sum(-finger_dx*negative_finger_electric_displacement_piezo_z,2);
-  max(charge_on_positive_electrode_incident(:,2))
-  max(charge_on_positive_electrode_piezo(:,2))
 
-  dlmwrite(['../backup/charge_on_positive_electrode_incident'],charge_on_positive_electrode_incident,' ');
-  dlmwrite(['../backup/charge_on_positive_electrode_piezo'],charge_on_positive_electrode_piezo,' ');
+  dlmwrite(['../backup/charge_on_positive_electrode_incident'],[t charge_on_positive_electrode_incident],' ');
+  dlmwrite(['../backup/charge_on_positive_electrode_piezo'],   [t charge_on_positive_electrode_piezo],' ');
+exit
 
   %------------------------------------
   charge_on_positive_electrode = charge_on_positive_electrode_incident + charge_on_positive_electrode_piezo;

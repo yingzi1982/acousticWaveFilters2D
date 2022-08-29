@@ -25,7 +25,7 @@ if false; then
 ./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 40" 2f1 Amp. 1E0 "" "-1 1" 1f0.5
 fi
 #--------------------------------------------------
-if false; then
+if true; then
 ./plot2DField.sh potential S   '-CGMT_seis.cpt -Iz'  1E0  V        $dx X 1E-6 m $dz Z 1E-6 m on
 ./plot2DField.sh electric  V1  '-CGMT_hot.cpt -Iz'   1E6  V/m      $dx X 1E-6 m $dz Z 1E-6 m on
 ./plot2DField.sh electric  V2  '-CGMT_seis.cpt -Iz'  1E6  V/m      $dx X 1E-6 m $dz Z 1E-6 m on
@@ -92,7 +92,7 @@ if false; then
 ./plotSpectrogram.sh
 fi
 #--------------------------------------------------
-if true; then
+if false; then
 #./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 5" 5f2.5 Amp 1E0 "V" "-1 1" 1f0.5
 #./plot1DSignal.sh sourceFrequencySpetrum 1 Freq 1E9 Hz "0 5" 5f2.5 Amp 1E-2 "V/Hz" "0 3" 1f0.5
 ./plot1DSignal.sh  charge 10 Time 1E-9 s "0 20" 10f5 Charge 2E-10 "C" "-1 1" 1f0.5

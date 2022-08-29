@@ -73,6 +73,7 @@ sourceTimeFunction= [t s];
 save("-ascii",['../backup/sourceTimeFunction'],'sourceTimeFunction')
 
 sourceFrequencySpetrum = trace2spectrum(sourceTimeFunction);
+sourceFrequencySpetrum = [sourceFrequencySpetrum(:,1) abs(sourceFrequencySpetrum(:,2))];
 save("-ascii",['../backup/sourceFrequencySpetrum'],'sourceFrequencySpetrum')
 
 %------------------------------------
