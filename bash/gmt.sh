@@ -20,7 +20,7 @@ dz=`grep dz ../backup/meshInformation | cut -d = -f 2`
 dx2=`echo $dx | awk '{print $1*2}'`
 dz2=`echo $dz | awk '{print $1*2}'`
 dt=2.0e-10
-xtick=10f5
+xtick=50f25
 ytick=20f10
 #--------------------------------------------------
 if false; then
