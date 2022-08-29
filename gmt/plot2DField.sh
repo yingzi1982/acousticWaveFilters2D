@@ -112,7 +112,7 @@ gmt subplot begin 2x1 -M0.0i/0.04i -Fs$width\i/0 -Srl -Scb -R$region -J$projecti
 
 gmt subplot set 0,0 
 #gmt grdimage $xgrd -Bwesn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
-gmt grdimage $xgrd -Bwen -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
+gmt grdimage $xgrd -Bwes -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
 
 if true; then
 awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger | gmt plot -Ss0.005i -Gred   -N
@@ -120,7 +120,7 @@ awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $bac
 fi
 gmt subplot set 1,0 
 #gmt grdimage $zgrd -BWeSn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
-gmt grdimage $zgrd -BWen -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
+gmt grdimage $zgrd -BWeS -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
 
 if true; then
 awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger | gmt plot -Ss0.005i -Gred   -N
