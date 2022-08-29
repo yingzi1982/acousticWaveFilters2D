@@ -14,18 +14,19 @@ type=${2}
 cpt=${3}
 scale=${4}
 unit=${5}
+heightRatio=${6}
 
-xinc=${6}
-xlabel=${7}
-xscale=${8}
-xunit=${9}
-xtick=${10}
+xinc=${7}
+xlabel=${8}
+xscale=${9}
+xunit=${10}
+xtick=${11}
 
-zinc=${11}
-zlabel=${12}
-zscale=${13}
-zunit=${14}
-ztick=${15}
+zinc=${12}
+zlabel=${13}
+zscale=${14}
+zunit=${15}
+ztick=${16}
 
 backupFolder=../backup/
 DATAFolder=../DATA/
@@ -44,7 +45,12 @@ zmin=`gmt info $originalxyz -C | awk -v zscale="$zscale" '{print $3/zscale}'`
 zmax=`gmt info $originalxyz -C | awk -v zscale="$zscale" '{print $4/zscale}'`
 
 width=2.2
+if [[ "$heightRatio" == 0 ]]
+then
 height=`echo "$width*(($zmax)-($zmin))/(($xmax)-($xmin))" | bc -l`
+else
+height=`echo "$width*$heightRatio" | bc -l`
+fi
 projection=X$width\i/$height\i
 region=$xmin/$xmax/$zmin/$zmax
 
