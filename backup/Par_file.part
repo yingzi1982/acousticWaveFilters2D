@@ -269,9 +269,9 @@ tangential_detection_curve_file = ./DATA/courbe_eros_nodes  # file containing th
 interfacesfile                  = ./interfaces.dat
 
 # geometry of the model (origin lower-left corner = 0,0) and mesh description
-xmin                            = -1.5E-4
-xmax                            =  1.5E-4
-nx                              = 1500
+xmin                            = -2.1E-4
+xmax                            =  2.1E-4
+nx                              = 2100
 
 # absorbing boundary parameters (see absorbing_conditions above)
 absorbbottom                    = .true.
