@@ -21,10 +21,10 @@ NPROC                           = 256
 
 # time step parameters
 # total number of time steps
-NSTEP                           = 40001
+NSTEP                           = 50001
 
 # duration of a time step (see section "How to choose the time step" of the manual for how to do this)
-DT                              = 5.0e-13
+DT                              = 1.0e-12
 
 # time stepping
 # 1 = Newmark (2nd order), 2 = LDDRK4-6 (4th-order 6-stage low storage Runge-Kutta), 3 = classical RK4 4th-order 4-stage Runge-Kutta
@@ -269,9 +269,9 @@ tangential_detection_curve_file = ./DATA/courbe_eros_nodes  # file containing th
 interfacesfile                  = ./interfaces.dat
 
 # geometry of the model (origin lower-left corner = 0,0) and mesh description
-xmin                            = -5E-5
-xmax                            =  5E-5
-nx                              = 500
+xmin                            = -1E-4
+xmax                            =  1E-4
+nx                              = 1000
 
 # absorbing boundary parameters (see absorbing_conditions above)
 absorbbottom                    = .true.
