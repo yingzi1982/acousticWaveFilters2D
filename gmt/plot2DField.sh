@@ -120,7 +120,7 @@ awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $bac
 fi
 gmt subplot set 1,0 
 #gmt grdimage $zgrd -BWeSn -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
-gmt grdimage $zgrd -BWeS -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
+gmt grdimage $zgrd -BWen -Bx10f5+l"$xlabel ($xscale$xunit)" -By10f5+l"$zlabel ($zscale$zunit)"
 
 if true; then
 awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger | gmt plot -Ss0.005i -Gred   -N
