@@ -109,7 +109,7 @@ xmin = xmin + dx*(1+NELEM_PML_THICKNESS);
 end
 
 %amplitude_selection = force_rho/max(force_rho) >= .05;
-amplitude_selection = force_rho/max(force_rho) >= .1;
+amplitude_selection = force_rho/max(force_rho) >= .2;
 position_selection = force_x >= xmin & force_x <= xmax & force_z >= zmin & force_z <= zmax;
 selection_index = find(amplitude_selection & position_selection);
 
@@ -124,7 +124,8 @@ factor = force_rho(selection_index);
 
 source_surf                     = [repmat({'.false.'},1,source_number)];
 source_type                     = [1]*ones(source_size);
-time_function_type              = [8]*ones(source_size);
+%time_function_type              = [8]*ones(source_size);
+time_function_type              = [1]*ones(source_size);
 name_of_source_file             = [repmat({'DATA/STF'},1,source_number)];
 burst_band_width                = [0.0]*ones(source_size);
 f0                              = [f0]*ones(source_size);
@@ -161,7 +162,9 @@ for nSOURCE = [1:source_number]
   fprintf(fileID, 'vx                 = %f\n', vx(nSOURCE))
   fprintf(fileID, 'vz                 = %f\n', vz(nSOURCE))
   fprintf(fileID, '#\n')
-  dlmwrite(['../' stf_name],[t s],' ');
+
+  %dlmwrite(['../' stf_name],[t s],' ');
+
   %stf_fileID = fopen(stf_name,'w');
   %for i = 1:nt
   %  fprintf(stf_fileID, '%f %f\n', t(i), s(i))
