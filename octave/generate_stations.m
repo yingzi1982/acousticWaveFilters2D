@@ -50,41 +50,69 @@ case 'SAW'
 switch filter_dimension
 case '2D'
 
-%[absorbbottom_status absorbbottom] = system('grep absorbbottom ../backup/Par_file.part | cut -d = -f 2');
-%[absorbright_status absorbright] = system('grep absorbright ../backup/Par_file.part | cut -d = -f 2');
-%[absorbleft_status absorbleft] = system('grep absorbleft ../backup/Par_file.part | cut -d = -f 2');
-%[absorbtop_status absorbtop] = system('grep absorbtop ../backup/Par_file.part | cut -d = -f 2');
-%
-%if strcmp ('.true.', strtrim(absorbbottom))
-%zmin = zmin + dz*(1+NELEM_PML_THICKNESS);
-%end
-%
-%if strcmp ('.true.', strtrim(absorbright))
-%xmax = xmax - dx*(1+NELEM_PML_THICKNESS);
-%end
-%
-%if strcmp ('.true.', strtrim(absorbtop))
-%zmax = zmax - dz*(1+NELEM_PML_THICKNESS);
-%end
-%
-%if strcmp ('.true.', strtrim(absorbleft))
-%xmin = xmin + dx*(1+NELEM_PML_THICKNESS);
-%end
+[absorbbottom_status absorbbottom] = system('grep absorbbottom ../backup/Par_file.part | cut -d = -f 2');
+[absorbright_status absorbright] = system('grep absorbright ../backup/Par_file.part | cut -d = -f 2');
+[absorbleft_status absorbleft] = system('grep absorbleft ../backup/Par_file.part | cut -d = -f 2');
+[absorbtop_status absorbtop] = system('grep absorbtop ../backup/Par_file.part | cut -d = -f 2');
+
+if strcmp ('.true.', strtrim(absorbbottom))
+zmin = zmin + dz*(1+NELEM_PML_THICKNESS);
+end
+
+if strcmp ('.true.', strtrim(absorbright))
+xmax = xmax - dx*(1+NELEM_PML_THICKNESS);
+end
+
+if strcmp ('.true.', strtrim(absorbtop))
+zmax = zmax - dz*(1+NELEM_PML_THICKNESS);
+end
+
+if strcmp ('.true.', strtrim(absorbleft))
+xmin = xmin + dx*(1+NELEM_PML_THICKNESS);
+end
 
 %------------
-xmin = -20e-6;
-xmax = 20e-6;
-zmin = zmin;
-zmax = zmax;
-%------------
 
-
-LA_flag = 1;
+PF_flag=1;
+LA_flag = 0;
 SA_flag = 0;
 
 LA_resample_rate = 1;
 SA_resample_rate = 2;
 
+if(PF_flag)
+
+positive_finger=dlmread('../backup/positive_finger','');
+
+[x_station] = positive_finger(:,1);
+[z_station] = positive_finger(:,2);
+
+selection_index = find((x_station >= xmin & x_station <= xmax) & (z_station >= zmin & z_station <= zmax));
+x_station = x_station(selection_index);
+z_station = z_station(selection_index);
+
+networkName = 'PF';
+elevation_station = zeros(size(x_station));
+burial_station = zeros(size(x_station));
+
+stationNumber = length(x_station);
+fileID = fopen(['../backup/STATIONS_' networkName],'w');
+for nSTATIONS = 1:stationNumber
+  stationName = ['S' int2str(nSTATIONS)];
+    fprintf(fileID,'%s  %s  %g  %g  %g  %g\n',stationName,networkName,x_station(nSTATIONS),z_station(nSTATIONS),elevation_station(nSTATIONS),burial_station(nSTATIONS));
+end
+fclose(fileID);
+
+z_station = z_station - dz;
+networkName = 'PF2';
+fileID = fopen(['../backup/STATIONS_' networkName],'w');
+for nSTATIONS = 1:stationNumber
+  stationName = ['S' int2str(nSTATIONS)];
+    fprintf(fileID,'%s  %s  %g  %g  %g  %g\n',stationName,networkName,x_station(nSTATIONS),z_station(nSTATIONS),elevation_station(nSTATIONS),burial_station(nSTATIONS));
+end
+fclose(fileID);
+end
+%----------------------------------------------
 if(LA_flag)
 [x_station] = x(1:LA_resample_rate:end);
 
@@ -109,16 +137,8 @@ for nSTATIONS = 1:stationNumber
 end
 fclose(fileID);
 
-z_station = z_station - dz;
-networkName = 'LA2';
-fileID = fopen(['../backup/STATIONS_' networkName],'w');
-for nSTATIONS = 1:stationNumber
-  stationName = ['S' int2str(nSTATIONS)];
-    fprintf(fileID,'%s  %s  %g  %g  %g  %g\n',stationName,networkName,x_station(nSTATIONS),z_station(nSTATIONS),elevation_station(nSTATIONS),burial_station(nSTATIONS));
 end
-fclose(fileID);
-end
-
+%----------------------------------------------
 if(SA_flag)
 [x_station] = x(1:SA_resample_rate:end);
 [z_station] = z(1:SA_resample_rate:end);
