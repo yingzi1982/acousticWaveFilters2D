@@ -24,7 +24,7 @@ zmax = piezo.zmax;
 unit_length = 1.0E-6;
 switch filter_type
 case 'SAW'
-finger_pair_number=99;
+finger_pair_number=19;
 dlmwrite('../backup/finger_pair_number',finger_pair_number,' ');
 %finger_pair_number=7;
 %finger_pair_number=1;
@@ -34,8 +34,8 @@ period_width = (finger_width +finger_gap)*2; % positive+gap+negative+gap
   switch filter_dimension
   case '2D'
 
-  single_positive_finger_x = [ 0:dx:finger_width];
-  single_negative_finger_x = [-finger_gap-finger_width:dx:-finger_gap];
+  single_positive_finger_x = [ 0:dx:finger_width-dx];
+  single_negative_finger_x = single_positive_finger_x - period_width/2;
 
   positive_finger_x = [];
   negative_finger_x = [];

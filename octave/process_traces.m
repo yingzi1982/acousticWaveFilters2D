@@ -77,7 +77,7 @@ if PF_flag
 
   PF_charge_piezo = 0;
   %for n = 1:finger_pair_number
-  for n = 31:31
+  for n = 11:11
     nIndex = [1:finger_point_number] + (n-1)*finger_point_number;
 
     nPF_index = PF_index(nIndex);
@@ -123,17 +123,11 @@ if PF_flag
 
     nPF_charge_piezo = sum(-dx*nPF_electric_displacement_piezo_z,2);
     PF_charge_piezo = PF_charge_piezo + nPF_charge_piezo;
-end
+  end
 
 max(PF_charge_piezo)
 dlmwrite('../backup/PF_charge_piezo',[t PF_charge_piezo],' ');
 exit
-
-
-
-whos PF_x
-diff = diff(PF_x)
-whos diff
 end
 exit
 %------------------------------------
