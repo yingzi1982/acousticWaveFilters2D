@@ -75,9 +75,9 @@ if PF_flag
   dielectric_constant = piezo.dielectric_constant;
   dielectric_constant = dielectric_constant([1 3],[1 3]);
 
-  PF_charge = 0;
-  for n = 1:finger_pair_number
-  %for n = 1:1
+  PF_charge_piezo = 0;
+  %for n = 1:finger_pair_number
+  for n = 31:31
     nIndex = [1:finger_point_number] + (n-1)*finger_point_number;
 
     nPF_index = PF_index(nIndex);
@@ -122,7 +122,7 @@ if PF_flag
     nPF_electric_displacement_piezo_z = piezoelectric_constant(2,1)*nPF_strain1 + piezoelectric_constant(2,2)*nPF_strain2 + piezoelectric_constant(2,3)*nPF_strain3;
 
     nPF_charge_piezo = sum(-dx*nPF_electric_displacement_piezo_z,2);
-    PF_charge_piezo = PF_charge + nPF_charge_piezo;
+    PF_charge_piezo = PF_charge_piezo + nPF_charge_piezo;
 end
 
 max(PF_charge_piezo)
