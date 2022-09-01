@@ -37,8 +37,12 @@ band_z='.BXZ.semd';
 time_resample_rate=1;
 time_resampled_point_number = 500;
 sourceTimeFunction = dlmread([signal_folder 'plot_source_time_function.txt'],'');
-t = sourceTimeFunction(1:time_resample_rate:end,1);
+sourceTimeFunction = sourceTimeFunction(1:time_resample_rate:end,:);
+t = sourceTimeFunction(:,1);
 t = t - t(1);
+sourceTimeFunction = [t sourceTimeFunction(:,2)];
+dlmwrite('../backup/sourceTimeFunction',sourceTimeFunction,' ');
+exit
 
 switch filter_type
 case 'SAW'
