@@ -76,8 +76,8 @@ if PF_flag
   dielectric_constant = dielectric_constant([1 3],[1 3]);
 
   PF_charge_piezo = 0;
-  %for n = 1:finger_pair_number
-  for n = 11:11
+  for n = 1:finger_pair_number
+  %for n = 11:11
     nIndex = [1:finger_point_number] + (n-1)*finger_point_number;
 
     nPF_index = PF_index(nIndex);
