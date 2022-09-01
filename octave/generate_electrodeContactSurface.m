@@ -25,6 +25,7 @@ unit_length = 1.0E-6;
 switch filter_type
 case 'SAW'
 finger_pair_number=99;
+dlmwrite('../backup/finger_pair_number',finger_pair_number,' ');
 %finger_pair_number=7;
 %finger_pair_number=1;
 finger_width = 1*unit_length;

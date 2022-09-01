@@ -27,7 +27,12 @@ stationName = station{1};
 networkName = station{2};
 longorUTM = station{3};
 latorUTM = station{4};
-%stationNumber = length(stationName);
+
+stationNumber = length(stationName);
+
+band_x='.BXX.semd';
+band_y='.BXY.semd';
+band_z='.BXZ.semd';
 
 time_resample_rate=1;
 time_resampled_point_number = 500;
@@ -46,29 +51,86 @@ LA_flag = 0;
 SA_flag = 0;
 %------------------------------------
 if PF_flag
+
+  dx = longorUTM(2)-longorUTM(1);
+  dz = latorUTM(1)-latorUTM(stationNumber/2+1);
+  dt = t(2) - t(1);
+
   PF_index  = find(strcmp("PF",networkName));
   PF2_index = find(strcmp("PF2",networkName));
 
   PF_stationNumber = length(PF_index);
   PF2_stationNumber = length(PF2_index);
-  if PF_stationNumber != PF2_stationNumber
-    error('The station numbers of arrays PF and PF2 are not equal!');
+
+  finger_pair_number = dlmread('../backup/finger_pair_number','');
+  finger_point_number = PF_stationNumber/finger_pair_number;
+
+  if (PF_stationNumber != PF2_stationNumber) && (mod(finger_point_number,1) != 0)
+    error('The vaules for PF and PF2 arrays are not correctly set!');
   end
 
-  PF_x = longorUTM(PF_index);
-  %PF2_x = longorUTM(PF2_index);
-positive_finger=dlmread('../backup/negative_finger','');
-diff(positive_finger(:,1))
+  [piezo]=generate_piezomaterial_parameters(filter_dimension);
+  piezoelectric_constant = piezo.piezoelectric_constant;
+  piezoelectric_constant = piezoelectric_constant([1 3],[1 3 5]);
+  dielectric_constant = piezo.dielectric_constant;
+  dielectric_constant = dielectric_constant([1 3],[1 3]);
+
+  PF_charge = 0;
+  for n = 1:finger_pair_number
+  %for n = 1:1
+    nIndex = [1:finger_point_number] + (n-1)*finger_point_number;
+
+    nPF_index = PF_index(nIndex);
+    nPF2_index = PF2_index(nIndex);
+
+    nPF_combined_signal_x = [];
+    nPF_combined_signal_z = [];
+
+    nPF2_combined_signal_x = [];
+    nPF2_combined_signal_z = [];
+
+    for nStation = 1:finger_point_number
+      signal_x = dlmread([signal_folder networkName{nPF_index(nStation)} '.' stationName{nPF_index(nStation)} band_x],'',startRowNumber,startColumnNumber);
+      signal_z = dlmread([signal_folder networkName{nPF_index(nStation)} '.' stationName{nPF_index(nStation)} band_z],'',startRowNumber,startColumnNumber);
+      nPF_combined_signal_x = [nPF_combined_signal_x signal_x((1:time_resample_rate:end))];
+      nPF_combined_signal_z = [nPF_combined_signal_z signal_z((1:time_resample_rate:end))];
+
+      signal2_x = dlmread([signal_folder networkName{nPF2_index(nStation)} '.' stationName{nPF2_index(nStation)} band_x],'',startRowNumber,startColumnNumber);
+      signal2_z = dlmread([signal_folder networkName{nPF2_index(nStation)} '.' stationName{nPF2_index(nStation)} band_z],'',startRowNumber,startColumnNumber);
+      nPF2_combined_signal_x = [nPF2_combined_signal_x signal2_x((1:time_resample_rate:end))];
+      nPF2_combined_signal_z = [nPF2_combined_signal_z signal2_z((1:time_resample_rate:end))];
+    end
+
+    combined_signal_x = cat(3,nPF2_combined_signal_x',nPF_combined_signal_x');
+    combined_signal_x = permute(combined_signal_x,[1 3 2]);
+
+    combined_signal_z = cat(3,nPF2_combined_signal_z',nPF_combined_signal_z');
+    combined_signal_z = permute(combined_signal_z,[1 3 2]);
+
+    [combined_signal_x_partialx, combined_signal_x_partialz, combined_signal_x_partialt] = gradient(combined_signal_x,dx,dz,dt);
+    [combined_signal_z_partialx, combined_signal_z_partialz, combined_signal_z_partialt] = gradient(combined_signal_z,dx,dz,dt);
+
+    strain1 = combined_signal_x_partialx;
+    strain2 = combined_signal_z_partialz;
+    strain3 = combined_signal_x_partialz + combined_signal_z_partialx;
+
+    nPF_strain1 = transpose(squeeze(strain1(:,end,:)));
+    nPF_strain2 = transpose(squeeze(strain2(:,end,:)));
+    nPF_strain3 = transpose(squeeze(strain3(:,end,:)));
+ 
+    nPF_electric_displacement_piezo_x = piezoelectric_constant(1,1)*nPF_strain1 + piezoelectric_constant(1,2)*nPF_strain2 + piezoelectric_constant(1,3)*nPF_strain3;
+    nPF_electric_displacement_piezo_z = piezoelectric_constant(2,1)*nPF_strain1 + piezoelectric_constant(2,2)*nPF_strain2 + piezoelectric_constant(2,3)*nPF_strain3;
+
+    nPF_charge_piezo = sum(-dx*nPF_electric_displacement_piezo_z,2);
+    PF_charge_piezo = PF_charge + nPF_charge_piezo;
+end
+
+max(PF_charge_piezo)
+dlmwrite('../backup/PF_charge_piezo',[t PF_charge_piezo],' ');
 exit
 
-  PF_z = latorUTM(PF_index);
-  PF2_z = latorUTM(PF2_index);
 
-  PF_z = [PF2_z(1);PF_z(1)];
 
-  dx = PF_x(2) - PF_x(1);
-  dz = PF_z(2) - PF_z(1);
-  dt = t(2) - t(1);
 whos PF_x
 diff = diff(PF_x)
 whos diff
