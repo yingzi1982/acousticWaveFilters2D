@@ -51,15 +51,21 @@ current = [t -gradient(charge(:,2),dt)];
 dlmwrite('../backup/voltage',voltage,' ');
 dlmwrite('../backup/current',current,' ');
 
-max(abs(current(:,2)))
-max(abs(voltage(:,2)))
+%max(abs(current(:,2)))
+%max(abs(voltage(:,2)))
 
+voltage_spectrum = trace2spectrum(voltage);
+current_spectrum = trace2spectrum(current);
+f = voltage_spectrum(:,1);
+index = find(f<2.5e9&f>0.5e9);
+admittance = abs(current_spectrum(:,2)./voltage_spectrum(:,2));
+min(admittance)
+max(admittance)
+admittance = [f(index), admittance(index)];
+dlmwrite('../backup/admittance',[admittance],' ');
 exit
 
-source_spectrum = trace2spectrum(sourceTimeFunction);
-current_spectrum = trace2spectrum(current);
 f= current_spectrum(:,1);
-admittance = abs(current_spectrum(:,2)./source_spectrum(:,2))
 max(admittance)
 min(admittance)
 dlmwrite('../backup/admittance_spectrum',[f admittance],' ');
