@@ -58,9 +58,9 @@ voltage_spectrum = trace2spectrum(voltage);
 current_spectrum = trace2spectrum(current);
 f = voltage_spectrum(:,1);
 index = find(f<2.5e9&f>0.5e9);
-admittance = abs(current_spectrum(:,2)./voltage_spectrum(:,2));
-min(admittance)
-max(admittance)
+admittance = real(current_spectrum(:,2)./voltage_spectrum(:,2));
+min(admittance(index))
+max(admittance(index))
 admittance = [f(index), admittance(index)];
 dlmwrite('../backup/admittance',[admittance],' ');
 exit
