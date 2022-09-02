@@ -36,12 +36,33 @@ band_z='.BXZ.semd';
 
 time_resample_rate=1;
 time_resampled_point_number = 500;
+
 sourceTimeFunction = dlmread([signal_folder 'plot_source_time_function.txt'],'');
 sourceTimeFunction = sourceTimeFunction(1:time_resample_rate:end,:);
-t = sourceTimeFunction(:,1);
-t = t - t(1);
-sourceTimeFunction = [t sourceTimeFunction(:,2)];
-dlmwrite('../backup/sourceTimeFunction',sourceTimeFunction,' ');
+sourceTimeFunction(:,1) = sourceTimeFunction(:,1) - sourceTimeFunction(1,1);
+index = find(sourceTimeFunction(:,1)<4e-8);
+voltage = sourceTimeFunction(index,:);
+t = voltage(:,1);
+charge=dlmread('../backup/PF_charge_piezo','');
+charge = charge(1:time_resample_rate:end,:);
+charge = charge(index,:);
+dt = t(2) - t(1);
+current = [t -gradient(charge(:,2),dt)];
+dlmwrite('../backup/voltage',voltage,' ');
+dlmwrite('../backup/current',current,' ');
+
+max(abs(current(:,2)))
+max(abs(voltage(:,2)))
+
+exit
+
+source_spectrum = trace2spectrum(sourceTimeFunction);
+current_spectrum = trace2spectrum(current);
+f= current_spectrum(:,1);
+admittance = abs(current_spectrum(:,2)./source_spectrum(:,2))
+max(admittance)
+min(admittance)
+dlmwrite('../backup/admittance_spectrum',[f admittance],' ');
 exit
 
 switch filter_type
