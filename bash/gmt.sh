@@ -108,7 +108,7 @@ if true; then
 #./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0 3" 1f0.5 Amp 1E0 "" "-50 0" 25f12.5
 #./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0.1 2.9" 1f0.5 Amp 1E0 "" "-30 0" 10f5
 
-./plot1DSignal.sh admittance 1 Freq 1E9 Hz "0.5 2.5" 1f0.5 Amp 3E5 "" "0 1" 1f.5
+./plot1DSignal.sh admittance 1 Freq 1E9 Hz "0.5 2.5" 1f0.5 Amp 1E1 "" "0 1" 1f.5
 #./plot1DSignal.sh current 10 Time 1E-8 s "0 10" 4f2 A  .1 "A" "-1 1" 1f0.5
 #./plot1DSignal.sh voltage 10 Time 1E-8 s "0 10" 4f2 A  .1 "A" "-1 1" 1f0.5
 fi
