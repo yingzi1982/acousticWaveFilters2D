@@ -7,7 +7,7 @@ Fs=1/dt;
 
 s = signal(:,2:end);
 
-nfft = 2^nextpow2(10*length(t));
+nfft = 2^nextpow2(length(t));
 f = transpose(Fs*(0:(nfft/2))/nfft);
 spectrum = fft(s,nfft);
 %PSD = 2*abs(spectrum(1:nfft/2+1)/nfft).^2;
