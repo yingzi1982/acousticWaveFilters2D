@@ -155,7 +155,7 @@ freqIndex = find(f>0.5e9&f<1.5e9);
 admittance = (current_spectrum(:,2)./voltage_spectrum(:,2));
 f = f(freqIndex);
 admittance = admittance(freqIndex);
-admittance = abs(admittance);
+admittance = real(admittance);
 min(admittance)
 max(admittance)
 
