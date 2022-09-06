@@ -136,8 +136,8 @@ if PF_flag
     PF_charge_piezo = PF_charge_piezo + nPF_charge_piezo;
   end
 
-PF_charge_total = PF_charge_incident + PF_charge_piezo;
-%PF_charge_total = PF_charge_piezo;
+%PF_charge_total = PF_charge_incident + PF_charge_piezo;
+PF_charge_total = PF_charge_piezo;
 
 dlmwrite('../backup/PF_charge_piezo',[t PF_charge_piezo],' ');
 dlmwrite('../backup/PF_charge_total',[t PF_charge_total],' ');
