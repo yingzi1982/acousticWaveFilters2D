@@ -61,28 +61,26 @@ else
 end
 
 %-------------------------------------------------
+total_finger_interfaces = dlmread('../backup/total_finger_interfaces','');
+piezo_finger_interface = total_finger_interfaces(:,[1 2]);
 
-%%z_mesh_interp_on_piezo_top_interface    = interp1(x_piezo,z_piezo_top_interface, x_mesh,'nearest');
-%%z_mesh_interp_on_piezo_bottom_interface = interp1(x_piezo,z_piezo_bottom_interface, x_mesh,'nearest');
-%%
-%%x_mesh_interp_on_piezo_left_interface  = interp1(z_piezo,x_piezo_left_interface, z_mesh,'nearest');
-%%x_mesh_interp_on_piezo_right_interface = interp1(z_piezo,x_piezo_right_interface, z_mesh,'nearest');
-%%
-%%mask_piezo = (z_mesh <= z_mesh_interp_on_piezo_top_interface & z_mesh >= z_mesh_interp_on_piezo_bottom_interface) ...
-           %%& (x_mesh <= x_mesh_interp_on_piezo_right_interface & x_mesh >= x_mesh_interp_on_piezo_left_interface);
-%%
-%%mask_piezo = [reshape(mask_piezo,[],1)];
-%%dlmwrite('../backup/mask_piezo',mask_piezo);
+z_mesh_interp_on_piezo_finger_interface = interp1(piezo_finger_interface(:,1),piezo_finger_interface(:,2), x_mesh,'nearest');
+
+mask_piezo = (z_mesh <= z_mesh_interp_on_piezo_finger_interface);
+mask_finger = (z_mesh > z_mesh_interp_on_piezo_finger_interface);
 
 
 %-------------------------------------------------
 regionsMaterialNumbering = zeros(size(z_mesh));
 piezo_material_numbering = 1;
-[piezo]=generate_piezomaterial_parameters(filter_dimension);
-polygon_piezo = piezo.polygon;
-[in,on] = inpolygon (x_mesh, z_mesh, polygon_piezo(:,1), polygon_piezo(:,2));
-mask_piezo = in | on;
+finger_material_numbering = 2;
+
+%[piezo]=generate_piezomaterial_parameters(filter_dimension);
+%polygon_piezo = piezo.polygon;
+%[in,on] = inpolygon (x_mesh, z_mesh, polygon_piezo(:,1), polygon_piezo(:,2));
+%mask_piezo = in | on;
 regionsMaterialNumbering(find(mask_piezo)) = piezo_material_numbering;
+regionsMaterialNumbering(find(mask_finger)) = finger_material_numbering;
 
 regionsMaterialNumbering = [reshape(regionsMaterialNumbering,[],1)];
 

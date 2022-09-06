@@ -82,7 +82,7 @@ SA_resample_rate = 2;
 
 if(PF_flag)
 
-positive_finger=dlmread('../backup/positive_finger','');
+positive_finger=dlmread('../backup/positive_finger_contact_interface','');
 
 [x_station] = positive_finger(:,1);
 [z_station] = positive_finger(:,2);

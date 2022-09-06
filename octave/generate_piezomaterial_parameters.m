@@ -13,8 +13,11 @@ ymax = str2num(ymax);
 
 [zmin_status zmin] = system(['grep zmin ' meshInformation_file ' | cut -d = -f 2']);
 zmin = str2num(zmin);
-[zmax_status zmax] = system(['grep zmax ' meshInformation_file ' | cut -d = -f 2']);
-zmax = str2num(zmax);
+%[zmax_status zmax] = system(['grep zmax ' meshInformation_file ' | cut -d = -f 2']);
+%zmax = str2num(zmax);
+total_finger_interfaces = dlmread('../backup/total_finger_interfaces','');
+total_finger_interfaces = transpose(total_finger_interfaces);
+zmax = min(total_finger_interfaces(2,:));
 
 [dx_status dx] = system(['grep dx ' meshInformation_file ' | cut -d = -f 2']);
 dx = str2num(dx);

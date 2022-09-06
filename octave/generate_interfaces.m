@@ -15,8 +15,6 @@ end
 
 switch filter_type
 case 'SAW'
-zmax = 0;
-zmin = -10.0E-6;
 case 'BAW'
 otherwise
 error('Wrong filter type!')
@@ -24,6 +22,7 @@ end
 
 switch filter_dimension
 case '2D'
+
 [xminStatus xmin] = system('grep xmin ../backup/Par_file.part | cut -d = -f 2');
 xmin = str2num(xmin);
 
@@ -38,6 +37,13 @@ dx = (xmax - xmin)/nx;
 x=linspace(xmin,xmax,xNumber);
 
 dz = dx;
+
+total_finger_interfaces = dlmread('../backup/total_finger_interfaces','');
+total_finger_interfaces = transpose(total_finger_interfaces);
+
+zmax = max(total_finger_interfaces(3,:));
+zmin = -10.0E-6;
+
 nz = round((zmax - zmin)/dz);
 
 ymin = 0;
@@ -74,8 +80,7 @@ interfaces = [zmin zmax];
 layers = [nz];
 
 subInterfaces = repmat(transpose(interfaces),[1,xNumber]);
-
-%subInterfaces(end,:) = interp1(TOPO_slice(1,:),TOPO_slice(2,:),x);
+subInterfaces(end,:) = interp1(total_finger_interfaces(1,:),total_finger_interfaces(3,:),x);
 
 fileID = fopen(['../DATA/interfaces.dat'],'w');
 fprintf(fileID, '%i\n', length(interfaces))

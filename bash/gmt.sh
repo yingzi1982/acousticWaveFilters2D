@@ -104,11 +104,11 @@ if true; then
 #./plot1DSignal.sh  charge 10 Time 1E-9 s "0 20" 10f5 Charge 2E-10 "C" "-1 1" 1f0.5
 #./plot1DSignal.sh current 10 Time 1E-9 s "0 20" 10f5 Current  1E "A" "-1 1" 0.5f0.25
 #./plot1DSignal.sh sourceTimeFunction 10 Time 1E-8 s "0 10" 4f2 A  1 "A" "-1 1" 1f0.5
-#./plot1DSignal.sh PF_charge_piezo 10 Time 1E-8 s "0 10" 4f2 A  2E-11 "A" "-1 1" 1f0.5
+./plot1DSignal.sh PF_charge_piezo 10 Time 1E-8 s "0 10" 4f2 A  2E-11 "A" "-1 1" 1f0.5
 #./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0 3" 1f0.5 Amp 1E0 "" "-50 0" 25f12.5
 #./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0.1 2.9" 1f0.5 Amp 1E0 "" "-30 0" 10f5
 
-./plot1DSignal.sh admittance 1 Freq 1E9 Hz "0.7 1.0" .1f0.05 Amp 1E1 "" "-.8 .8" .4f.2
+#./plot1DSignal.sh admittance 1 Freq 1E9 Hz "0.7 1.0" .1f0.05 Amp 1E1 "" "-.8 .8" .4f.2
 #./plot1DSignal.sh current 10 Time 1E-8 s "0 10" 4f2 A  .1 "A" "-1 1" 1f0.5
 #./plot1DSignal.sh voltage 10 Time 1E-8 s "0 10" 4f2 A  .1 "A" "-1 1" 1f0.5
 fi

@@ -37,39 +37,42 @@ band_z='.BXZ.semd';
 time_resample_rate=1;
 time_resampled_point_number = 500;
 
-sourceTimeFunction = dlmread([signal_folder 'plot_source_time_function.txt'],'');
+sourceTimeFunction = dlmread(['../backup/sourceTimeFunction'],'');
 sourceTimeFunction = sourceTimeFunction(1:time_resample_rate:end,:);
-sourceTimeFunction(:,1) = sourceTimeFunction(:,1) - sourceTimeFunction(1,1);
-index = find(sourceTimeFunction(:,1)<4e-8);
-voltage = sourceTimeFunction(index,:);
+voltage = sourceTimeFunction;;
 t = voltage(:,1);
-charge=dlmread('../backup/PF_charge_piezo','');
-charge = charge(1:time_resample_rate:end,:);
-charge = charge(index,:);
-dt = t(2) - t(1);
-current = [t -gradient(charge(:,2),dt)];
-dlmwrite('../backup/voltage',voltage,' ');
-dlmwrite('../backup/current',current,' ');
+%timeIndex = find(sourceTimeFunction(:,1)<4e-8);
+%voltage = sourceTimeFunction(timeIndex,:);
+%charge=dlmread('../backup/PF_charge_piezo','');
+%charge = charge(1:time_resample_rate:end,:);
+%charge = charge(timeIndex,:);
+%dt = t(2) - t(1);
+%current = [t -gradient(charge(:,2),dt)];
+%dlmwrite('../backup/voltage',voltage,' ');
+%dlmwrite('../backup/current',current,' ');
 
-%max(abs(current(:,2)))
-%max(abs(voltage(:,2)))
+%%max(abs(current(:,2)))
+%%max(abs(voltage(:,2)))
 
-voltage_spectrum = trace2spectrum(voltage);
-current_spectrum = trace2spectrum(current);
-f = voltage_spectrum(:,1);
-index = find(f>0.8e9&f<0.9e9);
-admittance = real(current_spectrum(:,2)./voltage_spectrum(:,2));
-min(admittance(index))
-max(admittance(index))
-admittance = [f(index), admittance(index)];
-dlmwrite('../backup/admittance',[admittance],' ');
-exit
+%voltage_spectrum = trace2spectrum(voltage);
+%current_spectrum = trace2spectrum(current);
+%f = voltage_spectrum(:,1);
+%freqIndex = find(f>0.8e9&f<0.9e9);
+%admittance = real(current_spectrum(:,2)./voltage_spectrum(:,2));
+%[min minIndex] = min(admittance(freqIndex));
+%[max maxIndex] = max(admittance(freqIndex));
+%f = f(FreqIndex);
+%f(minIndex)
+%f(maxIndex)
+%admittance = [f, admittance(freqIndex)];
+%dlmwrite('../backup/admittance',[admittance],' ');
+%exit
 
-f= current_spectrum(:,1);
-max(admittance)
-min(admittance)
-dlmwrite('../backup/admittance_spectrum',[f admittance],' ');
-exit
+%f= current_spectrum(:,1);
+%max(admittance)
+%min(admittance)
+%dlmwrite('../backup/admittance_spectrum',[f admittance],' ');
+%exit
 
 switch filter_type
 case 'SAW'
@@ -108,7 +111,6 @@ if PF_flag
 
   PF_charge_piezo = 0;
   for n = 1:finger_pair_number
-  %for n = 11:11
     nIndex = [1:finger_point_number] + (n-1)*finger_point_number;
 
     nPF_index = PF_index(nIndex);
@@ -158,7 +160,6 @@ if PF_flag
 
 max(PF_charge_piezo)
 dlmwrite('../backup/PF_charge_piezo',[t PF_charge_piezo],' ');
-exit
 end
 exit
 %------------------------------------
