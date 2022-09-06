@@ -41,38 +41,6 @@ sourceTimeFunction = dlmread(['../backup/sourceTimeFunction'],'');
 sourceTimeFunction = sourceTimeFunction(1:time_resample_rate:end,:);
 voltage = sourceTimeFunction;;
 t = voltage(:,1);
-%timeIndex = find(sourceTimeFunction(:,1)<4e-8);
-%voltage = sourceTimeFunction(timeIndex,:);
-%charge=dlmread('../backup/PF_charge_piezo','');
-%charge = charge(1:time_resample_rate:end,:);
-%charge = charge(timeIndex,:);
-%dt = t(2) - t(1);
-%current = [t -gradient(charge(:,2),dt)];
-%dlmwrite('../backup/voltage',voltage,' ');
-%dlmwrite('../backup/current',current,' ');
-
-%%max(abs(current(:,2)))
-%%max(abs(voltage(:,2)))
-
-%voltage_spectrum = trace2spectrum(voltage);
-%current_spectrum = trace2spectrum(current);
-%f = voltage_spectrum(:,1);
-%freqIndex = find(f>0.8e9&f<0.9e9);
-%admittance = real(current_spectrum(:,2)./voltage_spectrum(:,2));
-%[min minIndex] = min(admittance(freqIndex));
-%[max maxIndex] = max(admittance(freqIndex));
-%f = f(FreqIndex);
-%f(minIndex)
-%f(maxIndex)
-%admittance = [f, admittance(freqIndex)];
-%dlmwrite('../backup/admittance',[admittance],' ');
-%exit
-
-%f= current_spectrum(:,1);
-%max(admittance)
-%min(admittance)
-%dlmwrite('../backup/admittance_spectrum',[f admittance],' ');
-%exit
 
 switch filter_type
 case 'SAW'
@@ -108,6 +76,16 @@ if PF_flag
   piezoelectric_constant = piezoelectric_constant([1 3],[1 3 5]);
   dielectric_constant = piezo.dielectric_constant;
   dielectric_constant = dielectric_constant([1 3],[1 3]);
+
+  PF_electric_incident = dlmread('../backup/electric_positive_finger_contact_interface','');
+  PF_electric_incident = PF_electric_incident(:,[3 4]);
+
+  PF_electric_displacement_incident = ...
+   [dielectric_constant(1,1)*PF_electric_incident(:,1) + dielectric_constant(1,2)*PF_electric_incident(:,2)...
+    dielectric_constant(2,1)*PF_electric_incident(:,1) + dielectric_constant(2,2)*PF_electric_incident(:,2)];
+
+    PF_charge_incident = sum(dx*PF_electric_displacement_incident(:,2));
+    PF_charge_incident = PF_charge_incident * voltage(:,2);
 
   PF_charge_piezo = 0;
   for n = 1:finger_pair_number
@@ -158,8 +136,36 @@ if PF_flag
     PF_charge_piezo = PF_charge_piezo + nPF_charge_piezo;
   end
 
-max(PF_charge_piezo)
+PF_charge_total = PF_charge_incident + PF_charge_piezo;
+
 dlmwrite('../backup/PF_charge_piezo',[t PF_charge_piezo],' ');
+dlmwrite('../backup/PF_charge_total',[t PF_charge_total],' ');
+
+current = [t -gradient(PF_charge_total,dt)];
+
+timeIndex = find(t<=4e-8);
+voltage = voltage(timeIndex,:);
+current = current(timeIndex,:);
+
+voltage_spectrum = trace2spectrum(voltage);
+current_spectrum = trace2spectrum(current);
+f = voltage_spectrum(:,1);
+freqIndex = find(f>0.8e9&f<0.9e9);
+admittance = (current_spectrum(:,2)./voltage_spectrum(:,2));
+f = f(freqIndex);
+admittance = admittance(freqIndex);
+admittance = abs(admittance);
+min(admittance)
+max(admittance)
+
+admittance = [f, admittance];
+dlmwrite('../backup/admittance',admittance,' ');
+%exit
+
+%f= current_spectrum(:,1);
+%max(admittance)
+%min(admittance)
+%dlmwrite('../backup/admittance_spectrum',[f admittance],' ');
 end
 exit
 %------------------------------------

@@ -123,9 +123,9 @@ anglesource = rad2deg(force_theta(selection_index) - pi/2);
 factor = force_rho(selection_index);
 
 source_surf                     = [repmat({'.false.'},1,source_number)];
-%source_type                     = [1]*ones(source_size);
+source_type                     = [1]*ones(source_size);
 time_function_type              = [8]*ones(source_size);
-time_function_type              = [1]*ones(source_size);
+%time_function_type              = [1]*ones(source_size);
 name_of_source_file             = [repmat({'DATA/STF'},1,source_number)];
 burst_band_width                = [0.0]*ones(source_size);
 f0                              = [f0]*ones(source_size);
