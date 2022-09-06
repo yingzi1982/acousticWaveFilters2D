@@ -21,7 +21,7 @@ NPROC                           = 512
 
 # time step parameters
 # total number of time steps
-NSTEP                           = 200001
+NSTEP                           = 100001
 
 # duration of a time step (see section "How to choose the time step" of the manual for how to do this)
 DT                              = 5e-13
@@ -208,7 +208,7 @@ APPROXIMATE_HESS_KL             = .false.
 
 # Perfectly Matched Layer (PML) boundaries
 # absorbing boundary active or not
-PML_BOUNDARY_CONDITIONS         = .true.
+PML_BOUNDARY_CONDITIONS         = .false.
 NELEM_PML_THICKNESS             = 4
 ROTATE_PML_ACTIVATE             = .false.
 ROTATE_PML_ANGLE                = 30.
@@ -223,7 +223,7 @@ damping_change_factor_elastic   = 1.0d0
 PML_PARAMETER_ADJUSTMENT        = .false.
 
 # Stacey ABC
-STACEY_ABSORBING_CONDITIONS     = .false.
+STACEY_ABSORBING_CONDITIONS     = .true.
 
 # periodic boundaries
 ADD_PERIODIC_CONDITIONS         = .false.

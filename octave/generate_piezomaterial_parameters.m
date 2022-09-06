@@ -28,6 +28,10 @@ dy = str2num(dy);
 [dz_status dz] = system(['grep dz ' meshInformation_file ' | cut -d = -f 2']);
 dz = str2num(dz);
 
+%dx=dx/5;
+%dy=dy/5;
+%dz=dz/5;
+
 nx = round((xmax-xmin)/dx+1);
 ny = round((ymax-ymin)/dy+1);
 nz = round((zmax-zmin)/dz+1);
