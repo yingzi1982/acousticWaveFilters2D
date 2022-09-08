@@ -120,7 +120,7 @@ source_size = size(selection_index);
 xs = force_x(selection_index);
 zs = force_z(selection_index);
 
-anglesource = rad2deg(force_theta(selection_index) - pi/2);
+anglesource = rad2deg(force_theta(selection_index) + pi/2);
 factor = force_rho(selection_index);
 
 source_surf                     = [repmat({'.false.'},1,source_number)];
@@ -134,8 +134,8 @@ tshift                          = [0.0]*ones(source_size);
 Mxx                             = [1.0]*ones(source_size);
 Mzz                             = [1.0]*ones(source_size); 
 Mxz                             = [0.0]*ones(source_size);
-vx                              = [0]*ones(source_size);
-vz                              = [0]*ones(source_size);
+%vx                              = [0]*ones(source_size);
+%vz                              = [0]*ones(source_size);
 
 %source = [xs zs];
 %save('-ascii','../backup/source','source');
@@ -160,8 +160,8 @@ for nSOURCE = [1:source_number]
   fprintf(fileID, 'Mzz                = %f\n', Mzz(nSOURCE))
   fprintf(fileID, 'Mxz                = %f\n', Mxz(nSOURCE))
   fprintf(fileID, 'factor             = %g\n', factor(nSOURCE))
-  fprintf(fileID, 'vx                 = %f\n', vx(nSOURCE))
-  fprintf(fileID, 'vz                 = %f\n', vz(nSOURCE))
+  %fprintf(fileID, 'vx                 = %f\n', vx(nSOURCE))
+  %fprintf(fileID, 'vz                 = %f\n', vz(nSOURCE))
   fprintf(fileID, '#\n')
 
   dlmwrite(['../' stf_name],[t s],' ');

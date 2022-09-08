@@ -73,6 +73,7 @@ end
 
 %------------
 
+NF_flag=1;
 PF_flag=1;
 LA_flag = 0;
 SA_flag = 0;
@@ -80,6 +81,7 @@ SA_flag = 0;
 LA_resample_rate = 1;
 SA_resample_rate = 2;
 
+%----------------------------------------------
 if(PF_flag)
 
 positive_finger=dlmread('../backup/positive_finger_contact_interface','');
@@ -105,6 +107,39 @@ fclose(fileID);
 
 z_station = z_station - dz;
 networkName = 'PF2';
+fileID = fopen(['../backup/STATIONS_' networkName],'w');
+for nSTATIONS = 1:stationNumber
+  stationName = ['S' int2str(nSTATIONS)];
+    fprintf(fileID,'%s  %s  %g  %g  %g  %g\n',stationName,networkName,x_station(nSTATIONS),z_station(nSTATIONS),elevation_station(nSTATIONS),burial_station(nSTATIONS));
+end
+fclose(fileID);
+end
+%----------------------------------------------
+if(NF_flag)
+
+negative_finger=dlmread('../backup/negative_finger_contact_interface','');
+
+[x_station] = negative_finger(:,1);
+[z_station] = negative_finger(:,2);
+
+selection_index = find((x_station >= xmin & x_station <= xmax) & (z_station >= zmin & z_station <= zmax));
+x_station = x_station(selection_index);
+z_station = z_station(selection_index);
+
+networkName = 'NF';
+elevation_station = zeros(size(x_station));
+burial_station = zeros(size(x_station));
+
+stationNumber = length(x_station);
+fileID = fopen(['../backup/STATIONS_' networkName],'w');
+for nSTATIONS = 1:stationNumber
+  stationName = ['S' int2str(nSTATIONS)];
+    fprintf(fileID,'%s  %s  %g  %g  %g  %g\n',stationName,networkName,x_station(nSTATIONS),z_station(nSTATIONS),elevation_station(nSTATIONS),burial_station(nSTATIONS));
+end
+fclose(fileID);
+
+z_station = z_station - dz;
+networkName = 'NF2';
 fileID = fopen(['../backup/STATIONS_' networkName],'w');
 for nSTATIONS = 1:stationNumber
   stationName = ['S' int2str(nSTATIONS)];

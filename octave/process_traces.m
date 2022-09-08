@@ -20,8 +20,8 @@ signal_folder=['/cfs/klemming/projects/snic/snic2022-22-620/yingzi/' strtrim(run
 startRowNumber=0;
 startColumnNumber=1;
 
-fileID = fopen([signal_folder 'output_list_stations.txt']);
-station = textscan(fileID,'%s %s %f %f');
+fileID = fopen(['../DATA/STATIONS']);
+station = textscan(fileID,'%s %s %f %f %f %f');
 fclose(fileID);
 stationName = station{1};
 networkName = station{2};
@@ -42,6 +42,13 @@ sourceTimeFunction = sourceTimeFunction(1:time_resample_rate:end,:);
 voltage = sourceTimeFunction;;
 t = voltage(:,1);
 
+dt = t(2) - t(1);
+
+[dx_status dx] = system('grep dx ../backup/meshInformation | cut -d = -f 2');
+dx = str2num(dx);
+[dz_status dz] = system('grep dz ../backup/meshInformation | cut -d = -f 2');
+dz = str2num(dz);
+
 switch filter_type
 case 'SAW'
 
@@ -53,10 +60,6 @@ LA_flag = 0;
 SA_flag = 0;
 %------------------------------------
 if PF_flag
-
-  dx = longorUTM(2)-longorUTM(1);
-  dz = latorUTM(1)-latorUTM(stationNumber/2+1);
-  dt = t(2) - t(1);
 
   PF_index  = find(strcmp("PF",networkName));
   PF2_index = find(strcmp("PF2",networkName));
