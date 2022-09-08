@@ -148,7 +148,8 @@ dlmwrite('../backup/PF_charge_total',[t PF_charge_total],' ');
 
 current = [t -gradient(PF_charge_total,dt)];
 
-timeIndex = find(t<=4e-8);
+%timeIndex = find(t<=4e-8);
+timeIndex = find(t<=1e-8);
 voltage = voltage(timeIndex,:);
 current = current(timeIndex,:);
 
