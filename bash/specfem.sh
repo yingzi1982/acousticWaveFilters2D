@@ -25,15 +25,15 @@ cd $workingDir
 NPROC=`grep ^NPROC DATA/Par_file | grep -v -E '^[[:space:]]*#' | cut -d = -f 2`
 
 if [ "$NPROC" -eq 1 ]; then
-  ./xmeshfem2D > meshfem.log
-  ./xspecfem2D > specfem.log
+  ./xmeshfem2D
+  ./xspecfem2D
 else
   #mpiexec -n $NPROC ./xmeshfem2D
   #mpiexec -n $NPROC ./xspecfem2D
   #mpirun -n $NPROC ./xmeshfem2D
   #mpirun -n $NPROC ./xspecfem2D
-  srun -n $NPROC ./xmeshfem2D > meshfem.log
-  srun -n $NPROC ./xspecfem2D > specfem.log
+  srun -n $NPROC ./xmeshfem2D
+  srun -n $NPROC ./xspecfem2D
 fi
 cd -
 ;;
