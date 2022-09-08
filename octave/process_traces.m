@@ -91,7 +91,8 @@ if PF_flag
     PF_charge_incident = PF_charge_incident * voltage(:,2);
 
   PF_charge_piezo = 0;
-  for n = 1:finger_pair_number
+  for n = 1:1
+  %for n = 1:finger_pair_number
     nIndex = [1:finger_point_number] + (n-1)*finger_point_number;
 
     nPF_index = PF_index(nIndex);
