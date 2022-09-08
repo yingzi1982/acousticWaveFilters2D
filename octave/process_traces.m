@@ -148,15 +148,14 @@ dlmwrite('../backup/PF_charge_total',[t PF_charge_total],' ');
 
 current = [t -gradient(PF_charge_total,dt)];
 
-%timeIndex = find(t<=4e-8);
-timeIndex = find(t<=1e-8);
+timeIndex = find(t<=4e-8);
 voltage = voltage(timeIndex,:);
 current = current(timeIndex,:);
 
 voltage_spectrum = trace2spectrum(voltage);
 current_spectrum = trace2spectrum(current);
 f = voltage_spectrum(:,1);
-freqIndex = find(f>0.5e9&f<1.5e9);
+freqIndex = find(f>0.1e9&f<2.5e9);
 admittance = (current_spectrum(:,2)./voltage_spectrum(:,2));
 f = f(freqIndex);
 admittance = admittance(freqIndex);
