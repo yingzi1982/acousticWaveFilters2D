@@ -71,7 +71,7 @@ mask_finger = (z_mesh > z_mesh_interp_on_piezo_finger_interface);
 
 
 %-------------------------------------------------
-regionsMaterialNumbering = zeros(size(z_mesh));
+regionsMaterialNumbering = ones(size(z_mesh));
 piezo_material_numbering = 1;
 finger_material_numbering = 2;
 
@@ -79,8 +79,9 @@ finger_material_numbering = 2;
 %polygon_piezo = piezo.polygon;
 %[in,on] = inpolygon (x_mesh, z_mesh, polygon_piezo(:,1), polygon_piezo(:,2));
 %mask_piezo = in | on;
-regionsMaterialNumbering(find(mask_piezo)) = piezo_material_numbering;
-regionsMaterialNumbering(find(mask_finger)) = finger_material_numbering;
+
+%regionsMaterialNumbering(find(mask_piezo)) = piezo_material_numbering;
+%regionsMaterialNumbering(find(mask_finger)) = finger_material_numbering;
 
 regionsMaterialNumbering = [reshape(regionsMaterialNumbering,[],1)];
 

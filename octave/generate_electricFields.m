@@ -25,18 +25,23 @@ z = piezo.z;
 positive_finger_V = 1;
 negative_finger_V = 0;
 %---------------------------------
-positive_finger_grid = dlmread('../backup/positive_finger_grid',' ');
-negative_finger_grid = dlmread('../backup/negative_finger_grid',' ');
+%positive_finger_grid = dlmread('../backup/positive_finger_grid',' ');
+%negative_finger_grid = dlmread('../backup/negative_finger_grid',' ');
 
 positive_finger_contact_interface = dlmread('../backup/positive_finger_contact_interface',' ');
 negative_finger_contact_interface = dlmread('../backup/negative_finger_contact_interface',' ');
+
+positive_finger_source = positive_finger_contact_interface;
+negative_finger_source = negative_finger_contact_interface;
+%positive_finger_source = positive_finger_grid;
+%negative_finger_source = negative_finger_grid;
 
 switch filter_dimension
 case '2D'
 
 [X Z] = meshgrid (x,z);
-%V = relaxationMethod(x,y,z,positive_finger_grid,negative_finger_grid,positive_finger_V,negative_finger_V,filter_dimension);
-V = summationMethod(x,y,z,positive_finger_grid,negative_finger_grid,positive_finger_V,negative_finger_V,filter_dimension);
+%V = relaxationMethod(x,y,z,positive_finger_source,negative_finger_source,positive_finger_V,negative_finger_V,filter_dimension);
+V = summationMethod(x,y,z,positive_finger_source,negative_finger_source,positive_finger_V,negative_finger_V,filter_dimension);
 
 [E_x E_z] = gradient(V,dx,dz);
 E_x = -E_x;
