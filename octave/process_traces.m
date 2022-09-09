@@ -91,8 +91,7 @@ if PF_flag
     PF_charge_incident = PF_charge_incident * voltage(:,2);
 
   PF_charge_piezo = 0;
-  for n = 1:1
-  %for n = 1:finger_pair_number
+  for n = 1:finger_pair_number
     nIndex = [1:finger_point_number] + (n-1)*finger_point_number;
 
     nPF_index = PF_index(nIndex);
@@ -156,8 +155,7 @@ voltage_spectrum = trace2spectrum(voltage);
 current_spectrum = trace2spectrum(current);
 f = voltage_spectrum(:,1);
 freqIndex = find(f>0.1e9&f<2.0e9);
-%admittance = (current_spectrum(:,2)./voltage_spectrum(:,2));
-admittance = (current_spectrum(:,2));
+admittance = (current_spectrum(:,2)./voltage_spectrum(:,2));
 f = f(freqIndex);
 admittance = admittance(freqIndex);
 admittance = [real(admittance) imag(admittance)];
