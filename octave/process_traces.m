@@ -20,8 +20,8 @@ signal_folder=['/cfs/klemming/projects/snic/snic2022-22-620/yingzi/' strtrim(run
 startRowNumber=0;
 startColumnNumber=1;
 
-fileID = fopen(['../DATA/STATIONS']);
-station = textscan(fileID,'%s %s %f %f %f %f');
+fileID = fopen([signal_folder 'output_list_stations.txt']);
+station = textscan(fileID,'%s %s %f %f');
 fclose(fileID);
 stationName = station{1};
 networkName = station{2};
@@ -43,11 +43,6 @@ voltage = sourceTimeFunction;;
 t = voltage(:,1);
 
 dt = t(2) - t(1);
-
-[dx_status dx] = system('grep dx ../backup/meshInformation | cut -d = -f 2');
-dx = str2num(dx);
-[dz_status dz] = system('grep dz ../backup/meshInformation | cut -d = -f 2');
-dz = str2num(dz);
 
 switch filter_type
 case 'SAW'
@@ -75,6 +70,8 @@ if PF_flag
   end
 
   [piezo]=generate_piezomaterial_parameters(filter_dimension);
+  dx = piezo.dx;
+  dz = piezo.dz;
   piezoelectric_constant = piezo.piezoelectric_constant;
   piezoelectric_constant = piezoelectric_constant([1 3],[1 3 5]);
   dielectric_constant = piezo.dielectric_constant;
