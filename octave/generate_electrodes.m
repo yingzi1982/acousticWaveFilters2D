@@ -48,7 +48,7 @@ period_width = (finger_width +finger_gap)*2; % positive+gap+negative+gap
   switch filter_dimension
   case '2D'
 
-  single_positive_finger_x = [ 0:dx:finger_width-dx];
+  single_positive_finger_x = [0:dx:finger_width-dx];
   single_negative_finger_x = single_positive_finger_x - period_width/2;
   single_positive_finger_length = length(single_positive_finger_x);
   single_negative_finger_length = length(single_negative_finger_x);
