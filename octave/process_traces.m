@@ -170,7 +170,6 @@ dlmwrite('../backup/admittance',admittance,' ');
 %min(admittance)
 %dlmwrite('../backup/admittance_spectrum',[f admittance],' ');
 end
-exit
 %------------------------------------
 if LA_flag
   LA_index = find(strcmp("LA",networkName));

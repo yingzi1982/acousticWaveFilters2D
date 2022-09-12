@@ -37,8 +37,8 @@ finger_z_max = 0.2*unit_length;
 
 finger_z = [finger_z_min:dz:finger_z_max];
 
-%finger_pair_number=17;
-finger_pair_number=19;
+finger_pair_number=9;
+%finger_pair_number=19;
 %finger_pair_number=1;
 dlmwrite('../backup/finger_pair_number',finger_pair_number,' ');
 finger_width = 1*unit_length;
@@ -53,9 +53,9 @@ period_width = (finger_width +finger_gap)*2; % positive+gap+negative+gap
   single_positive_finger_length = length(single_positive_finger_x);
   single_negative_finger_length = length(single_negative_finger_x);
 
-  element_shape = transpose(hanning(single_positive_finger_length)/max(hanning(single_positive_finger_length)));
-  %element_shape = zeros(single_positive_finger_length,1);
-  %element_shape = ones(single_positive_finger_length,1);
+  %element_shape = transpose(hanning(single_positive_finger_length)/max(hanning(single_positive_finger_length)));
+  element_shape = zeros(1,single_positive_finger_length);
+  %element_shape = ones(1,single_positive_finger_length);
 
   positive_finger_x = [];
   negative_finger_x = [];
