@@ -61,17 +61,17 @@ else
 end
 
 %-------------------------------------------------
-total_finger_interfaces = dlmread('../backup/total_finger_interfaces','');
-%piezo_finger_interface = total_finger_interfaces(:,[1 2]);
-%z_mesh_interp_on_piezo_finger_interface = interp1(piezo_finger_interface(:,1),piezo_finger_interface(:,2), X_MESH,'nearest');
-%mask_piezo = (Z_MESH <= z_mesh_interp_on_piezo_finger_interface);
-%mask_finger = (Z_MESH > z_mesh_interp_on_piezo_finger_interface);
+total_finger_and_grating_interfaces = dlmread('../backup/total_finger_and_grating_interfaces','');
+%piezo_finger_and_grating_interface = total_finger_and_grating_interfaces(:,[1 2]);
+%z_mesh_interp_on_piezo_finger_and_grating_interface = interp1(piezo_finger_and_grating_interface(:,1),piezo_finger_and_grating_interface(:,2), X_MESH,'nearest');
+%mask_piezo = (Z_MESH <= z_mesh_interp_on_piezo_finger_and_grating_interface);
+%mask_finger = (Z_MESH > z_mesh_interp_on_piezo_finger_and_grating_interface);
 
-finger_thickness = max(total_finger_interfaces(:,3)) - min(total_finger_interfaces(:,2));
+finger_thickness = max(total_finger_and_grating_interfaces(:,3)) - min(total_finger_and_grating_interfaces(:,2));
 finger_thickness_element_number = round(finger_thickness/dz);
 
-x_mesh_interp_on_finger_lower_interface = interp1(total_finger_interfaces(:,1),total_finger_interfaces(:,2), x_mesh','linear');
-x_mesh_interp_on_finger_upper_interface = interp1(total_finger_interfaces(:,1),total_finger_interfaces(:,3), x_mesh','linear');
+x_mesh_interp_on_finger_lower_interface = interp1(total_finger_and_grating_interfaces(:,1),total_finger_and_grating_interfaces(:,2), x_mesh','linear');
+x_mesh_interp_on_finger_upper_interface = interp1(total_finger_and_grating_interfaces(:,1),total_finger_and_grating_interfaces(:,3), x_mesh','linear');
 x_finger_index = find((x_mesh_interp_on_finger_upper_interface - x_mesh_interp_on_finger_lower_interface) > finger_thickness/1.5);
 
 %-------------------------------------------------
