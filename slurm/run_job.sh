@@ -17,5 +17,5 @@ filter_dimension=2D
 
 cd ../bash
 #./preprocess.sh $filter_type $filter_dimension
-#./specfem.sh $filter_dimension
-./postprocess.sh $filter_type $filter_dimension
+./specfem.sh $filter_dimension
+#./postprocess.sh $filter_type $filter_dimension

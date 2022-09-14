@@ -5,6 +5,7 @@ filter_dimension=$1
 runningName=`grep ^title ../DATA/Par_file | cut -d = -f 2 | sed -r "s/( )+//g"`
 
 workingDir=/cfs/klemming/projects/snic/snic2022-22-620/yingzi/$runningName/
+echo $workingDir > ../backup/workingDir
 #rm -f $workingDir
 mkdir -p /tmp/empty & rsync -r --delete /tmp/empty/ $workingDir
 mkdir -p $workingDir
@@ -25,8 +26,8 @@ cd $workingDir
 NPROC=`grep ^NPROC DATA/Par_file | grep -v -E '^[[:space:]]*#' | cut -d = -f 2`
 
 if [ "$NPROC" -eq 1 ]; then
-  ./xmeshfem2D
-  ./xspecfem2D
+  srun -n $NPROC ./xmeshfem2D
+  srun -n $NPROC ./xspecfem2D
 else
   #mpiexec -n $NPROC ./xmeshfem2D
   #mpiexec -n $NPROC ./xspecfem2D

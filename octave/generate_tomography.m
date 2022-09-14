@@ -47,37 +47,43 @@ readMeshFromFile='no';
 if strcmp(readMeshFromFile,'yes')
   %disp(['reading mesh from file ../backup/mesh.xz'])
   %mesh=dlmread('../backup/mesh.xz'); 
-  %x_mesh = mesh(:,1);
-  %z_mesh = mesh(:,2);
+  %X_MESH = mesh(:,1);
+  %Z_MESH = mesh(:,2);
 
-  %x_mesh = reshape(reshape(x_mesh,[],1),nz,nx);
-  %z_mesh = reshape(reshape(z_mesh,[],1),nz,nx);
+  %X_MESH = reshape(reshape(X_MESH,[],1),nz,nx);
+  %Z_MESH = reshape(reshape(Z_MESH,[],1),nz,nx);
 else
   %disp(['creating regular mesh'])
   x_mesh = [xmin+dx/2:dx:xmax-dx/2];
   z_mesh = [zmin+dz/2:dz:zmax-dz/2];
 
-  [z_mesh x_mesh] = ndgrid(z_mesh,x_mesh);
+  [Z_MESH X_MESH] = ndgrid(z_mesh,x_mesh);
 end
 
 %-------------------------------------------------
 total_finger_interfaces = dlmread('../backup/total_finger_interfaces','');
-piezo_finger_interface = total_finger_interfaces(:,[1 2]);
+%piezo_finger_interface = total_finger_interfaces(:,[1 2]);
+%z_mesh_interp_on_piezo_finger_interface = interp1(piezo_finger_interface(:,1),piezo_finger_interface(:,2), X_MESH,'nearest');
+%mask_piezo = (Z_MESH <= z_mesh_interp_on_piezo_finger_interface);
+%mask_finger = (Z_MESH > z_mesh_interp_on_piezo_finger_interface);
 
-z_mesh_interp_on_piezo_finger_interface = interp1(piezo_finger_interface(:,1),piezo_finger_interface(:,2), x_mesh,'nearest');
+finger_thickness = max(total_finger_interfaces(:,3)) - min(total_finger_interfaces(:,2));
+finger_thickness_element_number = round(finger_thickness/dz);
 
-mask_piezo = (z_mesh <= z_mesh_interp_on_piezo_finger_interface);
-mask_finger = (z_mesh > z_mesh_interp_on_piezo_finger_interface);
-
+x_mesh_interp_on_finger_lower_interface = interp1(total_finger_interfaces(:,1),total_finger_interfaces(:,2), x_mesh','linear');
+x_mesh_interp_on_finger_upper_interface = interp1(total_finger_interfaces(:,1),total_finger_interfaces(:,3), x_mesh','linear');
+x_finger_index = find(x_mesh_interp_on_finger_lower_interface < x_mesh_interp_on_finger_upper_interface);
 
 %-------------------------------------------------
-regionsMaterialNumbering = ones(size(z_mesh));
+regionsMaterialNumbering = zeros(size(Z_MESH));
 piezo_material_numbering = 1;
 finger_material_numbering = 2;
+regionsMaterialNumbering(:,:) = piezo_material_numbering;
+regionsMaterialNumbering(end-finger_thickness_element_number+1:end,x_finger_index) = finger_material_numbering;
 
 %[piezo]=generate_piezomaterial_parameters(filter_dimension);
 %polygon_piezo = piezo.polygon;
-%[in,on] = inpolygon (x_mesh, z_mesh, polygon_piezo(:,1), polygon_piezo(:,2));
+%[in,on] = inpolygon (X_MESH, Z_MESH, polygon_piezo(:,1), polygon_piezo(:,2));
 %mask_piezo = in | on;
 
 %regionsMaterialNumbering(find(mask_piezo)) = piezo_material_numbering;

@@ -68,11 +68,11 @@ fprintf(fileID, 'dx = %g\n', dx);
 fprintf(fileID, 'dy = %g\n', dy);
 fprintf(fileID, 'dz = %g\n', dz);
 
-%fprintf(fileID, '\n');
-%
-%fprintf(fileID, 'nx = %i\n', nx);
-%fprintf(fileID, 'ny = %i\n', ny);
-%fprintf(fileID, 'nz = %i\n', nz);
+fprintf(fileID, '\n');
+
+fprintf(fileID, 'nx = %i\n', nx);
+fprintf(fileID, 'ny = %i\n', ny);
+fprintf(fileID, 'nz = %i\n', nz);
 fclose(fileID);
 
 interfaces = [zmin zmax];

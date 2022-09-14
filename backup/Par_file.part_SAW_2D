@@ -66,7 +66,7 @@ MODEL                           = default
 
 # Output the model with the requested type, does not save if turn to default or .false.
 # (available output formats: ascii,binary,gll,legacy)
-SAVE_MODEL                      = .false.
+SAVE_MODEL                      = ascii
 
 
 #-----------------------------------------------------------
@@ -178,9 +178,9 @@ rec_normal_to_surface           = .false.        # base anglerec normal to surfa
 
 # first receiver set (repeat these 6 lines and adjust nreceiversets accordingly)
 nrec                            = 1              # number of receivers
-xdeb                            = 150000.        # first receiver x in meters
-zdeb                            = 40000.         # first receiver z in meters
-xfin                            = 70000.         # last receiver x in meters (ignored if only one receiver)
+xdeb                            = 0.        # first receiver x in meters
+zdeb                            = 0.         # first receiver z in meters
+xfin                            = 0.         # last receiver x in meters (ignored if only one receiver)
 zfin                            = 0.             # last receiver z in meters (ignored if only one receiver)
 record_at_surface_same_vertical = .false.        # receivers inside the medium or at the surface
 
