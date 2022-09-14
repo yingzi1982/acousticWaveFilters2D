@@ -72,7 +72,7 @@ finger_thickness_element_number = round(finger_thickness/dz);
 
 x_mesh_interp_on_finger_lower_interface = interp1(total_finger_interfaces(:,1),total_finger_interfaces(:,2), x_mesh','linear');
 x_mesh_interp_on_finger_upper_interface = interp1(total_finger_interfaces(:,1),total_finger_interfaces(:,3), x_mesh','linear');
-x_finger_index = find(x_mesh_interp_on_finger_lower_interface < x_mesh_interp_on_finger_upper_interface);
+x_finger_index = find((x_mesh_interp_on_finger_upper_interface - x_mesh_interp_on_finger_lower_interface) > finger_thickness/1.5);
 
 %-------------------------------------------------
 regionsMaterialNumbering = zeros(size(Z_MESH));
