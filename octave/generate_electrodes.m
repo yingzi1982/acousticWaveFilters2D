@@ -37,9 +37,9 @@ finger_z_max = 0.2*unit_length;
 
 finger_z = [finger_z_min:dz:finger_z_max];
 
-%finger_pair_number=9;
+finger_pair_number=9;
 %finger_pair_number=19;
-finger_pair_number=1;
+%finger_pair_number=1;
 dlmwrite('../backup/finger_pair_number',finger_pair_number,' ');
 finger_width = 1*unit_length;
 finger_gap = 1*unit_length;
