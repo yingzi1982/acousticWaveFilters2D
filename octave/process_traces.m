@@ -141,7 +141,7 @@ if PF_flag
 charge = PF_charge_piezo;
 current = [-gradient(charge,dt)];
 
-timeIndex = find(t<=4e-8);
+timeIndex = find(t<=10e-8);
 charge = [t(timeIndex) charge(timeIndex)]; 
 current = [t(timeIndex) current(timeIndex)];
 

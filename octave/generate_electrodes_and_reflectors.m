@@ -31,6 +31,8 @@ unit_length = 1.0E-6;
 
 finger_grating_gap = 2.5*unit_length;
 
+finger_pair_number=25;
+grating_pair_number = 10;
 switch filter_type
 case 'SAW'
 
@@ -38,9 +40,6 @@ case 'SAW'
   case '2D'
 
   %finger_z = [finger_z_min:dz:finger_z_max];
-  finger_pair_number=9;
-  %finger_pair_number=19;
-  %finger_pair_number=1;
   dlmwrite('../backup/finger_pair_number',finger_pair_number,' ');
   finger_z_min = 0.0*unit_length;
   finger_z_max = 0.2*unit_length;
@@ -109,7 +108,6 @@ case 'SAW'
    error('the finger is over xrange limit!')
  end
 %-----------------------------------------------------
-  grating_pair_number = 5;
   dlmwrite('../backup/grating_pair_number',grating_pair_number,' ');
   grating_z_min = finger_z_min;
   grating_z_max = finger_z_max;
