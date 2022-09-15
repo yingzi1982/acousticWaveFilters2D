@@ -141,25 +141,28 @@ if PF_flag
 charge = PF_charge_piezo;
 current = [-gradient(charge,dt)];
 
-timeIndex = find(t<=10e-8);
-charge = [t(timeIndex) charge(timeIndex)]; 
-current = [t(timeIndex) current(timeIndex)];
+%timeIndex = find(t<=10e-8);
+%charge = [t(timeIndex) charge(timeIndex)]; 
+%current = [t(timeIndex) current(timeIndex)];
+%voltage = voltage(timeIndex,:);
+
+charge = [t charge]; 
+current = [t current];
 
 dlmwrite('../backup/charge',charge,' ');
 dlmwrite('../backup/current',current,' ');
 
-voltage = voltage(timeIndex,:);
 
 voltage_spectrum = trace2spectrum(voltage);
 current_spectrum = trace2spectrum(current);
 f = voltage_spectrum(:,1);
-freqIndex = find(f>1e9&f<2.5e9);
 admittance = current_spectrum(:,2)./voltage_spectrum(:,2);
-f = f(freqIndex);
-admittance = admittance(freqIndex);
+freqIndex = find(f>0.5e9&f<1.5e9);
+%f = f(freqIndex);
+%admittance = admittance(freqIndex);
 admittance = [abs(admittance) real(admittance) imag(admittance)];
-min(admittance)
-max(admittance)
+min(admittance(freqIndex))
+max(admittance(freqIndex))
 
 admittance = [f, admittance];
 dlmwrite('../backup/admittance',admittance,' ');
