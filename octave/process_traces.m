@@ -89,7 +89,13 @@ if PF_flag
 
   PF_charge_piezo = 0;
   %for n = 1:finger_pair_number
-  for n = 1:1
+    %nIndex = [1:finger_point_number] + (n-1)*finger_point_number;
+    %nPF_index = PF_index(nIndex);
+    %longorUTM(nPF_index)
+  %end
+%exit
+  %for n = 1:finger_pair_number
+  for n = 13:13
     nIndex = [1:finger_point_number] + (n-1)*finger_point_number;
 
     nPF_index = PF_index(nIndex);
