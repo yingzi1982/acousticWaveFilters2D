@@ -77,7 +77,8 @@ x_finger_index = find((x_mesh_interp_on_finger_upper_interface - x_mesh_interp_o
 %-------------------------------------------------
 regionsMaterialNumbering = zeros(size(Z_MESH));
 piezo_material_numbering = 1;
-finger_material_numbering = 2;
+%piezo_material_numbering = 2;
+finger_material_numbering = 3;
 regionsMaterialNumbering(:,:) = piezo_material_numbering;
 regionsMaterialNumbering(end-finger_thickness_element_number+1:end,x_finger_index) = finger_material_numbering;
 
