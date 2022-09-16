@@ -54,8 +54,8 @@ case 'SAW'
   single_negative_finger_length = length(single_negative_finger_x);
 
   %finger_element_shape = transpose(hanning(single_positive_finger_length)/max(hanning(single_positive_finger_length)));
-  %finger_element_shape = zeros(1,single_positive_finger_length);
-  finger_element_shape = ones(1,single_positive_finger_length);
+  finger_element_shape = zeros(1,single_positive_finger_length);
+  %finger_element_shape = ones(1,single_positive_finger_length);
 
   positive_finger_x = [];
   negative_finger_x = [];
@@ -124,8 +124,8 @@ case 'SAW'
   single_left_grating_length = length(single_grating_x);
 
   %grating_element_shape = transpose(hanning(single_right_grating_length)/max(hanning(single_right_grating_length)));
-  %grating_element_shape = zeros(1,single_right_grating_length);
-  grating_element_shape = ones(1,single_right_grating_length);
+  grating_element_shape = zeros(1,single_right_grating_length);
+  %grating_element_shape = ones(1,single_right_grating_length);
 
   grating_x = [];
   right_grating_x = [];
