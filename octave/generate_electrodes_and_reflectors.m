@@ -29,10 +29,11 @@ dz = dx;
 
 unit_length = 1.0E-6;
 
-finger_grating_gap = 2.5*unit_length;
+right_finger_grating_gap = 0.5*unit_length;
+left_finger_grating_gap = 0.5*unit_length;
 
-finger_pair_number=25;
-grating_pair_number = 10;
+finger_pair_number = 1;
+grating_pair_number = 1;
 switch filter_type
 case 'SAW'
 
@@ -42,7 +43,7 @@ case 'SAW'
   %finger_z = [finger_z_min:dz:finger_z_max];
   dlmwrite('../backup/finger_pair_number',finger_pair_number,' ');
   finger_z_min = 0.0*unit_length;
-  finger_z_max = 0.2*unit_length;
+  finger_z_max = 0.4*unit_length;
   finger_width = 1*unit_length;
   finger_gap = 1*unit_length;
   finger_period_width = (finger_width + finger_gap)*2; % positive+gap+negative+gap
@@ -104,6 +105,8 @@ case 'SAW'
   total_finger_interfaces = [x' total_finger_bottom_interface' total_finger_top_interface'];
   finger_x_min = min([positive_finger_x negative_finger_x]);
   finger_x_max = max([positive_finger_x negative_finger_x]);
+  finger_x_range = [finger_x_min-finger_period_width finger_x_max+finger_period_width];
+  dlmwrite('../backup/finger_x_range',finger_x_range,' ');
  if ( max(finger_x_max)>xmax || min(finger_x_min)<xmin )
    error('the finger is over xrange limit!')
  end
@@ -144,8 +147,8 @@ case 'SAW'
     left_grating_contact_interface = [left_grating_contact_interface grating_z_min*ones(1,single_left_grating_length)];
   end
 
-  right_grating_x = finger_x_max + grating_x + finger_grating_gap;
-  left_grating_x = finger_x_min - fliplr(grating_x) - finger_grating_gap;
+  right_grating_x = finger_x_max + grating_x + right_finger_grating_gap;
+  left_grating_x = finger_x_min - fliplr(grating_x) - left_finger_grating_gap;
 
   [right_grating_x right_grating_x_index]=findNearest(x,right_grating_x);
   [left_grating_x left_grating_x_index]=findNearest(x,left_grating_x);

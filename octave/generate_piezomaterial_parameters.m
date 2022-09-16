@@ -32,6 +32,13 @@ dz = str2num(dz);
 %dy=dy/5;
 %dz=dz/5;
 
+piezo_x_range_selection = 'cut';
+if strcmp(piezo_x_range_selection,'cut')
+  finger_x_range = dlmread('../backup/finger_x_range','');
+  xmin = finger_x_range(1);
+  xmax = finger_x_range(2);
+end
+
 nx = round((xmax-xmin)/dx+1);
 ny = round((ymax-ymin)/dy+1);
 nz = round((zmax-zmin)/dz+1);

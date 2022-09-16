@@ -17,11 +17,11 @@ NOISE_TOMOGRAPHY                = 0
 SAVE_FORWARD                    = .false.
 
 # parameters concerning partitioning
-NPROC                           = 512
+NPROC                           = 1
 
 # time step parameters
 # total number of time steps
-NSTEP                           = 250001
+NSTEP                           = 50001
 
 # duration of a time step (see section "How to choose the time step" of the manual for how to do this)
 DT                              = 4e-13
@@ -269,9 +269,9 @@ tangential_detection_curve_file = ./DATA/courbe_eros_nodes  # file containing th
 interfacesfile                  = ./interfaces.dat
 
 # geometry of the model (origin lower-left corner = 0,0) and mesh description
-xmin                            = -2.0E-4
-xmax                            =  2.0E-4
-nx                              = 2000
+xmin                            = -10.0E-6
+xmax                            =  10.0E-6
+nx                              = 200
 
 # absorbing boundary parameters (see absorbing_conditions above)
 absorbbottom                    = .true.

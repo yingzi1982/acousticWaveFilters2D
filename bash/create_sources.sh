@@ -1,6 +1,9 @@
 #!/bin/bash
 filter_dimension=$1
 
+rm -f ../DATA/SOURCE
+rm -f ../DATA/STF_*
+
 ./octave.sh generate_sources.m $filter_dimension
 
 Par_file=../DATA/Par_file
