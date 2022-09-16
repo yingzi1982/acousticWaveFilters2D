@@ -32,11 +32,14 @@ dz = str2num(dz);
 %dy=dy/5;
 %dz=dz/5;
 
-piezo_x_range_selection = 'cut';
-if strcmp(piezo_x_range_selection,'cut')
+piezo_x_range_selection = '.true.';
+if strcmp(piezo_x_range_selection,'.true.')
   finger_x_range = dlmread('../backup/finger_x_range','');
-  xmin = finger_x_range(1);
-  xmax = finger_x_range(2);
+  finger_width = dlmread('../backup/finger_width','');
+  xmin = finger_x_range(1) - finger_width;
+  xmax = finger_x_range(2) + finger_width;
+  zmin = zmax - finger_width;
+  zmax = zmax;
 end
 
 nx = round((xmax-xmin)/dx+1);
@@ -72,10 +75,21 @@ elastic_constant=...
      %0      0     0      0 0.595     0;...
      %0      0     0      0     0 0.728]*(1.0e11); 
 
+% P-wave velocities
+% C11 = rho*v11^2; ***
+% C22 = rho*v22^2;
+% C33 = rho*v33^2;
+% S-wave velocities
+% C44 = rho*v23^2 = rho*v32^2;
+% C55 = rho*v31^2 = rho*v13^2; ***
+% C66 = rho*v12^2 = rho*v21^2; 
+
 density = 4650;
 
-Vp = 7000;
-Vs = 4500;
+%Vp = 7000;
+%Vs = 4500;
+Vp = sqrt(elastic_constant(1,1)/density);
+Vs = sqrt(elastic_constant(5,5)/density);
 QKappa = 9999;
 QMu    = 9999;
 
@@ -90,7 +104,6 @@ z_bottom_interface = zmin*ones(size(x));
 
 x_left_interface = xmin*ones(size(z));
 x_right_interface = xmax*ones(size(z));
-
 
 %top_interface    = [transpose(x) transpose(z_top_interface)];
 %right_interface  = [transpose(x_right_interface) transpose(z)];

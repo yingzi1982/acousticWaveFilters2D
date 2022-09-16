@@ -45,6 +45,7 @@ case 'SAW'
   finger_z_min = 0.0*unit_length;
   finger_z_max = 0.4*unit_length;
   finger_width = 1*unit_length;
+  dlmwrite('../backup/finger_width',finger_width,' ');
   finger_gap = 1*unit_length;
   finger_period_width = (finger_width + finger_gap)*2; % positive+gap+negative+gap
 
@@ -105,7 +106,7 @@ case 'SAW'
   total_finger_interfaces = [x' total_finger_bottom_interface' total_finger_top_interface'];
   finger_x_min = min([positive_finger_x negative_finger_x]);
   finger_x_max = max([positive_finger_x negative_finger_x]);
-  finger_x_range = [finger_x_min-finger_period_width finger_x_max+finger_period_width];
+  finger_x_range = [finger_x_min finger_x_max];
   dlmwrite('../backup/finger_x_range',finger_x_range,' ');
  if ( max(finger_x_max)>xmax || min(finger_x_min)<xmin )
    error('the finger is over xrange limit!')
