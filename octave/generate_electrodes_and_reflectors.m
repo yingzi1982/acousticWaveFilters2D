@@ -119,7 +119,6 @@ case 'SAW'
   grating_gap = finger_gap;
   grating_period_width = (grating_width + grating_gap);
 
-
   single_grating_x = [0:dx:grating_width-dx];
   single_right_grating_length = length(single_grating_x);
   single_left_grating_length = length(single_grating_x);
