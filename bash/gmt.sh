@@ -112,7 +112,7 @@ admittance_imag_file=../backup/admittance_imag
 cat $admittance_file | awk  '{print $1,$3}' > $admittance_real_file
 cat $admittance_file | awk  '{print $1,$4}' > $admittance_imag_file
 ./plot1DSignal.sh admittance_real 1 Freq 1E9 Hz "0.5 1.1" 1f0.5 Amp 1E-1 "" "-1 1" ''
-./plot1DSignal.sh admittance_imag 1 Freq 1E9 Hz "0.5 1.1" 1f0.5 Amp 1E-1 "" "-1 1" ''
+./plot1DSignal.sh admittance_imag 1 Freq 1E9 Hz "0.5 1.1" 1f0.5 Amp 1E-1 "" "0 2" ''
 rm -f $admittance_real_file $admittance_imag_file
 exit
 #./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0 3" 1f0.5 Amp 1E0 "" "-50 0" 25f12.5
