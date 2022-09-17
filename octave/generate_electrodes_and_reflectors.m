@@ -12,19 +12,23 @@ else
   error('Please input filter type and dimension.');
 end
 
-[xminStatus xmin] = system('grep xmin ../backup/Par_file.part | cut -d = -f 2');
-xmin = str2num(xmin);
+[piezo]=generate_piezomaterial_parameters(filter_dimension);
 
-[xmaxStatus xmax] = system('grep xmax ../backup/Par_file.part | cut -d = -f 2');
-xmax = str2num(xmax);
+dx = piezo.dx;
+dy = piezo.dy;
+dz = piezo.dz;
 
-[nxStatus nx] = system('grep nx ../backup/Par_file.part | cut -d = -f 2');
-nx = str2num(nx);
-xNumber = nx + 1;
+x = piezo.x;
+y = piezo.y;
+z = piezo.z;
 
-dx = (xmax - xmin)/nx;
-x=linspace(xmin,xmax,xNumber);
-dz = dx;
+xmin = piezo.xmin;
+ymin = piezo.ymin;
+zmin = piezo.zmin;
+       
+xmax = piezo.xmax;
+ymax = piezo.ymax;
+zmax = piezo.zmax;
 %---------------------------------
 
 unit_length = 1.0E-6;
@@ -32,7 +36,7 @@ unit_length = 1.0E-6;
 right_finger_grating_gap = 0.5*unit_length;
 left_finger_grating_gap = 0.5*unit_length;
 
-finger_pair_number = 1;
+finger_pair_number = 3;
 grating_pair_number = 1;
 switch filter_type
 case 'SAW'

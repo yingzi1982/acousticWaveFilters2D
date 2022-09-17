@@ -13,11 +13,12 @@ ymax = str2num(ymax);
 
 [zmin_status zmin] = system(['grep zmin ' meshInformation_file ' | cut -d = -f 2']);
 zmin = str2num(zmin);
-%[zmax_status zmax] = system(['grep zmax ' meshInformation_file ' | cut -d = -f 2']);
-%zmax = str2num(zmax);
-total_finger_interfaces = dlmread('../backup/total_finger_interfaces','');
-total_finger_interfaces = transpose(total_finger_interfaces);
-zmax = min(total_finger_interfaces(2,:));
+[zmax_status zmax] = system(['grep zmax ' meshInformation_file ' | cut -d = -f 2']);
+zmax = str2num(zmax);
+
+%total_finger_interfaces = dlmread('../backup/total_finger_interfaces','');
+%total_finger_interfaces = transpose(total_finger_interfaces);
+%zmax = min(total_finger_interfaces(2,:));
 
 [dx_status dx] = system(['grep dx ' meshInformation_file ' | cut -d = -f 2']);
 dx = str2num(dx);
@@ -28,19 +29,9 @@ dy = str2num(dy);
 [dz_status dz] = system(['grep dz ' meshInformation_file ' | cut -d = -f 2']);
 dz = str2num(dz);
 
-%dx=dx/5;
-%dy=dy/5;
-%dz=dz/5;
-
-piezo_x_range_selection = '.true.';
-if strcmp(piezo_x_range_selection,'.true.')
-  finger_x_range = dlmread('../backup/finger_x_range','');
-  finger_width = dlmread('../backup/finger_width','');
-  xmin = finger_x_range(1) - finger_width;
-  xmax = finger_x_range(2) + finger_width;
-  zmin = zmax - finger_width;
-  zmax = zmax;
-end
+dx=dx/5;
+dy=dy/5;
+dz=dz/5;
 
 nx = round((xmax-xmin)/dx+1);
 ny = round((ymax-ymin)/dy+1);

@@ -18,9 +18,28 @@ dx = piezo.dx;
 dy = piezo.dy;
 dz = piezo.dz;
 
-x = piezo.x;
-y = piezo.y;
-z = piezo.z;
+piezo_x_range_selection = '.false.';
+if strcmp(piezo_x_range_selection,'.true.')
+  finger_x_range = dlmread('../backup/finger_x_range','');
+  finger_width = dlmread('../backup/finger_width','');
+  xmin = finger_x_range(1) - finger_width; 
+  xmax = finger_x_range(2) + finger_width;
+  zmin = zmax - finger_width;
+  zmax = zmax;
+  nx = round((xmax-xmin)/dx+1); 
+  ny = round((ymax-ymin)/dy+1);
+  nz = round((zmax-zmin)/dz+1);
+
+  x = linspace(xmin,xmax,nx);
+  y = linspace(ymin,ymax,ny);
+  z = linspace(zmin,zmax,nz);
+else
+  x = piezo.x;
+  y = piezo.y;
+  z = piezo.z;
+end
+
+
 %---------------------------------
 positive_finger_V = 1;
 negative_finger_V = 0;
