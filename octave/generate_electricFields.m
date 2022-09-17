@@ -18,14 +18,34 @@ dx = piezo.dx;
 dy = piezo.dy;
 dz = piezo.dz;
 
-piezo_x_range_selection = '.false.';
-if strcmp(piezo_x_range_selection,'.true.')
+xmin = piezo.xmin;
+ymin = piezo.ymin;
+zmin = piezo.zmin;
+
+xmax = piezo.xmax;
+ymax = piezo.ymax;
+zmax = piezo.zmax;
+
+piezo_range_selection = '.true.';
+if strcmp(piezo_range_selection,'.true.')
   finger_x_range = dlmread('../backup/finger_x_range','');
   finger_width = dlmread('../backup/finger_width','');
   xmin = finger_x_range(1) - finger_width; 
   xmax = finger_x_range(2) + finger_width;
-  zmin = zmax - finger_width;
+  zmin = zmax - finger_width/2;
   zmax = zmax;
+
+  fileID = fopen(['../backup/range_selection'],'w');
+  fprintf(fileID, 'xmin = %g\n', xmin);
+  fprintf(fileID, 'ymin = %g\n', ymin);
+  fprintf(fileID, 'zmin = %g\n', zmin);
+  fprintf(fileID, '\n');
+  
+  fprintf(fileID, 'xmax = %g\n', xmax);
+  fprintf(fileID, 'ymax = %g\n', ymax);
+  fprintf(fileID, 'zmax = %g\n', zmax);
+  fclose(fileID);
+
   nx = round((xmax-xmin)/dx+1); 
   ny = round((ymax-ymin)/dy+1);
   nz = round((zmax-zmin)/dz+1);

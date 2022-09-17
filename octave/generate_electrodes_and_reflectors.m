@@ -36,7 +36,7 @@ unit_length = 1.0E-6;
 right_finger_grating_gap = 0.5*unit_length;
 left_finger_grating_gap = 0.5*unit_length;
 
-finger_pair_number = 1;
+finger_pair_number = 9;
 grating_pair_number = 1;
 switch filter_type
 case 'SAW'

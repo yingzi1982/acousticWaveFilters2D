@@ -16,13 +16,28 @@ dx = piezo.dx;
 dy = piezo.dy;                
 dz = piezo.dz;                
 
-nx = piezo.nx;                
-ny = piezo.ny;                
-nz = piezo.nz;                
+[xmin_status xmin] = system('grep xmin ../backup/range_selection | cut -d = -f 2');
+xmin = str2num(xmin);
+[xmax_status xmax] = system('grep xmax ../backup/range_selection | cut -d = -f 2');
+xmax = str2num(xmax);
 
-x = piezo.x;
-y = piezo.y;
-z = piezo.z;
+[ymin_status ymin] = system('grep ymin ../backup/range_selection | cut -d = -f 2');
+ymin = str2num(ymin);
+[ymax_status ymax] = system('grep ymax ../backup/range_selection | cut -d = -f 2');
+ymax = str2num(ymax);
+
+[zmin_status zmin] = system('grep zmin ../backup/range_selection | cut -d = -f 2');
+zmin = str2num(zmin);
+[zmax_status zmax] = system('grep zmax ../backup/range_selection | cut -d = -f 2');
+zmax = str2num(zmax);
+
+nx = round((xmax-xmin)/dx+1);
+ny = round((ymax-ymin)/dy+1);
+nz = round((zmax-zmin)/dz+1);
+
+x = linspace(xmin,xmax,nx);
+y = linspace(ymin,ymax,ny);
+z = linspace(zmin,zmax,nz);
 
 piezoelectric_constant = piezo.piezoelectric_constant;
 
