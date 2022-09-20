@@ -80,6 +80,7 @@ save("-ascii",['../backup/sourceFrequencySpetrum'],'sourceFrequencySpetrum')
 
 switch filter_dimension 
 case '2D'
+
 force=load('../backup/force');
 
 force_x = force(:,1);
@@ -110,7 +111,7 @@ end
 
 %amplitude_selection = force_rho/max(force_rho) >= .05;
 %amplitude_selection = force_rho/max(force_rho) >= .1;
-amplitude_selection = force_rho/max(force_rho) >= .5;
+amplitude_selection = force_rho/max(force_rho) >= .0;
 position_selection = force_x >= xmin & force_x <= xmax & force_z >= zmin;
 selection_index = find(amplitude_selection & position_selection);
 

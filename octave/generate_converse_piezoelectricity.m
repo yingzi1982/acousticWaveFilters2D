@@ -64,6 +64,18 @@ case '2D'
   bodyforce_x = (stress1partialx + stress3partialz);
   bodyforce_z = (stress2partialz + stress3partialx);
 
+  onlySourceAtEdge='.true.'
+  if strcmp ('.true.', strtrim(onlySourceAtEdge))
+    positive_finger_edge=dlmread('../backup/positive_finger_edge','');
+    negative_finger_edge=dlmread('../backup/negative_finger_edge','');
+    finger_edge = [positive_finger_edge;negative_finger_edge];
+    [finger_edge_x finger_edge_xIndex] = findNearest(x,finger_edge(:,1));
+    bodyforce_x = bodyforce_x(end,finger_edge_xIndex);
+    bodyforce_z = bodyforce_z(end,finger_edge_xIndex);
+    X = X(end,finger_edge_xIndex);
+    Z = Z(end,finger_edge_xIndex);
+  end
+  
   [bodyforce_theta,bodyforce_rho] = cart2pol(bodyforce_x,bodyforce_z);
 
   bodyforce=[reshape(X,[],1) reshape(Z,[],1) reshape(bodyforce_rho,[],1) reshape(bodyforce_theta,[],1) reshape(bodyforce_x,[],1) reshape(bodyforce_z,[],1)];

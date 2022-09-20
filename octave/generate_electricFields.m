@@ -30,9 +30,10 @@ piezo_range_selection = '.true.';
 if strcmp(piezo_range_selection,'.true.')
   finger_x_range = dlmread('../backup/finger_x_range','');
   finger_width = dlmread('../backup/finger_width','');
-  xmin = finger_x_range(1) - finger_width; 
-  xmax = finger_x_range(2) + finger_width;
-  zmin = zmax - finger_width/2;
+  offset = finger_width/5;
+  xmin = finger_x_range(1) - offset; 
+  xmax = finger_x_range(2) + offset;
+  zmin = zmax - offset;
   zmax = zmax;
 
   fileID = fopen(['../backup/range_selection'],'w');
@@ -58,7 +59,6 @@ else
   y = piezo.y;
   z = piezo.z;
 end
-
 
 %---------------------------------
 positive_finger_V = 1;
