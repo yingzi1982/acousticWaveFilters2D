@@ -24,7 +24,7 @@ NPROC                           = 256
 NSTEP                           = 400001
 
 # duration of a time step (see section "How to choose the time step" of the manual for how to do this)
-DT                              = .5e-12
+DT                              = 1.e-12
 
 # time stepping
 # 1 = Newmark (2nd order), 2 = LDDRK4-6 (4th-order 6-stage low storage Runge-Kutta), 3 = classical RK4 4th-order 4-stage Runge-Kutta
@@ -271,7 +271,7 @@ interfacesfile                  = ./interfaces.dat
 # geometry of the model (origin lower-left corner = 0,0) and mesh description
 xmin                            = -25.0E-6
 xmax                            =  25.0E-6
-nx                              = 500
+nx                              = 250
 
 # absorbing boundary parameters (see absorbing_conditions above)
 absorbbottom                    = .true.
