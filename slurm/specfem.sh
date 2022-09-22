@@ -5,7 +5,7 @@
 #SBATCH -t 5:00:00
 #SBATCH -o output.txt
 #SBATCH -e error.txt
-#SBATCH -N 1
+#SBATCH -N 2
 #SBATCH --mail-user=yingzi.ying@me.com
 #SBATCH --mail-type=ALL
 

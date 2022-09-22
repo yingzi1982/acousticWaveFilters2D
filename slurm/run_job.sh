@@ -4,7 +4,7 @@
 #SBATCH -p shared #main long shared memory
 #SBATCH -c 1
 #SBATCH -J processing
-#SBATCH -t 1:00:00
+#SBATCH -t 5:00:00
 #SBATCH -o output.txt
 #SBATCH -e error.txt
 #SBATCH --mail-user=yingzi.ying@me.com
@@ -16,6 +16,6 @@ filter_type=SAW
 filter_dimension=2D
 
 cd ../bash
-./preprocess.sh $filter_type $filter_dimension
+#./preprocess.sh $filter_type $filter_dimension
 #./specfem.sh $filter_dimension
-#./postprocess.sh $filter_type $filter_dimension
+./postprocess.sh $filter_type $filter_dimension
