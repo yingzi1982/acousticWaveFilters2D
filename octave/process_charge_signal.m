@@ -7,6 +7,8 @@ clc
 charge = dlmread('../backup/charge','');
 voltage = dlmread(['../backup/sourceTimeFunction'],'');
 
+whos charge 
+
 if rows(charge) != rows(voltage)
   error('the charge and voltage are not equal length!')
 end
@@ -14,6 +16,7 @@ t = charge(:,1);
 timeIndex =  find(t<=12e-8); 
 charge = charge(timeIndex,:);  
 voltage = voltage(timeIndex,:); 
+whos charge 
 
 voltage_spectrum = trace2spectrum(voltage);
 charge_spectrum = trace2spectrum(charge);
