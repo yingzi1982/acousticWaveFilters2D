@@ -141,14 +141,14 @@ if PF_flag
 charge = PF_charge_piezo;
 %current = [-gradient(charge,dt)];
 
-%timeIndex = find(t<=4e-8);
-%charge = [t(timeIndex) charge(timeIndex)]; 
-%%current = [t(timeIndex) current(timeIndex)];
-%voltage = voltage(timeIndex,:);
+timeIndex  find(t<=12e-8);
+charge = [t(timeIndex) charge(timeIndex)]; 
+%current = [t(timeIndex) current(timeIndex)];
+voltage = voltage(timeIndex,:);
 
-charge = [t charge]; 
+%charge = [t charge]; 
 %current = [t current];
-voltage = voltage;
+%voltage = voltage;
 
 dlmwrite('../backup/charge',charge,' ');
 %dlmwrite('../backup/current',current,' ');
