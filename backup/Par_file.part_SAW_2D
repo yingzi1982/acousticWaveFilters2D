@@ -66,7 +66,7 @@ MODEL                           = default
 
 # Output the model with the requested type, does not save if turn to default or .false.
 # (available output formats: ascii,binary,gll,legacy)
-SAVE_MODEL                      = ascii
+SAVE_MODEL                      = .false.
 
 
 #-----------------------------------------------------------
@@ -209,7 +209,7 @@ APPROXIMATE_HESS_KL             = .false.
 # Perfectly Matched Layer (PML) boundaries
 # absorbing boundary active or not
 PML_BOUNDARY_CONDITIONS         = .true.
-NELEM_PML_THICKNESS             = 4
+NELEM_PML_THICKNESS             = 3
 ROTATE_PML_ACTIVATE             = .false.
 ROTATE_PML_ANGLE                = 30.
 # change the four parameters below only if you know what you are doing; they change the damping profiles inside the PMLs
