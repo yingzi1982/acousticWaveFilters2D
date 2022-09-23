@@ -13,7 +13,7 @@ if rows(charge) != rows(voltage)
   error('the charge and voltage are not equal length!')
 end
 t = charge(:,1);
-timeIndex =  find(t<=12e-8); 
+timeIndex =  find(t<=10e-8); 
 charge = charge(timeIndex,:);  
 voltage = voltage(timeIndex,:); 
 whos charge 
