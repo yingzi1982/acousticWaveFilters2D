@@ -22,8 +22,11 @@ voltage_spectrum = trace2spectrum(voltage);
 charge_spectrum = trace2spectrum(charge);
 f = voltage_spectrum(:,1);
 admittance = -i*2*pi*f.*charge_spectrum(:,2)./voltage_spectrum(:,2);
+[M,I] = max(imag(admittance))
+f(I)
 freqIndex = find(f>0.5e9&f<1.5e9);
 admittance = [abs(admittance) real(admittance) imag(admittance)];
+
 min(admittance(freqIndex))
 max(admittance(freqIndex))
 
