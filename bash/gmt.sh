@@ -106,6 +106,7 @@ if true; then
 #./plot1DSignal.sh sourceTimeFunction 10 Time 1E-8 s "0 10" 4f2 A  1 "A" "-1 1" 1f0.5
 #./plot1DSignal.sh charge 10 Time 1E-8 s "0 15" 5f2.5 Charge  20E-11 "C" "-5 5" 1f.5
 ./plot1DSignal2.sh conductance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Amp 1E0 "" "-0.2 1.2" 1f0.5
+./plot1DSignal2.sh susceptance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Amp 1E0 "" "-1.2 1.2" 1f0.5
 exit
 
 admittance_file=../backup/admittance

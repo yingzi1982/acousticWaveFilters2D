@@ -29,6 +29,12 @@ admittance = admittance(freqIndex,:);
 conductance = real(admittance);
 susceptance = imag(admittance);
 
+[M,I] = max(conductance(:,3));
+conductance_peak_frequency = f(I)
+[M1,I1] = max(susceptance(:,3));
+[M2,I2] = min(susceptance(:,3));
+susceptance_peak_frequency = f([I1 I2])
+
 conductance = [f conductance./max(abs(conductance))];
 susceptance = [f susceptance./max(abs(susceptance))];
 
