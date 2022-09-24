@@ -44,9 +44,9 @@ projection=X$width\i/$height\i
 
 gmt begin $fig
 
-awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $2/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel ($yscale$yunit)" -Wthin,red
-awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $3/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel ($yscale$yunit)" -Wthin,blue
-awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $4/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel ($yscale$yunit)" -Wthin,yellow
+awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $2/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel ($yscale$yunit)" -Wthin,red,.
+awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $3/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel ($yscale$yunit)" -Wthin,blue,-
+awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $4/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel ($yscale$yunit)" -Wthin,black
 
 gmt end
 
