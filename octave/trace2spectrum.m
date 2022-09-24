@@ -14,7 +14,7 @@ spectrum = fft(s,nfft);
 %PSD = 10*log10(PSD);
 %sourceFrequencySpetrum =[f,PSD];
 %spectrum = 2*abs(spectrum(1:nfft/2+1)/nfft);
-spectrum = 2*spectrum(1:nfft/2+1)/nfft;
+spectrum = 2*spectrum(1:nfft/2+1,:)/nfft;
 
 %spectrum = spectrum/max(spectrum);
 
