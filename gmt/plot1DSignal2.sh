@@ -48,6 +48,11 @@ awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'N
 awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $3/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel " -Wthin,blue,-
 awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $4/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel " -Wthin,black
 
+gmt legend -DjRT+w5.5c+o0.25c -F+p1p+gbeige+s <<- EOF
+S 0.5c - 0.9c - 4p,green 1.2c Parsons & Sclater (1977)
+S 0.5c - 0.9c - 4p,white 1.2c Stein & Stein (1992)
+S 0.5c s 0.4c blue - 1.2c Modal depth estimates
+EOF
 gmt end
 
 rm -f gmt.conf
