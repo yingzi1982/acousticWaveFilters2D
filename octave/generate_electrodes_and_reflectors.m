@@ -36,7 +36,8 @@ unit_length = 1.0E-6;
 right_finger_grating_gap = 0.5*unit_length;
 left_finger_grating_gap = 0.5*unit_length;
 
-finger_pair_number = 99;
+finger_pair_number = 9;
+%finger_pair_number = 99;
 grating_pair_number = 1;
 switch filter_type
 case 'SAW'
@@ -61,6 +62,9 @@ case 'SAW'
   single_positive_finger_x_edge = [0 finger_width];
   single_negative_finger_x_edge = single_positive_finger_x_edge - finger_period_width/2;
 
+  single_positive_gap_center = finger_width + finger_width/2;
+  single_negative_gap_center = -finger_width + finger_width/2;
+
   %finger_element_shape = transpose(hanning(single_positive_finger_length)/max(hanning(single_positive_finger_length)));
   finger_element_shape = zeros(1,single_positive_finger_length);
   %finger_element_shape = ones(1,single_positive_finger_length);
@@ -70,6 +74,9 @@ case 'SAW'
 
   positive_finger_x_edge = [];
   negative_finger_x_edge = [];
+
+  positive_gap_center = [];
+  negative_gap_center = [];
 
   positive_finger_shape = [];
   negative_finger_shape = [];
@@ -89,12 +96,20 @@ case 'SAW'
     
     positive_finger_x_edge =  [positive_finger_x_edge single_positive_finger_x_edge + i*finger_period_width];
     negative_finger_x_edge =  [negative_finger_x_edge single_negative_finger_x_edge + i*finger_period_width];
+
+    positive_gap_center = [positive_gap_center single_positive_gap_center + i*finger_period_width];
+    negative_gap_center = [negative_gap_center single_negative_gap_center + i*finger_period_width];
   end
 
    positive_finger_edge = [transpose(positive_finger_x_edge) transpose(zeros(size(positive_finger_x_edge)))];
    negative_finger_edge = [transpose(negative_finger_x_edge) transpose(zeros(size(negative_finger_x_edge)))];
    dlmwrite('../backup/positive_finger_edge',positive_finger_edge,' ');
    dlmwrite('../backup/negative_finger_edge',negative_finger_edge,' ');
+
+   positive_gap_center = [transpose(positive_gap_center) transpose(zeros(size(positive_gap_center)))];
+   negative_gap_center = [transpose(negative_gap_center) transpose(zeros(size(negative_gap_center)))];
+   dlmwrite('../backup/positive_gap_center',positive_gap_center,' ');
+   dlmwrite('../backup/negative_gap_center',negative_gap_center,' ');
 
    positive_finger_shape = [transpose(positive_finger_x) transpose(positive_finger_shape)];
    negative_finger_shape = [transpose(negative_finger_x) transpose(negative_finger_shape)];

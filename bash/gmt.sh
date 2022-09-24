@@ -107,13 +107,10 @@ if true; then
 ./plot1DSignal.sh charge 10 Time 1E-8 s "0 5" 5f2.5 Charge  2E-11 "C" "-1 1" 1f.5
 
 admittance_file=../backup/admittance
-admittance_abs_file=../backup/admittance_abs
 admittance_real_file=../backup/admittance_real
 admittance_imag_file=../backup/admittance_imag
-cat $admittance_file | awk  '{print $1,$2}' > $admittance_abs_file
 cat $admittance_file | awk  '{print $1,$3}' > $admittance_real_file
 cat $admittance_file | awk  '{print $1,$4}' > $admittance_imag_file
-./plot1DSignal.sh admittance_abs 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Amp 1E-1 "" "-10 10" ''
 ./plot1DSignal.sh admittance_real 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Amp 1E-1 "" "-10 10" ''
 ./plot1DSignal.sh admittance_imag 1 Freq 1E9 Hz "0.8 0.9" 0.01f0.005 Amp 1E-1 "" "-10 10" ''
 rm -f $admittance_real_file  $admittance_imag_file

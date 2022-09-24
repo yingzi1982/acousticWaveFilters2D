@@ -21,7 +21,7 @@ NPROC                           = 500
 
 # time step parameters
 # total number of time steps
-NSTEP                           = 300001
+NSTEP                           = 30001
 
 # duration of a time step (see section "How to choose the time step" of the manual for how to do this)
 DT                              = .5e-12
@@ -269,9 +269,9 @@ tangential_detection_curve_file = ./DATA/courbe_eros_nodes  # file containing th
 interfacesfile                  = ./interfaces.dat
 
 # geometry of the model (origin lower-left corner = 0,0) and mesh description
-xmin                            = -250.0E-6
-xmax                            =  250.0E-6
-nx                              = 5000
+xmin                            = -50.0E-6
+xmax                            =  50.0E-6
+nx                              = 1000
 
 # absorbing boundary parameters (see absorbing_conditions above)
 absorbbottom                    = .true.
