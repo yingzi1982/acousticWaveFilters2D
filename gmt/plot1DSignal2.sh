@@ -49,7 +49,7 @@ awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'N
 awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $4/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel " -Wthin,black -l"99 pairs"
 
 #gmt legend -DjTR+o0.5c -F+pthick+ithinner+gwhite #--FONT_ANNOT_PRIMARY=18p,Times-Italic
-gmt legend -DjTR #-F+pthick+ithinner+gwhite #--FONT_ANNOT_PRIMARY=18p,Times-Italic
+gmt legend -DjTR --FONT_ANNOT_PRIMARY=12p #-F+pthick+ithinner+gwhite #--FONT_ANNOT_PRIMARY=18p,Times-Italic
 
 gmt end
 
