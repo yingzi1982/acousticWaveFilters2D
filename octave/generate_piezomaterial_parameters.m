@@ -29,9 +29,9 @@ dy = str2num(dy);
 [dz_status dz] = system(['grep dz ' meshInformation_file ' | cut -d = -f 2']);
 dz = str2num(dz);
 
-%dx=dx/2;
-%dy=dy/2;
-%dz=dz/2;
+dx=dx/2;
+dy=dy/2;
+dz=dz/2;
 
 nx = round((xmax-xmin)/dx+1);
 ny = round((ymax-ymin)/dy+1);
