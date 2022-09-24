@@ -17,14 +17,14 @@ NOISE_TOMOGRAPHY                = 0
 SAVE_FORWARD                    = .false.
 
 # parameters concerning partitioning
-NPROC                           = 1
+NPROC                           = 500
 
 # time step parameters
 # total number of time steps
-NSTEP                           = 30001
+NSTEP                           = 150001
 
 # duration of a time step (see section "How to choose the time step" of the manual for how to do this)
-DT                              = .5e-12
+DT                              = 1e-12
 
 # time stepping
 # 1 = Newmark (2nd order), 2 = LDDRK4-6 (4th-order 6-stage low storage Runge-Kutta), 3 = classical RK4 4th-order 4-stage Runge-Kutta
@@ -269,15 +269,15 @@ tangential_detection_curve_file = ./DATA/courbe_eros_nodes  # file containing th
 interfacesfile                  = ./interfaces.dat
 
 # geometry of the model (origin lower-left corner = 0,0) and mesh description
-xmin                            = -50.0E-6
-xmax                            =  50.0E-6
-nx                              = 500
+xmin                            = -350.0E-6
+xmax                            =  350.0E-6
+nx                              = 3500
 
 # absorbing boundary parameters (see absorbing_conditions above)
 absorbbottom                    = .true.
-absorbright                     = .true.
+absorbright                     = .false.
 absorbtop                       = .false.
-absorbleft                      = .true.
+absorbleft                      = .false.
 
 
 #-----------------------------------------------------------

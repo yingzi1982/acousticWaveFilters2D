@@ -133,8 +133,9 @@ if strcmp(useCrossedFieldModel,'.true.')
   xs=[positive_gap_center(:,1);negative_gap_center(:,1)];
   zs=[positive_gap_center(:,2);negative_gap_center(:,2)];
   anglesource=[positive_anglesource;negative_anglesource];
-  source_number = length(xs);
   factor = 1*ones(size(xs));
+  source_number = length(xs);
+  source_size = size(xs);
 end
 
 disp(['There are ', int2str(source_number), ' sources.'])
