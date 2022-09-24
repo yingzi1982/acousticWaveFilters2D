@@ -109,8 +109,8 @@ if true; then
 admittance_file=../backup/admittance
 admittance_real_file=../backup/admittance_real
 admittance_imag_file=../backup/admittance_imag
-cat $admittance_file | awk  '{print $1,-$3}' > $admittance_real_file
-cat $admittance_file | awk  '{print $1,-$4}' > $admittance_imag_file
+cat $admittance_file | awk  '{print $1,$3}' > $admittance_real_file
+cat $admittance_file | awk  '{print $1,$4}' > $admittance_imag_file
 ./plot1DSignal.sh admittance_real 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Amp 1E-1 "" "-50 50" ''
 ./plot1DSignal.sh admittance_imag 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Amp 1E-1 "" "-50 50" ''
 rm -f $admittance_real_file  $admittance_imag_file

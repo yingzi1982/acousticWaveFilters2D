@@ -128,8 +128,8 @@ useCrossedFieldModel='.true.';
 if strcmp(useCrossedFieldModel,'.true.')
   positive_gap_center=dlmread('../backup/positive_gap_center','');
   negative_gap_center=dlmread('../backup/negative_gap_center','');
-  positive_anglesource=0*ones(rows(positive_gap_center),1);
-  negative_anglesource=180*ones(rows(negative_gap_center),1);
+  positive_anglesource=180*ones(rows(positive_gap_center),1);
+  negative_anglesource=0*ones(rows(negative_gap_center),1);
   xs=[positive_gap_center(:,1);negative_gap_center(:,1)];
   zs=[positive_gap_center(:,2);negative_gap_center(:,2)];
   anglesource=[positive_anglesource;negative_anglesource];
