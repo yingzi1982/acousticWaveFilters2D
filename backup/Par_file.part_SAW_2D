@@ -275,9 +275,9 @@ nx                              = 3500
 
 # absorbing boundary parameters (see absorbing_conditions above)
 absorbbottom                    = .true.
-absorbright                     = .false.
+absorbright                     = .true.
 absorbtop                       = .false.
-absorbleft                      = .false.
+absorbleft                      = .true.
 
 
 #-----------------------------------------------------------
