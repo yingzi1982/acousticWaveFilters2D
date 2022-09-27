@@ -35,7 +35,7 @@ band_y='.BXY.semd';
 band_z='.BXZ.semd';
 
 time_resample_rate=1;
-time_resampled_point_number = 6000;
+time_resampled_point_number = 1000;
 
 sourceTimeFunction = dlmread(['../backup/sourceTimeFunction'],'');
 sourceTimeFunction = sourceTimeFunction(1:time_resample_rate:end,:);
