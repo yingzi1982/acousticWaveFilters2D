@@ -51,8 +51,8 @@ switch filter_dimension
 case '2D'
 
 PF_flag = 0;
-LA_flag = 1;
-SA_flag = 0;
+LA_flag = 0;
+SA_flag = 1;
 %------------------------------------
 [piezo]=generate_piezomaterial_parameters(filter_dimension);
 dx = piezo.dx;
