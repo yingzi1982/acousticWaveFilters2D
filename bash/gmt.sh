@@ -60,7 +60,7 @@ fi
 #--------------------------------------------------
 xtick2=10f5
 ztick2=10f5
-heightRatio2=0
+heightRatio2=1
 
 if true; then
 traceImage=LA_trace_image
@@ -69,7 +69,7 @@ traceImage_z=$traceImage\_z
 traceImageFile=../backup/$traceImage
 traceImage_xFile=../backup/$traceImage_x
 traceImage_zFile=../backup/$traceImage_z
-tmax=4.0e-8
+tmax=1.0e-8
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$3}' > $traceImage_xFile
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$4}' > $traceImage_zFile
 ./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 1E-11 m $heightRatio2 $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ztick2
