@@ -19,7 +19,8 @@ dx=`grep dx ../backup/meshInformation | cut -d = -f 2`
 dz=`grep dz ../backup/meshInformation | cut -d = -f 2`
 dx2=`echo $dx | awk '{print $1*2}'`
 dz2=`echo $dz | awk '{print $1*2}'`
-dt=2.0e-10
+#dt=2.0e-10
+dt=5e-13
 xtick=10f5
 ztick=5f2.5
 #heightRatio=0.28
