@@ -19,6 +19,7 @@ touch $station_file
 #[ -f ../backup/STATIONS_NF2 ] && cat ../backup/STATIONS_NF2 >> $station_file 
 
 [ -f ../backup/STATIONS_LA ] && cat ../backup/STATIONS_LA >> $station_file
+[ -f ../backup/STATIONS_LA2 ] && cat ../backup/STATIONS_LA2 >> $station_file
 
 [ -f ../backup/STATIONS_SA ] && cat ../backup/STATIONS_SA >> $station_file
 

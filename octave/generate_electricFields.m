@@ -26,7 +26,7 @@ xmax = piezo.xmax;
 ymax = piezo.ymax;
 zmax = piezo.zmax;
 
-piezo_range_selection = '.true.';
+piezo_range_selection = '.false.';
 if strcmp(piezo_range_selection,'.true.')
   finger_x_range = dlmread('../backup/finger_x_range','');
   finger_width = dlmread('../backup/finger_width','');
@@ -36,16 +36,6 @@ if strcmp(piezo_range_selection,'.true.')
   zmin = zmax - offset;
   zmax = zmax;
 
-  fileID = fopen(['../backup/range_selection'],'w');
-  fprintf(fileID, 'xmin = %g\n', xmin);
-  fprintf(fileID, 'ymin = %g\n', ymin);
-  fprintf(fileID, 'zmin = %g\n', zmin);
-  fprintf(fileID, '\n');
-  
-  fprintf(fileID, 'xmax = %g\n', xmax);
-  fprintf(fileID, 'ymax = %g\n', ymax);
-  fprintf(fileID, 'zmax = %g\n', zmax);
-  fclose(fileID);
 
   nx = round((xmax-xmin)/dx+1); 
   ny = round((ymax-ymin)/dy+1);
@@ -59,6 +49,17 @@ else
   y = piezo.y;
   z = piezo.z;
 end
+
+fileID = fopen(['../backup/range_selection'],'w');
+fprintf(fileID, 'xmin = %g\n', xmin);
+fprintf(fileID, 'ymin = %g\n', ymin);
+fprintf(fileID, 'zmin = %g\n', zmin);
+fprintf(fileID, '\n');
+
+fprintf(fileID, 'xmax = %g\n', xmax);
+fprintf(fileID, 'ymax = %g\n', ymax);
+fprintf(fileID, 'zmax = %g\n', zmax);
+fclose(fileID);
 
 %---------------------------------
 positive_finger_V = 1;

@@ -2,10 +2,10 @@
 #SBATCH -A pdc-test-2022 #snic2022-22-620 
 #SBATCH -p main #main long shared memory
 #SBATCH -J specfem
-#SBATCH -t 2:00:00
+#SBATCH -t 5:00:00
 #SBATCH -o output.txt
 #SBATCH -e error.txt
-#SBATCH -N 2
+#SBATCH -N 1
 #SBATCH --mail-user=yingzi.ying@me.com
 #SBATCH --mail-type=ALL
 

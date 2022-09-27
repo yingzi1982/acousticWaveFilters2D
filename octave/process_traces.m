@@ -50,8 +50,8 @@ case 'SAW'
 switch filter_dimension
 case '2D'
 
-PF_flag = 1;
-LA_flag = 0;
+PF_flag = 0;
+LA_flag = 1;
 SA_flag = 0;
 %------------------------------------
 if PF_flag
@@ -136,44 +136,16 @@ if PF_flag
     PF_charge_piezo = PF_charge_piezo + nPF_charge_piezo;
   end
 
-
 %PF_charge_total = PF_charge_incident + PF_charge_piezo;
 charge = PF_charge_piezo;
-%current = [-gradient(charge,dt)];
-
-%timeIndex =  find(t<=12e-8);
-%charge = [t(timeIndex) charge(timeIndex)]; 
-%%current = [t(timeIndex) current(timeIndex)];
-%voltage = voltage(timeIndex,:);
-
 charge = [t charge]; 
+%current = [gradient(charge,dt)];
 %current = [t current];
-voltage = voltage;
+%voltage = voltage;
 
 dlmwrite('../backup/charge',charge,' ');
 %dlmwrite('../backup/current',current,' ');
 
-voltage_spectrum = trace2spectrum(voltage);
-%current_spectrum = trace2spectrum(current);
-charge_spectrum = trace2spectrum(charge);
-f = voltage_spectrum(:,1);
-%admittance = current_spectrum(:,2)./voltage_spectrum(:,2);
-admittance = -i*2*pi*f.*charge_spectrum(:,2)./voltage_spectrum(:,2);
-freqIndex = find(f>0.5e9&f<1.5e9);
-%f = f(freqIndex);
-%admittance = admittance(freqIndex);
-admittance = [abs(admittance) real(admittance) imag(admittance)];
-min(admittance(freqIndex))
-max(admittance(freqIndex))
-
-admittance = [f, admittance];
-dlmwrite('../backup/admittance',admittance,' ');
-%exit
-
-%f= current_spectrum(:,1);
-%max(admittance)
-%min(admittance)
-%dlmwrite('../backup/admittance_spectrum',[f admittance],' ');
 end
 %------------------------------------
 if LA_flag

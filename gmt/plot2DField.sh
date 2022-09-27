@@ -103,8 +103,8 @@ gmt grdvector $xgrd $zgrd -Ix1 -Q0.1i+eAl+n0.25i+h0.1 -W1p,gray -S20i -N
 fi
 
 if true; then
-awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger | gmt plot -Ss0.005i -Gred   -N
-awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\negative_finger | gmt plot -Ss0.005i -Ggreen -N
+awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger_contact_interface | gmt plot -Ss0.005i -Gred   -N
+awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\negative_finger_contact_interface | gmt plot -Ss0.005i -Ggreen -N
 fi
 
 gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$unit"
@@ -122,15 +122,15 @@ gmt subplot set 0,0
 gmt grdimage $xgrd -Bwesn -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ztick+l"$zlabel ($zscale$zunit)"
 
 if true; then
-awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger | gmt plot -Ss0.005i -Gred   -N
-awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\negative_finger | gmt plot -Ss0.005i -Ggreen -N
+awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger_contact_interface | gmt plot -Ss0.005i -Gred   -N
+awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\negative_finger_contact_interface | gmt plot -Ss0.005i -Ggreen -N
 fi
 gmt subplot set 1,0 
 gmt grdimage $zgrd -BWeSn -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ztick+l"$zlabel ($zscale$zunit)"
 
 if true; then
-awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger | gmt plot -Ss0.005i -Gred   -N
-awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\negative_finger | gmt plot -Ss0.005i -Ggreen -N
+awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\positive_finger_contact_interface | gmt plot -Ss0.005i -Gred   -N
+awk  -v xscale="$xscale" -v zscale="$zscale" '{print $1/xscale, $2/zscale}' $backupFolder\negative_finger_contact_interface | gmt plot -Ss0.005i -Ggreen -N
 fi
 
 gmt colorbar -Dx$domain -Bxa1f0.5 -By+l"$scale$unit"

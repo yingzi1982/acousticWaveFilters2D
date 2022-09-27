@@ -62,7 +62,7 @@ fi
 xtick2=10f5
 heightRatio2=0
 
-if false; then
+if true; then
 traceImage=LA_trace_image
 traceImage_x=$traceImage\_x
 traceImage_z=$traceImage\_z
@@ -99,29 +99,16 @@ if false; then
 ./plotSpectrogram.sh
 fi
 #--------------------------------------------------
-if true; then
+if false; then
+./plot1DSignal2.sh conductance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Conductance 1E0 "" "-0.2 1.2" 1f0.5
+./plot1DSignal2.sh susceptance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Susceptance 1E0 "" "-1.2 1.2" 1f0.5
+fi
+
+if false; then
 #./plot1DSignal.sh sourceFrequencySpetrum 1 Freq 1E9 Hz "0 5" 5f2.5 Amp 1E-2 "V/Hz" "0 3" 1f0.5
 #./plot1DSignal.sh  charge 10 Time 1E-9 s "0 20" 10f5 Charge 2E-10 "C" "-1 1" 1f0.5
 #./plot1DSignal.sh current 10 Time 1E-9 s "0 20" 10f5 Current  1E "A" "-1 1" 0.5f0.25
 #./plot1DSignal.sh sourceTimeFunction 10 Time 1E-8 s "0 10" 4f2 A  1 "A" "-1 1" 1f0.5
-#./plot1DSignal.sh charge 10 Time 1E-8 s "0 15" 5f2.5 Charge  20E-11 "C" "-5 5" 1f.5
-./plot1DSignal2.sh conductance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Conductance 1E0 "" "-0.2 1.2" 1f0.5
-./plot1DSignal2.sh susceptance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Susceptance 1E0 "" "-1.2 1.2" 1f0.5
-exit
+./plot1DSignal.sh charge 10 Time 1E-8 s "0 15" 5f2.5 Charge  20E-11 "C" "-5 5" 1f.5
 
-admittance_file=../backup/admittance
-admittance_real_file=../backup/admittance_real
-admittance_imag_file=../backup/admittance_imag
-cat $admittance_file | awk  '{print $1,$3}' > $admittance_real_file
-cat $admittance_file | awk  '{print $1,$4}' > $admittance_imag_file
-./plot1DSignal.sh admittance_real 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Amp 20E-1 "" "-2 2" ''
-./plot1DSignal.sh admittance_imag 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Amp 20E-1 "" "-2 2" ''
-rm -f $admittance_real_file  $admittance_imag_file
-exit
-#./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0 3" 1f0.5 Amp 1E0 "" "-50 0" 25f12.5
-#./plot1DSignal.sh admittance_spectrum 1 Freq 1E9 Hz "0.1 2.9" 1f0.5 Amp 1E0 "" "-30 0" 10f5
-
-#./plot1DSignal.sh admittance 1 Freq 1E9 Hz "0.7 1.0" .1f0.05 Amp 1E1 "" "-.8 .8" .4f.2
-#./plot1DSignal.sh current 10 Time 1E-8 s "0 10" 4f2 A  .1 "A" "-1 1" 1f0.5
-#./plot1DSignal.sh voltage 10 Time 1E-8 s "0 10" 4f2 A  .1 "A" "-1 1" 1f0.5
 fi

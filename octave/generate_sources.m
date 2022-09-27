@@ -109,8 +109,8 @@ if strcmp ('.true.', strtrim(absorbleft))
 xmin = xmin + dx*(1+NELEM_PML_THICKNESS);
 end
 
-amplitude_selection = force_rho/max(force_rho) >= .9;
-%amplitude_selection = force_rho/max(force_rho) >= .1;
+%amplitude_selection = force_rho/max(force_rho) >= .9;
+amplitude_selection = force_rho/max(force_rho) >= .1;
 %amplitude_selection = force_rho/max(force_rho) >= .0;
 position_selection = force_x >= xmin & force_x <= xmax & force_z >= zmin;
 selection_index = find(amplitude_selection & position_selection);
@@ -124,12 +124,12 @@ zs = force_z(selection_index);
 anglesource = rad2deg(force_theta(selection_index) + pi/2);
 factor = force_rho(selection_index);
 
-useCrossedFieldModel='.true.';
+useCrossedFieldModel='.false.';
 if strcmp(useCrossedFieldModel,'.true.')
   positive_gap_center=dlmread('../backup/positive_gap_center','');
   negative_gap_center=dlmread('../backup/negative_gap_center','');
-  positive_anglesource=180*ones(rows(positive_gap_center),1);
-  negative_anglesource=0*ones(rows(negative_gap_center),1);
+  positive_anglesource=0*ones(rows(positive_gap_center),1);
+  negative_anglesource=180*ones(rows(negative_gap_center),1);
   xs=[positive_gap_center(:,1);negative_gap_center(:,1)];
   zs=[positive_gap_center(:,2);negative_gap_center(:,2)];
   anglesource=[positive_anglesource;negative_anglesource];

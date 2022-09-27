@@ -73,10 +73,10 @@ end
 
 %------------
 
-NF_flag=1;
-PF_flag=1;
-LA_flag = 0;
-SA_flag = 0;
+NF_flag=0;
+PF_flag=0;
+LA_flag = 1;
+SA_flag = 1;
 
 LA_resample_rate = 1;
 SA_resample_rate = 2;
@@ -165,6 +165,15 @@ elevation_station = zeros(size(x_station));
 burial_station = zeros(size(x_station));
 
 stationNumber = length(x_station);
+fileID = fopen(['../backup/STATIONS_' networkName],'w');
+for nSTATIONS = 1:stationNumber
+  stationName = ['S' int2str(nSTATIONS)];
+    fprintf(fileID,'%s  %s  %g  %g  %g  %g\n',stationName,networkName,x_station(nSTATIONS),z_station(nSTATIONS),elevation_station(nSTATIONS),burial_station(nSTATIONS));
+end
+fclose(fileID);
+
+z_station = z_station - dz;
+networkName = 'LA2';
 fileID = fopen(['../backup/STATIONS_' networkName],'w');
 for nSTATIONS = 1:stationNumber
   stationName = ['S' int2str(nSTATIONS)];
