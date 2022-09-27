@@ -80,7 +80,7 @@ fi
 #--------------------------------------------------
 
 if false; then
-traceImage=LA_electric_displacement_polarization_image
+traceImage=LA_electric_displacement_image
 traceImage_x=$traceImage\_x
 traceImage_z=$traceImage\_z
 traceImageFile=../backup/$traceImage

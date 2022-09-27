@@ -54,6 +54,13 @@ PF_flag = 0;
 LA_flag = 1;
 SA_flag = 0;
 %------------------------------------
+[piezo]=generate_piezomaterial_parameters(filter_dimension);
+dx = piezo.dx;
+dz = piezo.dz;
+piezoelectric_constant = piezo.piezoelectric_constant;
+piezoelectric_constant = piezoelectric_constant([1 3],[1 3 5]);
+dielectric_constant = piezo.dielectric_constant;
+dielectric_constant = dielectric_constant([1 3],[1 3]);
 if PF_flag
 
   PF_index  = find(strcmp("PF",networkName));
@@ -69,13 +76,6 @@ if PF_flag
     error('The vaules for PF and PF2 arrays are not correctly set!');
   end
 
-  [piezo]=generate_piezomaterial_parameters(filter_dimension);
-  dx = piezo.dx;
-  dz = piezo.dz;
-  piezoelectric_constant = piezo.piezoelectric_constant;
-  piezoelectric_constant = piezoelectric_constant([1 3],[1 3 5]);
-  dielectric_constant = piezo.dielectric_constant;
-  dielectric_constant = dielectric_constant([1 3],[1 3]);
 
   PF_electric_incident = dlmread('../backup/electric_positive_finger_contact_interface','');
   PF_electric_incident = PF_electric_incident(:,[3 4]);
@@ -150,25 +150,58 @@ end
 %------------------------------------
 if LA_flag
   LA_index = find(strcmp("LA",networkName));
+  LA2_index = find(strcmp("LA2",networkName));
   LA_stationNumber = length(LA_index);
 
   LA_x = longorUTM(LA_index);
 
   LA_combined_signal_x = [];
   LA_combined_signal_z = [];
+  LA2_combined_signal_x = [];
+  LA2_combined_signal_z = [];
   for nStation = 1:LA_stationNumber
     signal_x = dlmread([signal_folder networkName{LA_index(nStation)} '.' stationName{LA_index(nStation)} band_x],'',startRowNumber,startColumnNumber);
     signal_z = dlmread([signal_folder networkName{LA_index(nStation)} '.' stationName{LA_index(nStation)} band_z],'',startRowNumber,startColumnNumber);
     LA_combined_signal_x = [LA_combined_signal_x signal_x((1:time_resample_rate:end))];
     LA_combined_signal_z = [LA_combined_signal_z signal_z((1:time_resample_rate:end))];
+
+    signal2_x = dlmread([signal_folder networkName{LA2_index(nStation)} '.' stationName{LA2_index(nStation)} band_x],'',startRowNumber,startColumnNumber);
+    signal2_z = dlmread([signal_folder networkName{LA2_index(nStation)} '.' stationName{LA2_index(nStation)} band_z],'',startRowNumber,startColumnNumber);
+    LA2_combined_signal_x = [LA2_combined_signal_x signal2_x((1:time_resample_rate:end))];
+    LA2_combined_signal_z = [LA2_combined_signal_z signal2_z((1:time_resample_rate:end))];
   end
 
   LA_combined_signal_together_x = [t LA_combined_signal_x];
   LA_combined_signal_together_z = [t LA_combined_signal_z];
   [LA_trace_image_x]=trace2image(LA_combined_signal_together_x,time_resampled_point_number,LA_x);
   [LA_trace_image_z]=trace2image(LA_combined_signal_together_z,time_resampled_point_number,LA_x);
-
   dlmwrite('../backup/LA_trace_image',[LA_trace_image_x LA_trace_image_z(:,end)],' ');
+
+  combined_signal_x = cat(3,LA2_combined_signal_x',LA_combined_signal_x');
+  combined_signal_x = permute(combined_signal_x,[1 3 2]);
+
+  combined_signal_z = cat(3,LA2_combined_signal_z',LA_combined_signal_z');
+  combined_signal_z = permute(combined_signal_z,[1 3 2]);
+
+  [combined_signal_x_partialx, combined_signal_x_partialz, combined_signal_x_partialt] = gradient(combined_signal_x,dx,dz,dt);
+  [combined_signal_z_partialx, combined_signal_z_partialz, combined_signal_z_partialt] = gradient(combined_signal_z,dx,dz,dt);
+
+  strain1 = combined_signal_x_partialx;
+  strain2 = combined_signal_z_partialz;
+  strain3 = combined_signal_x_partialz + combined_signal_z_partialx;
+
+  LA_strain1 = transpose(squeeze(strain1(:,end,:)));
+  LA_strain2 = transpose(squeeze(strain2(:,end,:)));
+  LA_strain3 = transpose(squeeze(strain3(:,end,:)));
+
+  LA_electric_displacement_x = piezoelectric_constant(1,1)*LA_strain1 + piezoelectric_constant(1,2)*LA_strain2 + piezoelectric_constant(1,3)*LA_strain3;
+  LA_electric_displacement_z = piezoelectric_constant(2,1)*LA_strain1 + piezoelectric_constant(2,2)*LA_strain2 + piezoelectric_constant(2,3)*LA_strain3;
+
+  LA_electric_displacement_together_x = [t LA_electric_displacement_x];
+  LA_electric_displacement_together_z = [t LA_electric_displacement_z];
+  [LA_electric_displacement_image_x]=trace2image(LA_electric_displacement_together_x,time_resampled_point_number,LA_x);
+  [LA_electric_displacement_image_z]=trace2image(LA_electric_displacement_together_z,time_resampled_point_number,LA_x);
+  dlmwrite('../backup/LA_electric_displacement_image',[LA_electric_displacement_image_x LA_electric_displacement_image_z(:,end)],' ');
 end
 %------------------------------------
 if SA_flag
