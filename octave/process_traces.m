@@ -35,7 +35,7 @@ band_y='.BXY.semd';
 band_z='.BXZ.semd';
 
 time_resample_rate=1;
-time_resampled_point_number = 500;
+time_resampled_point_number = 2000;
 
 sourceTimeFunction = dlmread(['../backup/sourceTimeFunction'],'');
 sourceTimeFunction = sourceTimeFunction(1:time_resample_rate:end,:);
@@ -51,8 +51,8 @@ switch filter_dimension
 case '2D'
 
 PF_flag = 0;
-LA_flag = 0;
-SA_flag = 1;
+LA_flag = 1;
+SA_flag = 0;
 %------------------------------------
 [piezo]=generate_piezomaterial_parameters(filter_dimension);
 dx = piezo.dx;
