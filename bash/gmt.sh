@@ -21,7 +21,7 @@ dx2=`echo $dx | awk '{print $1*2}'`
 dz2=`echo $dz | awk '{print $1*2}'`
 dt=2.0e-10
 xtick=10f5
-ztick=10f5
+ztick=5f2.5
 #heightRatio=0.28
 heightRatio=0
 #--------------------------------------------------
@@ -29,7 +29,7 @@ if false; then
 ./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 40" 2f1 Amp. 1E0 "" "-1 1" 1f0.5
 fi
 #--------------------------------------------------
-if false; then
+if true; then
 ./plot2DField.sh potential S   '-CGMT_seis.cpt -Iz'  1E0  V        $heightRatio $dx X 1E-6 m $xtick $dz Z 1E-6 m $ztick
 #./plot2DField.sh electric  V1  '-CGMT_hot.cpt -Iz'   1E6  V/m      $heightRatio $dx X 1E-6 m $xtick $dz Z 1E-6 m $ztick
 ./plot2DField.sh electric  V2  '-CGMT_seis.cpt -Iz'  1E6  V/m      $heightRatio $dx X 1E-6 m $xtick $dz Z 1E-6 m $ztick
@@ -38,7 +38,7 @@ if false; then
 fi
 #--------------------------------------------------
 if true; then
-for i in $(seq 1 40)
+for i in $(seq 1 35)
 do
 snapshot=snapshot_$i
 snapshot_file=../backup/$snapshot
@@ -56,11 +56,10 @@ snapshot_file_list=`ls -v snapshot_*_V2.pdf`
 gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=snapshots.pdf $snapshot_file_list
 rm -f snapshot_*_V2.pdf
 module unload PDC ghostscript PrgEnv-gnu
-
 fi
-exit
 #--------------------------------------------------
 xtick2=10f5
+ztick2=10f5
 heightRatio2=0
 
 if true; then
@@ -73,8 +72,8 @@ traceImage_zFile=../backup/$traceImage_z
 tmax=4.0e-8
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$3}' > $traceImage_xFile
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$4}' > $traceImage_zFile
-./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 2E-11 m $heightRatio2 $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ztick
-./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 2E-11 m $heightRatio2 $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ztick
+./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 1E-11 m $heightRatio2 $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ztick2
+./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 1E-11 m $heightRatio2 $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ztick2
 rm $traceImage_xFile
 rm $traceImage_zFile
 fi
