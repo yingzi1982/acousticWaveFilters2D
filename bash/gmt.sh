@@ -58,9 +58,8 @@ rm -f snapshot_*_V2.pdf
 module unload PDC ghostscript PrgEnv-gnu
 fi
 #--------------------------------------------------
-xtick2=10f5
-ztick2=5f2.5
-heightRatio2=1
+ztick=5f2.5
+heightRatio=0.8
 
 if true; then
 traceImage=LA_trace_image
@@ -72,8 +71,8 @@ traceImage_zFile=../backup/$traceImage_z
 tmax=1.0e-8
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$3}' > $traceImage_xFile
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$4}' > $traceImage_zFile
-./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 1E-11 m $heightRatio2 $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ztick2
-./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 1E-11 m $heightRatio2 $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ztick2
+./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 1E-11 m $heightRatio $dx X 1E-6 m $xtick $dt Time 1E-9 s $ztick
+./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 1E-11 m $heightRatio $dx X 1E-6 m $xtick $dt Time 1E-9 s $ztick
 rm $traceImage_xFile
 rm $traceImage_zFile
 fi
@@ -88,8 +87,8 @@ traceImage_xFile=../backup/$traceImage_x
 traceImage_zFile=../backup/$traceImage_z
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$3}' > $traceImage_xFile
 cat $traceImageFile | awk -v tmax="$tmax" '$2 <=tmax {print $1,$2,$4}' > $traceImage_zFile
-./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 5E-5 $electric_displacement_unit $heightRatio2 $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ztick
-./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 5E-5 $electric_displacement_unit $heightRatio2 $dx X 1E-6 m $xtick2 $dt Time 1E-9 s $ztick
+./plot2DField.sh $traceImage_x S '-CGMT_gray.cpt -Iz' 5E-5 $electric_displacement_unit $heightRatio $dx X 1E-6 m $xtick $dt Time 1E-9 s $ztick
+./plot2DField.sh $traceImage_z S '-CGMT_gray.cpt -Iz' 5E-5 $electric_displacement_unit $heightRatio $dx X 1E-6 m $xtick $dt Time 1E-9 s $ztick
 rm $traceImage_xFile
 rm $traceImage_zFile
 fi
