@@ -37,7 +37,7 @@ if false; then
 ./plot2DField.sh bodyforce V2  '-CGMT_seis.cpt -Iz'  1E13 $bodyforce_unit $heightRatio $dx X 1E-6 m $xtick $dz Z 1E-6 m $ztick
 fi
 #--------------------------------------------------
-if true; then
+if false; then
 for i in $(seq 1 40)
 do
 snapshot=snapshot_$i
