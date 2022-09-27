@@ -20,7 +20,7 @@ dz=`grep dz ../backup/meshInformation | cut -d = -f 2`
 dx2=`echo $dx | awk '{print $1*2}'`
 dz2=`echo $dz | awk '{print $1*2}'`
 dt=2.0e-10
-xtick=50f25
+xtick=10f5
 ztick=10f5
 #heightRatio=0.28
 heightRatio=0
@@ -38,7 +38,7 @@ if false; then
 fi
 #--------------------------------------------------
 if true; then
-for i in $(seq 1 35)
+for i in $(seq 1 40)
 do
 snapshot=snapshot_$i
 snapshot_file=../backup/$snapshot
