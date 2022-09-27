@@ -29,14 +29,13 @@ if false; then
 ./plot1DSignal.sh sourceTimeFunction 10 Time 1E-9 s "0 40" 2f1 Amp. 1E0 "" "-1 1" 1f0.5
 fi
 #--------------------------------------------------
-if true; then
+if false; then
 ./plot2DField.sh potential S   '-CGMT_seis.cpt -Iz'  1E0  V        $heightRatio $dx X 1E-6 m $xtick $dz Z 1E-6 m $ztick
 #./plot2DField.sh electric  V1  '-CGMT_hot.cpt -Iz'   1E6  V/m      $heightRatio $dx X 1E-6 m $xtick $dz Z 1E-6 m $ztick
 ./plot2DField.sh electric  V2  '-CGMT_seis.cpt -Iz'  1E6  V/m      $heightRatio $dx X 1E-6 m $xtick $dz Z 1E-6 m $ztick
 #./plot2DField.sh bodyforce V1  '-CGMT_hot.cpt -Iz'   1E13 $bodyforce_unit $heightRatio $dx X 1E-6 m $xtick $dz Z 1E-6 m $ztick
 ./plot2DField.sh bodyforce V2  '-CGMT_seis.cpt -Iz'  1E13 $bodyforce_unit $heightRatio $dx X 1E-6 m $xtick $dz Z 1E-6 m $ztick
 fi
-exit
 #--------------------------------------------------
 if true; then
 for i in $(seq 1 40)
@@ -59,6 +58,7 @@ rm -f snapshot_*_V2.pdf
 module unload PDC ghostscript PrgEnv-gnu
 
 fi
+exit
 #--------------------------------------------------
 xtick2=10f5
 heightRatio2=0
