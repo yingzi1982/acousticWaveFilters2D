@@ -74,9 +74,9 @@ end
 %------------
 
 NF_flag=0;
-PF_flag=0;
-LA_flag = 1;
-SA_flag = 1;
+PF_flag=1;
+LA_flag = 0;
+SA_flag = 0;
 
 LA_resample_rate = 1;
 SA_resample_rate = 2;
