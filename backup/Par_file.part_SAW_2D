@@ -21,7 +21,7 @@ NPROC                           = 200
 
 # time step parameters
 # total number of time steps
-NSTEP                           = 40001
+NSTEP                           = 150001
 
 # duration of a time step (see section "How to choose the time step" of the manual for how to do this)
 DT                              = 5e-13
