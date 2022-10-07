@@ -41,3 +41,11 @@ susceptance = [f susceptance./max(abs(susceptance))];
 
 dlmwrite('../backup/conductance',conductance,' ');
 dlmwrite('../backup/susceptance',susceptance,' ');
+
+admittance_angle = [f rad2deg(angle(admittance))];
+
+admittance_abs = [f 20*log10(abs(admittance)./max(abs(admittance)))];
+%min(admittance_abs(:,2:end))
+%max(admittance_abs(:,2:end))
+dlmwrite('../backup/admittance_abs',admittance_abs,' ');
+dlmwrite('../backup/admittance_angle',admittance_angle,' ');
