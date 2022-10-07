@@ -102,7 +102,7 @@ if true; then
 #./plot1DSignal2.sh conductance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Conductance 1E0 "" "-0.2 1.2" 1f0.5
 #./plot1DSignal2.sh susceptance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Susceptance 1E0 "" "-1.2 1.2" 1f0.5
 
-./plot1DSignal2.sh admittance_angle 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Angle 1E0 "" "-90 90" 45f22.5
+./plot1DSignal2.sh admittance_angle 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Angle 1E0 "" "-95 95" 45f22.5
 #./plot1DSignal2.sh susceptance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Susceptance 1E0 "" "-1.2 1.2" 1f0.5
 fi
 
