@@ -38,11 +38,11 @@ x=linspace(xmin,xmax,xNumber);
 
 dz = dx;
 
-%total_finger_and_grating_interfaces = dlmread('../backup/total_finger_and_grating_interfaces','');
-%total_finger_and_grating_interfaces = transpose(total_finger_and_grating_interfaces);
+total_finger_and_grating_interfaces = dlmread('../backup/total_finger_and_grating_interfaces','');
+total_finger_and_grating_interfaces = transpose(total_finger_and_grating_interfaces);
 
-%zmax = max(total_finger_and_grating_interfaces(3,:));
-zmax = 0;
+zmax = max(total_finger_and_grating_interfaces(3,:));
+%zmax = 0;
 zmin = -10.0E-6;
 
 nz = round((zmax - zmin)/dz);
@@ -81,7 +81,7 @@ interfaces = [zmin zmax];
 layers = [nz];
 
 subInterfaces = repmat(transpose(interfaces),[1,xNumber]);
-%subInterfaces(end,:) = interp1(total_finger_and_grating_interfaces(1,:),total_finger_and_grating_interfaces(3,:),x);
+subInterfaces(end,:) = interp1(total_finger_and_grating_interfaces(1,:),total_finger_and_grating_interfaces(3,:),x);
 
 fileID = fopen(['../DATA/interfaces.dat'],'w');
 fprintf(fileID, '%i\n', length(interfaces))
