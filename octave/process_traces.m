@@ -50,8 +50,8 @@ case 'SAW'
 switch filter_dimension
 case '2D'
 
-PF_flag = 0;
-LA_flag = 1;
+PF_flag = 1;
+LA_flag = 0;
 SA_flag = 0;
 %------------------------------------
 [piezo]=generate_piezomaterial_parameters(filter_dimension);

@@ -98,15 +98,15 @@ if false; then
 ./plotSpectrogram.sh
 fi
 #--------------------------------------------------
-if true; then
-#./plot1DSignal2.sh conductance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Conductance 1E0 "" "-0.2 1.2" 1f0.5
-#./plot1DSignal2.sh susceptance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Susceptance 1E0 "" "-1.2 1.2" 1f0.5
+if false; then
+./plot1DSignal2.sh conductance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Conductance 1E0 "" "-0.2 1.2" 1f0.5
+./plot1DSignal2.sh susceptance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Susceptance 1E0 "" "-1.2 1.2" 1f0.5
 
-./plot1DSignal2.sh admittance_angle 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 "Angle (deg)" 1E0 "" "-95 95" 45f22.5
-./plot1DSignal2.sh admittance_abs 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 "Magnitude (dB)" 1E0 "" "-45 0" 20f10
+#./plot1DSignal2.sh admittance_angle 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 "Angle (deg)" 1E0 "" "-95 95" 45f22.5
+#./plot1DSignal2.sh admittance_abs 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 "Magnitude (dB)" 1E0 "" "-45 0" 20f10
 fi
 
-if false; then
+if true; then
 #./plot1DSignal.sh sourceFrequencySpetrum 1 Freq 1E9 Hz "0 5" 5f2.5 Amp 1E-2 "V/Hz" "0 3" 1f0.5
 #./plot1DSignal.sh  charge 10 Time 1E-9 s "0 20" 10f5 Charge 2E-10 "C" "-1 1" 1f0.5
 #./plot1DSignal.sh current 10 Time 1E-9 s "0 20" 10f5 Current  1E "A" "-1 1" 0.5f0.25
