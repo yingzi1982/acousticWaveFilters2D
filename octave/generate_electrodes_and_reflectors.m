@@ -37,9 +37,9 @@ right_finger_grating_gap = 0.5*unit_length;
 left_finger_grating_gap = 0.5*unit_length;
 
 %finger_pair_number = 3;
-%finger_pair_number = 99;
+finger_pair_number = 99;
 %finger_pair_number = 49;
-finger_pair_number = 9;
+%finger_pair_number = 9;
 grating_pair_number = 1;
 switch filter_type
 case 'SAW'
