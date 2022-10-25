@@ -37,9 +37,9 @@ right_finger_grating_gap = 0.5*unit_length;
 left_finger_grating_gap = 0.5*unit_length;
 
 %finger_pair_number = 3;
-finger_pair_number = 99;
+%finger_pair_number = 99;
 %finger_pair_number = 49;
-%finger_pair_number = 9;
+finger_pair_number = 9;
 grating_pair_number = 1;
 switch filter_type
 case 'SAW'
@@ -50,7 +50,7 @@ case 'SAW'
   %finger_z = [finger_z_min:dz:finger_z_max];
   dlmwrite('../backup/finger_pair_number',finger_pair_number,' ');
   finger_z_min = 0.0*unit_length;
-  finger_z_max = 0.4*unit_length;
+  finger_z_max = 0.2*unit_length;
   finger_width = 1*unit_length;
   dlmwrite('../backup/finger_width',finger_width,' ');
   finger_gap = 1*unit_length;
@@ -67,9 +67,9 @@ case 'SAW'
   single_positive_gap_center = finger_width + finger_width/2;
   single_negative_gap_center = -finger_width + finger_width/2;
 
-  %finger_element_shape = transpose(hanning(single_positive_finger_length)/max(hanning(single_positive_finger_length)));
+  finger_element_shape = transpose(hanning(single_positive_finger_length)/max(hanning(single_positive_finger_length)));
   %finger_element_shape = zeros(1,single_positive_finger_length);
-  finger_element_shape = ones(1,single_positive_finger_length);
+  %finger_element_shape = ones(1,single_positive_finger_length);
 
   positive_finger_x = [];
   negative_finger_x = [];
@@ -219,6 +219,7 @@ end
 dlmwrite('../backup/positive_finger_contact_interface',positive_finger_contact_interface,' ');
 dlmwrite('../backup/negative_finger_contact_interface',negative_finger_contact_interface,' ');
 
+delete('../backup/total_finger_and_grating_interfaces')
 dlmwrite('../backup/total_finger_interfaces',total_finger_interfaces,' ');
 dlmwrite('../backup/total_finger_and_grating_interfaces',total_finger_and_grating_interfaces,' ');
 
