@@ -83,7 +83,7 @@ layers = [nz];
 subInterfaces = repmat(transpose(interfaces),[1,xNumber]);
 subInterfaces(end,:) = interp1(total_finger_and_grating_interfaces(1,:),total_finger_and_grating_interfaces(3,:),x);
 
-fileID = fopen(['../DATA/interfaces.dat'],'w');
+fileID = fopen('../DATA/interfaces.dat','wt');
 fprintf(fileID, '%i\n', length(interfaces))
 fprintf(fileID, '%s\n', '#')
 for ninterface = [1:length(interfaces)]
