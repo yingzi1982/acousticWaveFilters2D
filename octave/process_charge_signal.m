@@ -7,7 +7,8 @@ clc
 charge9 = dlmread('../backup/charge_crossFieldModel/charge_9_pairs','');
 charge49 = dlmread('../backup/charge_crossFieldModel/charge_49_pairs','');
 charge99 = dlmread('../backup/charge_crossFieldModel/charge_99_pairs','');
-charge= [charge9 charge49(:,2) charge99(:,2)];
+%charge= [charge9 charge49(:,2) charge99(:,2)];
+charge= [charge99];
 %voltage = dlmread(['../backup/sourceTimeFunction'],'');
 voltage = dlmread(['../backup/charge_crossFieldModel/sourceTimeFunction'],'');
 

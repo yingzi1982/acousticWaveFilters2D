@@ -17,11 +17,11 @@ NOISE_TOMOGRAPHY                = 0
 SAVE_FORWARD                    = .false.
 
 # parameters concerning partitioning
-NPROC                           = 250
+NPROC                           = 500
 
 # time step parameters
 # total number of time steps
-NSTEP                           = 500001
+NSTEP                           = 200001
 
 # duration of a time step (see section "How to choose the time step" of the manual for how to do this)
 DT                              = 1e-12
@@ -208,7 +208,7 @@ APPROXIMATE_HESS_KL             = .false.
 
 # Perfectly Matched Layer (PML) boundaries
 # absorbing boundary active or not
-PML_BOUNDARY_CONDITIONS         = .true.
+PML_BOUNDARY_CONDITIONS         = .false.
 NELEM_PML_THICKNESS             = 3
 ROTATE_PML_ACTIVATE             = .false.
 ROTATE_PML_ANGLE                = 30.
@@ -223,7 +223,7 @@ damping_change_factor_elastic   = 1.0d0
 PML_PARAMETER_ADJUSTMENT        = .false.
 
 # Stacey ABC
-STACEY_ABSORBING_CONDITIONS     = .false.
+STACEY_ABSORBING_CONDITIONS     = .true.
 
 # periodic boundaries
 ADD_PERIODIC_CONDITIONS         = .false.
@@ -269,9 +269,9 @@ tangential_detection_curve_file = ./DATA/courbe_eros_nodes  # file containing th
 interfacesfile                  = ./interfaces.dat
 
 # geometry of the model (origin lower-left corner = 0,0) and mesh description
-xmin                            = -300.0E-6
-xmax                            =  300.0E-6
-nx                              = 3000
+xmin                            = -600.0E-6
+xmax                            =  600.0E-6
+nx                              = 6000
 
 # absorbing boundary parameters (see absorbing_conditions above)
 absorbbottom                    = .true.
