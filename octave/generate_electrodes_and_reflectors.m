@@ -63,9 +63,10 @@ case 'SAW'
   single_positive_gap_center = finger_width + finger_width/2;
   single_negative_gap_center = -finger_width + finger_width/2;
 
-  finger_element_shape = transpose(hanning(single_positive_finger_length)/max(hanning(single_positive_finger_length)));
+  %finger_element_shape = transpose(hanning(single_positive_finger_length)/max(hanning(single_positive_finger_length)));
   %finger_element_shape = zeros(1,single_positive_finger_length);
-  %finger_element_shape = ones(1,single_positive_finger_length);
+  finger_element_shape = ones(1,single_positive_finger_length);
+  finger_element_shape([1 end]) = 0.5;
 
   positive_finger_x = [];
   negative_finger_x = [];
