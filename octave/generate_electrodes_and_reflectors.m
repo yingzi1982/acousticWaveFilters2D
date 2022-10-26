@@ -12,23 +12,20 @@ else
   error('Please input filter type and dimension.');
 end
 
-[piezo]=generate_piezomaterial_parameters(filter_dimension);
+[xminStatus xmin] = system('grep xmin ../backup/Par_file.part | cut -d = -f 2');
+xmin = str2num(xmin);
 
-dx = piezo.dx;
-dy = piezo.dy;
-dz = piezo.dz;
+[xmaxStatus xmax] = system('grep xmax ../backup/Par_file.part | cut -d = -f 2');
+xmax = str2num(xmax);
 
-x = piezo.x;
-y = piezo.y;
-z = piezo.z;
+[nxStatus nx] = system('grep nx ../backup/Par_file.part | cut -d = -f 2');
+nx = str2num(nx);
 
-xmin = piezo.xmin;
-ymin = piezo.ymin;
-zmin = piezo.zmin;
-       
-xmax = piezo.xmax;
-ymax = piezo.ymax;
-zmax = piezo.zmax;
+dx = (xmax - xmin)/nx;
+
+xNumber = nx + 1;
+
+x=linspace(xmin,xmax,xNumber);
 %---------------------------------
 
 unit_length = 1.0E-6;
@@ -37,9 +34,9 @@ right_finger_grating_gap = 0.5*unit_length;
 left_finger_grating_gap = 0.5*unit_length;
 
 %finger_pair_number = 3;
-%finger_pair_number = 99;
+finger_pair_number = 99;
 %finger_pair_number = 49;
-finger_pair_number = 9;
+%finger_pair_number = 9;
 grating_pair_number = 1;
 switch filter_type
 case 'SAW'
@@ -47,7 +44,6 @@ case 'SAW'
   switch filter_dimension
   case '2D'
 
-  %finger_z = [finger_z_min:dz:finger_z_max];
   dlmwrite('../backup/finger_pair_number',finger_pair_number,' ');
   finger_z_min = 0.0*unit_length;
   finger_z_max = 0.2*unit_length;
@@ -219,7 +215,6 @@ end
 dlmwrite('../backup/positive_finger_contact_interface',positive_finger_contact_interface,' ');
 dlmwrite('../backup/negative_finger_contact_interface',negative_finger_contact_interface,' ');
 
-delete('../backup/total_finger_and_grating_interfaces')
 dlmwrite('../backup/total_finger_interfaces',total_finger_interfaces,' ');
 dlmwrite('../backup/total_finger_and_grating_interfaces',total_finger_and_grating_interfaces,' ');
 

@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH -A pdc-test-2022 #snic2022-22-620 #
+#SBATCH -A snic2022-22-620 #pdc-test-2022 #
 #SBATCH -p main #main long shared memory
 #SBATCH -J specfem
 #SBATCH -t 4:00:00
