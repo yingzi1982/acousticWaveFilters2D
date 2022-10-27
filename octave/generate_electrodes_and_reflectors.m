@@ -45,7 +45,8 @@ case 'SAW'
 
   dlmwrite('../backup/finger_pair_number',finger_pair_number,' ');
   finger_z_min = 0.0*unit_length;
-  finger_z_max = 0.2*unit_length;
+  %finger_z_max = 0.2*unit_length;
+  finger_z_max = 0.0*unit_length;
   finger_width = 1*unit_length;
   dlmwrite('../backup/finger_width',finger_width,' ');
   finger_gap = 1*unit_length;
