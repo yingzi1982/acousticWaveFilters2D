@@ -52,7 +52,7 @@ label2='200nm'
 label3='400nm'
 awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $2/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel " -Wthin,red,. -l$label1
 awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $3/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel " -Wthin,blue,- -l$label2
-awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $4/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel " -Wthin,black,. -l$label3
+awk -v xscale="$xscale" -v yscale="$yscale" -v resample_rate="$resample_rate" 'NR%resample_rate==0 {print $1/xscale, $4/yscale}' $originalxy | gmt plot -J$projection -R$region -Bx$xtick+l"$xlabel ($xscale$xunit)" -By$ytick+l"$ylabel " -Wthin,black -l$label3
 #8.2827
 
 #gmt legend -DjTR+o0.5c -F+pthick+ithinner+gwhite #--FONT_ANNOT_PRIMARY=18p,Times-Italic
