@@ -13,11 +13,13 @@ charge200 = dlmread('../backup/charge_crossFieldModel/charge_200nm','');
 charge400 = dlmread('../backup/charge_crossFieldModel/charge_400nm','');
 charge= [charge0 charge200(:,2) charge400(:,2)];
 
-window_length = 201;
+window_length = 1001;
 window = hanning(window_length);
 window = window([ceil(window_length/2):end]);
 window_length = length(window);
-charge(end-window_length+1:end,[2:end]) = charge(end-window_length+1:end,[2:end])./window;
+%whos charge window
+%exit
+charge(end-window_length+1:end,[2:end]) = charge(end-window_length+1:end,[2:end]).*window;
 
 %voltage = dlmread(['../backup/sourceTimeFunction'],'');
 voltage = dlmread(['../backup/charge_crossFieldModel/sourceTimeFunction'],'');
