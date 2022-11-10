@@ -111,6 +111,6 @@ if true; then
 #./plot1DSignal.sh  charge 10 Time 1E-9 s "0 20" 10f5 Charge 2E-10 "C" "-1 1" 1f0.5
 #./plot1DSignal.sh current 10 Time 1E-9 s "0 20" 10f5 Current  1E "A" "-1 1" 0.5f0.25
 #./plot1DSignal.sh sourceTimeFunction 10 Time 1E-8 s "0 10" 4f2 A  1 "A" "-1 1" 1f0.5
-./plot1DSignal.sh charge 10 Time 1E-8 s "0 50" 10f5 Charge  20E-11 "C" "-10 10" 10f5
+./plot1DSignal.sh charge 10 Time 1E-8 s "0 50" 10f5 Charge  20E-11 "C" "-1 1" 10f5
 
 fi
