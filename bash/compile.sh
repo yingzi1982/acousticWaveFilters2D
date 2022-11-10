@@ -1,6 +1,9 @@
 #!/bin/bash
 #module load PrgEnv-cray
 
+echo "copying the modified source code..."
+./modify_source_code.sh
+
 # configure
 echo ">>configuring"
 currentdir=`pwd`
