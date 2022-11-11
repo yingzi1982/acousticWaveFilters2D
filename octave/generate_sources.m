@@ -167,7 +167,8 @@ for nSOURCE = [1:source_number]
   fprintf(fileID, 'zs                 = %g\n', zs(nSOURCE))
   fprintf(fileID, 'source_type        = %i\n', source_type(nSOURCE))
   fprintf(fileID, 'time_function_type = %i\n', time_function_type(nSOURCE))
-  stf_name = [name_of_source_file{nSOURCE} '_' int2str(nSOURCE)];
+  %stf_name = [name_of_source_file{nSOURCE} '_' int2str(nSOURCE)];
+  stf_name = [name_of_source_file{nSOURCE}];
   fprintf(fileID, 'name_of_source_file= %s\n', stf_name)
   fprintf(fileID, 'burst_band_width   = %f\n', burst_band_width(nSOURCE))
   fprintf(fileID, 'f0                 = %g\n', f0(nSOURCE))
@@ -181,7 +182,10 @@ for nSOURCE = [1:source_number]
   fprintf(fileID, 'vz                 = %f\n', vz(nSOURCE))
   fprintf(fileID, '#\n')
 
-  dlmwrite(['../' stf_name],[t s],' ');
+  %dlmwrite(['../' stf_name],[t s],' ');
+  if nSOURCE==1
+    dlmwrite(['../' stf_name],[t s],' ');
+  end
 
   %stf_fileID = fopen(stf_name,'w');
   %for i = 1:nt
