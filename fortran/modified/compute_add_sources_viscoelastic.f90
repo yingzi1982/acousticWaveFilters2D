@@ -35,7 +35,7 @@
 
   subroutine compute_add_sources_viscoelastic(accel_elastic,it,i_stage)
 
-  use constants, only: CUSTOM_REAL,NGLLX,NGLLZ,NDIM,myrank
+  use constants, only: CUSTOM_REAL,NGLLX,NGLLZ,NDIM,myrank,IMAIN
 
   use specfem_par, only: P_SV,ispec_is_elastic,nglob_elastic, &
                          NSOURCES,source_time_function, &
@@ -64,8 +64,9 @@
 
         ! source time function
 	!modification: only use the first source time function.
-        stf_used = source_time_function(1,it,i_stage)
         !stf_used = source_time_function(i_source,it,i_stage)
+        stf_used = source_time_function(1,it,i_stage)
+        write(IMAIN,*) stf_used
 
         ! adds source term
         ! note: we use sourcearrays for both collocated forces and moment tensors
