@@ -1,9 +1,9 @@
 #!/bin/bash
 #module load PrgEnv-cray
 
-echo "copying the source code..."
-#./modify_source_code.sh original
-./modify_source_code.sh modified
+code_type=modified
+echo "copying the $code_type source code..."
+./modify_source_code.sh $code_type
 
 # configure
 echo ">>configuring"
