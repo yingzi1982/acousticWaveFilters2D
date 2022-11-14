@@ -210,7 +210,9 @@
         t_used = timeval - t0 - tshift_src(i_source)
 
         ! only process/partition containing source must set STF
-        if (myrank == islice_selected_source(i_source) .or. SOURCE_IS_MOVING) then
+        !modification: only use the first source time function.
+        !if (myrank == islice_selected_source(i_source) .or. SOURCE_IS_MOVING) then
+        if (.true.) then
 
           ! determines source_time_function value for different source types
           select case (time_function_type(i_source))
