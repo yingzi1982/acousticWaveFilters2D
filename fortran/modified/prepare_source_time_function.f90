@@ -116,7 +116,6 @@
     return
   else
     !modification: only use the first source time function.
-    write(IMAIN,*) '  allocating memory.. '
     allocate(source_time_function(1,NSTEP,stage_time_scheme),stat=ier)
     !allocate(source_time_function(NSOURCES,NSTEP,stage_time_scheme),stat=ier)
     if (ier /= 0) call exit_MPI(myrank,'Error allocating array source_time_function')
