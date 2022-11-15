@@ -124,19 +124,19 @@ zs = force_z(selection_index);
 anglesource = rad2deg(force_theta(selection_index) + pi/2);
 factor = force_rho(selection_index);
 
-%useCrossedFieldModel='.false.';
-%if strcmp(useCrossedFieldModel,'.true.')
-  %positive_gap_center=dlmread('../backup/positive_gap_center','');
-  %negative_gap_center=dlmread('../backup/negative_gap_center','');
-  %positive_anglesource=0*ones(rows(positive_gap_center),1);
-  %negative_anglesource=180*ones(rows(negative_gap_center),1);
-  %xs=[positive_gap_center(:,1);negative_gap_center(:,1)];
-  %zs=[positive_gap_center(:,2);negative_gap_center(:,2)];
-  %anglesource=[positive_anglesource;negative_anglesource];
-  %factor = 1*ones(size(xs));
-  %source_number = length(xs);
-  %source_size = size(xs);
-%end
+useCrossedFieldModel='.true.';
+if strcmp(useCrossedFieldModel,'.true.')
+  positive_gap_center=dlmread('../backup/positive_gap_center','');
+  negative_gap_center=dlmread('../backup/negative_gap_center','');
+  positive_anglesource=0*ones(rows(positive_gap_center),1);
+  negative_anglesource=180*ones(rows(negative_gap_center),1);
+  xs=[positive_gap_center(:,1);negative_gap_center(:,1)];
+  zs=[positive_gap_center(:,2);negative_gap_center(:,2)];
+  anglesource=[positive_anglesource;negative_anglesource];
+  factor = 1*ones(size(xs));
+  source_number = length(xs);
+  source_size = size(xs);
+end
 
 disp(['There are ', int2str(source_number), ' sources.'])
 
