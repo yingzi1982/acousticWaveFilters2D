@@ -393,8 +393,10 @@
             ! note: the amplification factor will amplify the external source time function.
             !       in case this is not desired, one just needs to set the amplification factor to 1 in DATA/SOURCE:
             !         factor  = 1.0
-            coeff = factor(i_source)
-            source_time_function(i_source,it,i_stage) = source_time_function(i_source,it,i_stage) * coeff
+            !modification: only use the first source time function.
+            !coeff = factor(i_source)
+            !source_time_function(i_source,it,i_stage) = source_time_function(i_source,it,i_stage) * coeff
+            source_time_function(i_source,it,i_stage) = source_time_function(i_source,it,i_stage)
 
           case (9)
             ! burst type

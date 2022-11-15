@@ -37,10 +37,12 @@
 
   use constants, only: CUSTOM_REAL,NGLLX,NGLLZ,NDIM,myrank,IMAIN
 
+  !modification: only use the first source time function.
   use specfem_par, only: P_SV,ispec_is_elastic,nglob_elastic, &
                          NSOURCES,source_time_function, &
                          islice_selected_source,ispec_selected_source,sourcearrays, &
-                         ibool
+                         ibool,&
+                         factor
   implicit none
 
   real(kind=CUSTOM_REAL), dimension(NDIM,nglob_elastic) :: accel_elastic
@@ -65,7 +67,7 @@
         ! source time function
 	!modification: only use the first source time function.
         !stf_used = source_time_function(i_source,it,i_stage)
-        stf_used = source_time_function(1,it,i_stage)
+        stf_used = source_time_function(1,it,i_stage) * factor(i_source)
 
         ! adds source term
         ! note: we use sourcearrays for both collocated forces and moment tensors
