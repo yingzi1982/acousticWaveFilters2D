@@ -110,7 +110,7 @@ xmin = xmin + dx*(1+NELEM_PML_THICKNESS);
 end
 
 %amplitude_selection = force_rho/max(force_rho) >= .9;
-amplitude_selection = force_rho/max(force_rho) >= .001;
+amplitude_selection = force_rho/max(force_rho) >= .01;
 %amplitude_selection = force_rho/max(force_rho) >= .0;
 position_selection = force_x >= xmin & force_x <= xmax & force_z >= zmin;
 selection_index = find(amplitude_selection & position_selection);
