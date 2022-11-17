@@ -4,25 +4,30 @@ clear all
 close all
 clc
 
+charge9 = dlmread('../backup/charge_forceModel/charge_9_pairs','');
+charge49 = dlmread('../backup/charge_forceModel/charge_49_pairs','');
+charge99 = dlmread('../backup/charge_forceModel/charge_99_pairs','');
+charge= [charge9 charge49(:,2) charge99(:,2)];
+
 %charge9 = dlmread('../backup/charge_crossFieldModel/charge_9_pairs','');
 %charge49 = dlmread('../backup/charge_crossFieldModel/charge_49_pairs','');
 %charge99 = dlmread('../backup/charge_crossFieldModel/charge_99_pairs','');
 %charge= [charge9 charge49(:,2) charge99(:,2)];
-charge0 = dlmread('../backup/charge_crossFieldModel/charge_0nm','');
-charge200 = dlmread('../backup/charge_crossFieldModel/charge_200nm','');
-charge400 = dlmread('../backup/charge_crossFieldModel/charge_400nm','');
-charge= [charge0 charge200(:,2) charge400(:,2)];
 
-window_length = 1001;
-window = hanning(window_length);
-window = window([ceil(window_length/2):end]);
-window_length = length(window);
+%charge0 = dlmread('../backup/charge_crossFieldModel/charge_0nm','');
+%charge200 = dlmread('../backup/charge_crossFieldModel/charge_200nm','');
+%charge400 = dlmread('../backup/charge_crossFieldModel/charge_400nm','');
+%charge= [charge0 charge200(:,2) charge400(:,2)];
+
+%window_length = 1001;
+%window = hanning(window_length);
+%window = window([ceil(window_length/2):end]);
+%window_length = length(window);
 %whos charge window
 %exit
-charge(end-window_length+1:end,[2:end]) = charge(end-window_length+1:end,[2:end]).*window;
+%charge(end-window_length+1:end,[2:end]) = charge(end-window_length+1:end,[2:end]).*window;
 
-%voltage = dlmread(['../backup/sourceTimeFunction'],'');
-voltage = dlmread(['../backup/charge_crossFieldModel/sourceTimeFunction'],'');
+voltage = dlmread(['../backup/sourceTimeFunction'],'');
 
 if rows(charge) != rows(voltage)
   error('the charge and voltage are not equal length!')
