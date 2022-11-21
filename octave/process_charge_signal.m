@@ -23,8 +23,6 @@ charge= [charge9 charge49(:,2) charge99(:,2)];
 %window = hanning(window_length);
 %window = window([ceil(window_length/2):end]);
 %window_length = length(window);
-%whos charge window
-%exit
 %charge(end-window_length+1:end,[2:end]) = charge(end-window_length+1:end,[2:end]).*window;
 
 voltage = dlmread(['../backup/sourceTimeFunction'],'');
@@ -33,10 +31,6 @@ if rows(charge) != rows(voltage)
   error('the charge and voltage are not equal length!')
 end
 t = voltage(:,1);
-%timeIndex =  find(t<=10e-8); 
-%charge = charge(timeIndex,:);  
-%voltage = voltage(timeIndex,:); 
-%whos charge 
 
 voltage_spectrum = trace2spectrum(voltage);
 charge_spectrum = trace2spectrum(charge);
@@ -60,10 +54,10 @@ susceptance = [f susceptance./max(abs(susceptance))];
 dlmwrite('../backup/conductance',conductance,' ');
 dlmwrite('../backup/susceptance',susceptance,' ');
 
-admittance_angle = [f rad2deg(angle(admittance))];
+%admittance_angle = [f rad2deg(angle(admittance))];
 
-admittance_abs = [f 20*log10(abs(admittance)./max(abs(admittance)))];
+%admittance_abs = [f 20*log10(abs(admittance)./max(abs(admittance)))];
 %min(admittance_abs(:,2:end))
 %max(admittance_abs(:,2:end))
-dlmwrite('../backup/admittance_abs',admittance_abs,' ');
-dlmwrite('../backup/admittance_angle',admittance_angle,' ');
+%dlmwrite('../backup/admittance_abs',admittance_abs,' ');
+%dlmwrite('../backup/admittance_angle',admittance_angle,' ');
