@@ -48,8 +48,12 @@ conductance_peak_frequency = f(I)
 [M2,I2] = min(susceptance(:,3));
 susceptance_peak_frequency = f([I1 I2])
 
-conductance = [f conductance./max(abs(conductance))];
-susceptance = [f susceptance./max(abs(susceptance))];
+%conductance = [f conductance./max(abs(conductance))];
+%susceptance = [f susceptance./max(abs(susceptance))];
+round(max(abs(conductance)))
+round(max(abs(susceptance)))
+conductance = [f conductance];
+susceptance = [f susceptance];
 
 dlmwrite('../backup/conductance',conductance,' ');
 dlmwrite('../backup/susceptance',susceptance,' ');
