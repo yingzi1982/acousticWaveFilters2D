@@ -138,13 +138,16 @@ if PF_flag
 
 %PF_charge_total = PF_charge_incident + PF_charge_piezo;
 charge = PF_charge_piezo;
+max(charge)
+current = [gradient(charge,dt)];
+max(current)
+
 charge = [t charge]; 
-%current = [gradient(charge,dt)];
-%current = [t current];
+current = [t current];
 %voltage = voltage;
 
 dlmwrite('../backup/charge',charge,' ');
-%dlmwrite('../backup/current',current,' ');
+dlmwrite('../backup/current',current,' ');
 
 end
 %------------------------------------
