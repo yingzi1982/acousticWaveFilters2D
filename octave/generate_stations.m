@@ -73,7 +73,7 @@ end
 
 %------------
 
-NF_flag=0;
+NF_flag=1;
 PF_flag=1;
 LA_flag = 0;
 SA_flag = 0;

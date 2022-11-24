@@ -121,9 +121,7 @@ source_size = size(selection_index);
 xs = force_x(selection_index);
 zs = force_z(selection_index);
 
-anglesource = rad2deg(force_theta(selection_index));
-%anglesource = rad2deg(force_theta(selection_index) + pi/2);
-%anglesource = rad2deg(force_theta(selection_index) + pi);
+anglesource = rad2deg(force_theta(selection_index) + pi/2);
 factor = force_rho(selection_index);
 
 %useCrossedFieldModel='.false.';
