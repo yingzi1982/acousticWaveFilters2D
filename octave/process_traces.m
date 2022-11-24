@@ -50,6 +50,7 @@ case 'SAW'
 switch filter_dimension
 case '2D'
 
+NF_flag = 1;
 PF_flag = 1;
 LA_flag = 0;
 SA_flag = 0;
@@ -77,7 +78,7 @@ if PF_flag
   end
 
 
-  PF_electric_incident = dlmread('../backup/electric_positive_finger_contact_interface','');
+  PF_electric_incident = dlmread('../backup/electric_PF_contact_interface','');
   PF_electric_incident = PF_electric_incident(:,[3 4]);
 
   PF_electric_displacement_incident = ...

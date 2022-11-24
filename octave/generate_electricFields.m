@@ -92,8 +92,8 @@ E_z_negative_finger_contact_interface = interp2(X,Z,E_z,negative_finger_contact_
 E_x_positive_finger_contact_interface = interp2(X,Z,E_x,positive_finger_contact_interface(:,1),positive_finger_contact_interface(:,2),'linear');
 E_z_positive_finger_contact_interface = interp2(X,Z,E_z,positive_finger_contact_interface(:,1),positive_finger_contact_interface(:,2),'linear');
 
-dlmwrite('../backup/electric_negative_finger_contact_interface',[negative_finger_contact_interface E_x_negative_finger_contact_interface E_z_negative_finger_contact_interface],' ');
-dlmwrite('../backup/electric_positive_finger_contact_interface',[positive_finger_contact_interface E_x_positive_finger_contact_interface E_z_positive_finger_contact_interface],' ');
+dlmwrite('../backup/electric_NF_contact_interface',[negative_finger_contact_interface E_x_negative_finger_contact_interface E_z_negative_finger_contact_interface],' ');
+dlmwrite('../backup/electric_PF_contact_interface',[positive_finger_contact_interface E_x_positive_finger_contact_interface E_z_positive_finger_contact_interface],' ');
 
 [E_theta,E_rho] = cart2pol(E_x,E_z);
 
