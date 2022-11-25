@@ -50,8 +50,7 @@ case 'SAW'
 switch filter_dimension
 case '2D'
 
-NF_flag = 1;
-PF_flag = 1;
+F_flag = 1;
 LA_flag = 0;
 SA_flag = 0;
 %------------------------------------
@@ -62,61 +61,64 @@ piezoelectric_constant = piezo.piezoelectric_constant;
 piezoelectric_constant = piezoelectric_constant([1 3],[1 3 5]);
 dielectric_constant = piezo.dielectric_constant;
 dielectric_constant = dielectric_constant([1 3],[1 3]);
-if PF_flag
 
-  PF_index  = find(strcmp("PF",networkName));
-  PF2_index = find(strcmp("PF2",networkName));
+fingers={"PF","NF"};
+capacitance = [];
+charge = [];
+if F_flag
+for i=1:length(fingers)
+  F_index = find(strcmp(fingers{i},networkName));
+  F_index_2 = find(strcmp([fingers{i} '2'],networkName));
 
-  PF_stationNumber = length(PF_index);
-  PF2_stationNumber = length(PF2_index);
+  F_stationNumber = length(F_index);
+  F_stationNumber_2 = length(F_index_2);
 
   finger_pair_number = dlmread('../backup/finger_pair_number','');
-  finger_point_number = PF_stationNumber/finger_pair_number;
+  finger_point_number = F_stationNumber/finger_pair_number;
 
-  if (PF_stationNumber != PF2_stationNumber) && (mod(finger_point_number,1) != 0)
-    error('The vaules for PF and PF2 arrays are not correctly set!');
+  if (F_stationNumber != F_stationNumber_2) && (mod(finger_point_number,1) != 0)
+    error('The vaules for arrays are not correctly set!');
   end
 
+  F_electric_incident = dlmread(['../backup/electric_' fingers{i} '_contact_interface'],'');
+  F_electric_incident = F_electric_incident(:,[3 4]);
 
-  PF_electric_incident = dlmread('../backup/electric_PF_contact_interface','');
-  PF_electric_incident = PF_electric_incident(:,[3 4]);
+  F_electric_displacement_incident = ...
+   [dielectric_constant(1,1)*F_electric_incident(:,1) + dielectric_constant(1,2)*F_electric_incident(:,2)...
+    dielectric_constant(2,1)*F_electric_incident(:,1) + dielectric_constant(2,2)*F_electric_incident(:,2)];
 
-  PF_electric_displacement_incident = ...
-   [dielectric_constant(1,1)*PF_electric_incident(:,1) + dielectric_constant(1,2)*PF_electric_incident(:,2)...
-    dielectric_constant(2,1)*PF_electric_incident(:,1) + dielectric_constant(2,2)*PF_electric_incident(:,2)];
+  F_capacitance = sum(-dx*F_electric_displacement_incident(:,2));
+  capacitance = [capacitance F_capacitance];
 
-    PF_charge_incident = sum(dx*PF_electric_displacement_incident(:,2));
-    PF_charge_incident = PF_charge_incident * voltage(:,2);
-
-  PF_charge_piezo = 0;
+  F_charge_piezo = 0;
   for n = 1:finger_pair_number
     nIndex = [1:finger_point_number] + (n-1)*finger_point_number;
 
-    nPF_index = PF_index(nIndex);
-    nPF2_index = PF2_index(nIndex);
+    nF_index = F_index(nIndex);
+    nF_index_2 = F_index_2(nIndex);
 
-    nPF_combined_signal_x = [];
-    nPF_combined_signal_z = [];
+    nF_combined_signal_x = [];
+    nF_combined_signal_z = [];
 
-    nPF2_combined_signal_x = [];
-    nPF2_combined_signal_z = [];
+    nF_combined_signal_x_2 = [];
+    nF_combined_signal_z_2 = [];
 
     for nStation = 1:finger_point_number
-      signal_x = dlmread([signal_folder networkName{nPF_index(nStation)} '.' stationName{nPF_index(nStation)} band_x],'',startRowNumber,startColumnNumber);
-      signal_z = dlmread([signal_folder networkName{nPF_index(nStation)} '.' stationName{nPF_index(nStation)} band_z],'',startRowNumber,startColumnNumber);
-      nPF_combined_signal_x = [nPF_combined_signal_x signal_x((1:time_resample_rate:end))];
-      nPF_combined_signal_z = [nPF_combined_signal_z signal_z((1:time_resample_rate:end))];
+      signal_x = dlmread([signal_folder networkName{nF_index(nStation)} '.' stationName{nF_index(nStation)} band_x],'',startRowNumber,startColumnNumber);
+      signal_z = dlmread([signal_folder networkName{nF_index(nStation)} '.' stationName{nF_index(nStation)} band_z],'',startRowNumber,startColumnNumber);
+      nF_combined_signal_x = [nF_combined_signal_x signal_x((1:time_resample_rate:end))];
+      nF_combined_signal_z = [nF_combined_signal_z signal_z((1:time_resample_rate:end))];
 
-      signal2_x = dlmread([signal_folder networkName{nPF2_index(nStation)} '.' stationName{nPF2_index(nStation)} band_x],'',startRowNumber,startColumnNumber);
-      signal2_z = dlmread([signal_folder networkName{nPF2_index(nStation)} '.' stationName{nPF2_index(nStation)} band_z],'',startRowNumber,startColumnNumber);
-      nPF2_combined_signal_x = [nPF2_combined_signal_x signal2_x((1:time_resample_rate:end))];
-      nPF2_combined_signal_z = [nPF2_combined_signal_z signal2_z((1:time_resample_rate:end))];
+      signal_x_2 = dlmread([signal_folder networkName{nF_index_2(nStation)} '.' stationName{nF_index_2(nStation)} band_x],'',startRowNumber,startColumnNumber);
+      signal_z_2 = dlmread([signal_folder networkName{nF_index_2(nStation)} '.' stationName{nF_index_2(nStation)} band_z],'',startRowNumber,startColumnNumber);
+      nF_combined_signal_x_2 = [nF_combined_signal_x_2 signal_x_2((1:time_resample_rate:end))];
+      nF_combined_signal_z_2 = [nF_combined_signal_z_2 signal_z_2((1:time_resample_rate:end))];
     end
 
-    combined_signal_x = cat(3,nPF2_combined_signal_x',nPF_combined_signal_x');
+    combined_signal_x = cat(3,nF_combined_signal_x_2',nF_combined_signal_x');
     combined_signal_x = permute(combined_signal_x,[1 3 2]);
 
-    combined_signal_z = cat(3,nPF2_combined_signal_z',nPF_combined_signal_z');
+    combined_signal_z = cat(3,nF_combined_signal_z_2',nF_combined_signal_z');
     combined_signal_z = permute(combined_signal_z,[1 3 2]);
 
     [combined_signal_x_partialx, combined_signal_x_partialz, combined_signal_x_partialt] = gradient(combined_signal_x,dx,dz,dt);
@@ -126,31 +128,32 @@ if PF_flag
     strain2 = combined_signal_z_partialz;
     strain3 = combined_signal_x_partialz + combined_signal_z_partialx;
 
-    nPF_strain1 = transpose(squeeze(strain1(:,end,:)));
-    nPF_strain2 = transpose(squeeze(strain2(:,end,:)));
-    nPF_strain3 = transpose(squeeze(strain3(:,end,:)));
+    nF_strain1 = transpose(squeeze(strain1(:,end,:)));
+    nF_strain2 = transpose(squeeze(strain2(:,end,:)));
+    nF_strain3 = transpose(squeeze(strain3(:,end,:)));
  
-    nPF_electric_displacement_piezo_x = piezoelectric_constant(1,1)*nPF_strain1 + piezoelectric_constant(1,2)*nPF_strain2 + piezoelectric_constant(1,3)*nPF_strain3;
-    nPF_electric_displacement_piezo_z = piezoelectric_constant(2,1)*nPF_strain1 + piezoelectric_constant(2,2)*nPF_strain2 + piezoelectric_constant(2,3)*nPF_strain3;
+    nF_electric_displacement_piezo_x = piezoelectric_constant(1,1)*nF_strain1 + piezoelectric_constant(1,2)*nF_strain2 + piezoelectric_constant(1,3)*nF_strain3;
+    nF_electric_displacement_piezo_z = piezoelectric_constant(2,1)*nF_strain1 + piezoelectric_constant(2,2)*nF_strain2 + piezoelectric_constant(2,3)*nF_strain3;
 
-    nPF_charge_piezo = sum(-dx*nPF_electric_displacement_piezo_z,2);
-    PF_charge_piezo = PF_charge_piezo + nPF_charge_piezo;
+    nF_charge_piezo = sum(-dx*nF_electric_displacement_piezo_z,2);
+    F_charge_piezo = F_charge_piezo + nF_charge_piezo;
   end
+  charge = [charge F_charge_piezo];
+end
 
-%PF_charge_total = PF_charge_incident + PF_charge_piezo;
-charge = PF_charge_piezo;
 max(charge)
 current = [gradient(charge,dt)];
 max(current)
 
 charge = [t charge]; 
 current = [t current];
-%voltage = voltage;
 
+dlmwrite('../backup/capacitance',capacitance,' ');
 dlmwrite('../backup/charge',charge,' ');
 dlmwrite('../backup/current',current,' ');
 
 end
+exit
 %------------------------------------
 if LA_flag
   LA_index = find(strcmp("LA",networkName));
