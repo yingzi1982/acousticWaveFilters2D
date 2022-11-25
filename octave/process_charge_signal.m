@@ -26,7 +26,6 @@ clc
 %charge(end-window_length+1:end,[2:end]) = charge(end-window_length+1:end,[2:end]).*window;
 
 charge = dlmread('../backup/charge','');
-charge = [charge(:,1) charge(:,2) - charge(:,3)];
 voltage = dlmread(['../backup/sourceTimeFunction'],'');
 
 if rows(charge) != rows(voltage)
@@ -44,9 +43,10 @@ admittance = admittance(freqIndex,:);
 conductance = real(admittance);
 susceptance = imag(admittance);
 
-conductance = conductance./max(abs(conductance));
-susceptance = susceptance./max(abs(susceptance));
-
+%conductance = conductance./max(abs(conductance));
+%susceptance = susceptance./max(abs(susceptance));
+max(abs(conductance))
+max(abs(susceptance))
 %[M,I] = max(conductance(:,3));
 %conductance_peak_frequency = f(I)
 %[M1,I1] = max(susceptance(:,3));
