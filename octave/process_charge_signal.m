@@ -26,6 +26,7 @@ clc
 %charge(end-window_length+1:end,[2:end]) = charge(end-window_length+1:end,[2:end]).*window;
 
 charge = dlmread('../backup/charge','');
+current = dlmread('../backup/current','');
 voltage = dlmread(['../backup/sourceTimeFunction'],'');
 
 if rows(charge) != rows(voltage)
@@ -35,8 +36,10 @@ t = voltage(:,1);
 
 voltage_spectrum = trace2spectrum(voltage);
 charge_spectrum = trace2spectrum(charge);
+current_spectrum = trace2spectrum(current);
 f = voltage_spectrum(:,1);
 admittance = i*2*pi*f.*charge_spectrum(:,2:end)./voltage_spectrum(:,2:end);
+%admittance = current_spectrum(:,2:end)./voltage_spectrum(:,2:end);
 freqIndex = find(f>0.5e9&f<1.5e9);
 f = f(freqIndex);
 admittance = admittance(freqIndex,:);
