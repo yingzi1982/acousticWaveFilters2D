@@ -4,10 +4,10 @@ clear all
 close all
 clc
 
-charge9 = dlmread('../backup/charge_forceModel/charge_9_pairs','');
-charge49 = dlmread('../backup/charge_forceModel/charge_49_pairs','');
-charge99 = dlmread('../backup/charge_forceModel/charge_99_pairs','');
-charge= [charge9 charge49(:,2) charge99(:,2)];
+%charge9 = dlmread('../backup/charge_forceModel/charge_9_pairs','');
+%charge49 = dlmread('../backup/charge_forceModel/charge_49_pairs','');
+%charge99 = dlmread('../backup/charge_forceModel/charge_99_pairs','');
+%charge= [charge9 charge49(:,2) charge99(:,2)];
 
 %charge9 = dlmread('../backup/charge_crossFieldModel/charge_9_pairs','');
 %charge49 = dlmread('../backup/charge_crossFieldModel/charge_49_pairs','');
@@ -25,6 +25,8 @@ charge= [charge9 charge49(:,2) charge99(:,2)];
 %window_length = length(window);
 %charge(end-window_length+1:end,[2:end]) = charge(end-window_length+1:end,[2:end]).*window;
 
+charge = dlmread('../backup/charge','');
+charge = [charge(:,1) charge(:,2) - charge(:,3)];
 voltage = dlmread(['../backup/sourceTimeFunction'],'');
 
 if rows(charge) != rows(voltage)
@@ -42,18 +44,18 @@ admittance = admittance(freqIndex,:);
 conductance = real(admittance);
 susceptance = imag(admittance);
 
-[M,I] = max(conductance(:,3));
-conductance_peak_frequency = f(I)
-[M1,I1] = max(susceptance(:,3));
-[M2,I2] = min(susceptance(:,3));
-susceptance_peak_frequency = f([I1 I2])
+%[M,I] = max(conductance(:,3));
+%conductance_peak_frequency = f(I)
+%[M1,I1] = max(susceptance(:,3));
+%[M2,I2] = min(susceptance(:,3));
+%susceptance_peak_frequency = f([I1 I2])
 
-%conductance = [f conductance./max(abs(conductance))];
-%susceptance = [f susceptance./max(abs(susceptance))];
-round(max(abs(conductance)))
-round(max(abs(susceptance)))
-conductance = [f conductance];
-susceptance = [f susceptance];
+conductance = [f conductance./max(abs(conductance))];
+susceptance = [f susceptance./max(abs(susceptance))];
+%round(max(abs(conductance)))
+%round(max(abs(susceptance)))
+%conductance = [f conductance];
+%susceptance = [f susceptance];
 
 dlmwrite('../backup/conductance',conductance,' ');
 dlmwrite('../backup/susceptance',susceptance,' ');
