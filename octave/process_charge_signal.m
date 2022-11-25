@@ -44,18 +44,17 @@ admittance = admittance(freqIndex,:);
 conductance = real(admittance);
 susceptance = imag(admittance);
 
+conductance = conductance./max(abs(conductance));
+susceptance = susceptance./max(abs(susceptance));
+
 %[M,I] = max(conductance(:,3));
 %conductance_peak_frequency = f(I)
 %[M1,I1] = max(susceptance(:,3));
 %[M2,I2] = min(susceptance(:,3));
 %susceptance_peak_frequency = f([I1 I2])
 
-conductance = [f conductance./max(abs(conductance))];
-susceptance = [f susceptance./max(abs(susceptance))];
-%round(max(abs(conductance)))
-%round(max(abs(susceptance)))
-%conductance = [f conductance];
-%susceptance = [f susceptance];
+conductance = [f conductance];
+susceptance = [f susceptance];
 
 dlmwrite('../backup/conductance',conductance,' ');
 dlmwrite('../backup/susceptance',susceptance,' ');
