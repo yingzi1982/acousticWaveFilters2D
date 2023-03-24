@@ -102,8 +102,8 @@ if true; then
 #./plot1DSignal2.sh conductance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Conductance 1E0 "" "-0.2 1.2" 1f0.5
 #./plot1DSignal2.sh susceptance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Susceptance 1E0 "" "-1.2 1.2" 1f0.5
 
-./plot1DSignal2.sh conductance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Conductance 1E0 "S" "-100 600" 200f100
-./plot1DSignal2.sh susceptance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Susceptance 1E0 "S" "-600 600" 200f100
+./plot1DSignal2.sh conductance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Conductance 1E0 "S" "-0.1 0.6" .2f.1
+./plot1DSignal2.sh susceptance 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 Susceptance 1E0 "S" "-0.4 0.4" .2f.1
 
 #./plot1DSignal2.sh admittance_angle 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 "Angle (deg)" 1E0 "" "-95 95" 45f22.5
 #./plot1DSignal2.sh admittance_abs 1 Freq 1E9 Hz "0.6 1.0" 0.2f0.1 "Magnitude (dB)" 1E0 "" "-45 0" 20f10
@@ -117,7 +117,6 @@ if true; then
 #./plot1DSignal.sh charge 10 Time 1E-8 s "0 10" 10f5 Charge  20E-11 "C" "-10 10" 10f5
 #./plot1DSignal.sh  charge 10 Time 1E-8 s "0 10" 10f5 Charge  5E-9 "C" "-1 1" 1f.5
 ./plot1DSignal.sh  charge 10 Time 1E-8 s "0 10" 10f5 Charge  15E-12 "C" "-1 1" 1f.5
-
 #./plot1DSignal.sh current 10 Time 1E-8 s "0 10" 10f5 Current 5E3 "A" "-1 1" 1f.5
 
 fi
